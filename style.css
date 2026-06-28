@@ -902,6 +902,13 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   box-shadow:0 4px 16px rgba(0,0,0,.4);
 }
 .float-btn:hover .tooltip{opacity:1;right:66px}
+.float-btn.menu-f{
+  background:linear-gradient(145deg,#2a2318,#1a1612);
+  color:#D4AF37;font-size:1.4rem;
+  border:1.5px solid rgba(212,175,55,.5);
+  box-shadow:0 4px 20px rgba(212,175,55,.25),inset 0 1px 0 rgba(255,255,255,.08);
+}
+.float-btn.menu-f:hover{box-shadow:0 8px 30px rgba(212,175,55,.45)}
 .float-btn.call-f{
   background:linear-gradient(145deg,#E8C84A,#B8880A);
   color:#080705;
@@ -934,6 +941,99 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 /* Toast */
 .toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--bg-card);border:1px solid var(--gold);color:var(--gold-light);padding:12px 24px;border-radius:50px;font-size:.85rem;font-weight:600;z-index:99000;opacity:0;transition:.4s var(--e);white-space:nowrap;pointer-events:none}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ══════════ FLOAT MENU DRAWER ══════════ */
+.fmenu-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);z-index:5000;opacity:0;pointer-events:none;transition:.3s}
+.fmenu-overlay.open{opacity:1;pointer-events:all}
+.fmenu-drawer{
+  position:fixed;bottom:0;left:0;right:0;z-index:5001;
+  background:#16120e;border-top:1px solid rgba(212,175,55,.25);
+  border-radius:22px 22px 0 0;
+  height:88vh;display:flex;flex-direction:column;
+  transform:translateY(100%);transition:.38s cubic-bezier(.4,0,.2,1);
+  box-shadow:0 -8px 40px rgba(0,0,0,.6);
+}
+.fmenu-drawer.open{transform:translateY(0)}
+.fmenu-drag{width:40px;height:4px;background:rgba(255,255,255,.2);border-radius:4px;margin:12px auto 0;flex-shrink:0}
+.fmenu-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 18px 10px;border-bottom:1px solid rgba(255,255,255,.07);flex-shrink:0;
+}
+.fmenu-title{font-weight:700;font-size:1rem;color:#F5F0E8}
+.fmenu-close{background:none;border:none;color:rgba(245,240,232,.45);font-size:1.3rem;cursor:pointer;padding:4px 8px;border-radius:8px;line-height:1}
+.fmenu-close:hover{background:rgba(255,255,255,.08);color:#F5F0E8}
+/* cart badge in drawer header */
+.fmenu-cart-chip{
+  background:linear-gradient(135deg,#D4AF37,#b8922a);color:#0D0B09;
+  font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:50px;
+  cursor:pointer;display:flex;align-items:center;gap:5px;
+}
+/* pages */
+.fmenu-page{flex:1;overflow-y:auto;overscroll-behavior:contain}
+.fmenu-page.hidden{display:none}
+/* Category list */
+.fmenu-cat-list{padding:8px 0 80px}
+.fmenu-cat-item{
+  display:flex;align-items:center;gap:14px;
+  padding:15px 18px;border-bottom:1px solid rgba(255,255,255,.05);
+  cursor:pointer;transition:.2s;
+}
+.fmenu-cat-item:hover,.fmenu-cat-item:active{background:rgba(212,175,55,.07)}
+.fmenu-cat-icon{font-size:1.6rem;width:40px;text-align:center;flex-shrink:0}
+.fmenu-cat-name{font-size:.92rem;font-weight:600;color:#F5F0E8;flex:1}
+.fmenu-cat-count{font-size:.72rem;color:rgba(245,240,232,.4);background:rgba(255,255,255,.06);padding:3px 8px;border-radius:20px}
+.fmenu-cat-arrow{color:rgba(245,240,232,.3);font-size:.85rem}
+/* Items page */
+.fmenu-back{
+  display:flex;align-items:center;gap:8px;
+  padding:10px 18px;border-bottom:1px solid rgba(255,255,255,.07);
+  cursor:pointer;color:#D4AF37;font-size:.85rem;font-weight:600;
+  background:none;border:none;width:100%;text-align:left;flex-shrink:0;
+}
+.fmenu-back:hover{background:rgba(212,175,55,.06)}
+.fmenu-items-grid{padding:10px 14px 100px;display:flex;flex-direction:column;gap:10px}
+.fmenu-item-card{
+  display:flex;align-items:center;gap:12px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);
+  border-radius:14px;padding:10px 12px;transition:.2s;
+}
+.fmenu-item-img{width:70px;height:70px;border-radius:10px;object-fit:cover;flex-shrink:0;background:#1a1612}
+.fmenu-item-info{flex:1;min-width:0}
+.fmenu-item-name{font-size:.88rem;font-weight:700;color:#F5F0E8;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fmenu-item-desc{font-size:.72rem;color:rgba(245,240,232,.45);line-height:1.4;margin-bottom:5px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.fmenu-item-price{font-size:.88rem;font-weight:700;color:#D4AF37}
+.fmenu-add-btn{
+  background:linear-gradient(135deg,#D4AF37,#b8922a);color:#0D0B09;
+  border:none;border-radius:10px;padding:8px 14px;font-size:.82rem;font-weight:800;
+  cursor:pointer;flex-shrink:0;transition:.2s;font-family:'Inter',sans-serif;
+}
+.fmenu-add-btn:active{transform:scale(.93)}
+.fmenu-add-btn.added{background:#25D366;color:#fff}
+
+/* ══════════ MOBILE OPTIMIZATIONS ══════════ */
+@media(max-width:768px){
+  /* menu tabs scroll horizontally */
+  .menu-tabs{display:flex;overflow-x:auto;flex-wrap:nowrap;gap:8px;padding-bottom:8px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .menu-tabs::-webkit-scrollbar{display:none}
+  .menu-tab{flex-shrink:0;white-space:nowrap;padding:8px 14px;font-size:.78rem}
+  /* menu grid single column */
+  .menu-grid{grid-template-columns:1fr!important}
+  .menu-card{display:flex;flex-direction:row;align-items:center;gap:12px;padding:10px}
+  .menu-card-img-wrap{width:90px;height:90px;flex-shrink:0;border-radius:10px;overflow:hidden}
+  .menu-card-img{width:100%;height:100%;object-fit:cover}
+  .add-to-cart-overlay{opacity:1;background:none;display:flex;align-items:flex-end;justify-content:flex-end;padding:4px}
+  .add-btn{padding:5px 10px;font-size:.72rem;border-radius:7px}
+  .menu-card-body{flex:1;padding:0}
+  /* cart panel full screen on mobile */
+  .cart-panel{width:100%!important;right:0!important;border-radius:20px 20px 0 0!important}
+  /* checkout drawer center fix */
+  .ck-drawer{width:calc(100% - 20px);top:auto;bottom:0;left:0;right:0;transform:translate(0,100%) scale(1);border-radius:22px 22px 0 0;margin:0 10px;max-height:95vh}
+  .ck-drawer.open{transform:translate(0,0) scale(1)}
+  /* hide desktop floating button tooltip on mobile — use label instead */
+  .float-btn .tooltip{display:none}
+  /* float menu button larger touch target on mobile */
+  .float-btn{width:56px;height:56px}
+}
 
 /* Responsive */
 @media(max-width:1024px){
