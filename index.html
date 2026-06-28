@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
   <title>Ishwar Kitchen – Authentic Punjabi & North Indian Cuisine | Nakodar</title>
   <meta name="description" content="Ishwar Kitchen in Nakodar – Authentic North Indian, Punjabi & Chinese cuisine. Order on Swiggy, Zomato, WhatsApp or call +91 8699081813."/>
-   
+
   <!-- PWA -->
   <link rel="manifest" href="/manifest.json"/>
   <meta name="theme-color" content="#D4AF37"/>
@@ -15,11 +15,10 @@
   <meta name="apple-mobile-web-app-title" content="Ishwar Kitchen"/>
   <link rel="apple-touch-icon" href="logo.png"/>
   <link rel="icon" type="image/png" href="logo.png"/>
-  
+
   <link rel="stylesheet" href="style.css"/>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </head>
 <body>
 
@@ -72,8 +71,8 @@
       <li><a href="#reviews">Reviews</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
-    <button class="cart-nav-btn" id="cartNavBtn" onclick="toggleCart()" aria-label="View cart">
-      🛒<span class="cart-count" id="cartCount">0</span>
+    <button class="cart-nav-btn" id="cartNavBtn" onclick="toggleCart()" aria-label="Order Now">
+      🍽️<span class="cart-count" style="background:#D4AF37;color:#0D0B09;font-size:.65rem;padding:2px 6px">ORDER</span>
     </button>
     <button class="reserve-btn" onclick="document.getElementById('reservation').scrollIntoView({behavior:'smooth'})">📅 Book Table</button>
     <button class="hamburger" id="hamburger" aria-label="Toggle menu">
@@ -85,7 +84,7 @@
 <!-- ══════════ HERO ══════════ -->
 <section class="hero" id="home">
   <div class="hero-overlay"></div>
-  <img src="images/unnamed.jpg" alt="Ishwar Kitchen food spread" class="hero-bg"/>
+  <img src="images/hero.png" alt="Ishwar Kitchen food spread" class="hero-bg"/>
   <div class="hero-content">
     <p class="hero-script">Welcome to</p>
     <h1 class="hero-title">Ishwar Kitchen</h1>
@@ -102,7 +101,7 @@
       <span class="badge">📞 +91 8699081813</span>
     </div>
     <div class="hero-cta">
-      <a href="menu.pdf" class="btn btn-primary">🍽️ View Menu</a>
+      <a href="#menu" class="btn btn-primary">🍽️ View Menu</a>
       <button class="btn btn-outline" onclick="toggleCart()">🛒 Open Cart</button>
       <a href="tel:+918699081813" class="btn btn-outline">📞 Call Us</a>
     </div>
@@ -569,29 +568,26 @@
 <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
 <div class="cart-drawer" id="cartDrawer">
   <div class="cart-header">
-    <h3>🛒 Your Order</h3>
+    <h3>🍽️ Order Now</h3>
     <button class="cart-close" onclick="toggleCart()">✕</button>
   </div>
-  <div class="cart-items" id="cartItems">
-    <div class="cart-empty"><div class="e-icon">🍽️</div><p>Your cart is empty.<br/>Add items from the menu!</p></div>
-  </div>
-  <div class="cart-footer" id="cartFooter" style="display:none">
-    <div class="cart-total">
-      <span>Total Amount</span>
-      <strong id="cartTotal">₹0</strong>
+  <div class="order-panel-body">
+    <div class="order-panel-intro">
+      <div class="order-panel-icon">🍽️</div>
+      <h4>Ready to order?</h4>
+      <p>Click any dish image to go directly to our online menu, or choose an option below.</p>
     </div>
-    <span class="checkout-label">Order directly from us:</span>
+    <div class="order-panel-divider"></div>
+    <p class="order-panel-label">Order from our website</p>
+    <a href="REPLACE_WITH_PETPOOJA_URL" target="_blank" class="checkout-btn pay-now order-panel-btn" id="petpoojaMainBtn">🍽️ Order on PetPooja</a>
+    <div class="order-panel-divider"></div>
+    <p class="order-panel-label">Other ways to order</p>
     <div class="checkout-btns">
-      <button class="checkout-btn pay-now" onclick="payRazorpay()">💳 Pay Now &amp; Order</button>
-      <button class="checkout-btn whatsapp" onclick="orderWhatsApp()"><img src="Logo/whatsapp.jpg" alt="WhatsApp" style="width:22px;height:22px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:7px;"> Order via WhatsApp</button>
-      <button class="checkout-btn call-order" onclick="window.location.href='tel:+918699081813'">📞 Call to Order: +91 8699081813</button>
+      <button class="checkout-btn whatsapp" onclick="window.open('https://wa.me/918699081813?text=Hello%20Ishwar%20Kitchen!%20I%20want%20to%20order.','_blank')"><img src="Logo/whatsapp.jpg" alt="WhatsApp" style="width:22px;height:22px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:7px;"> WhatsApp Order</button>
+      <button class="checkout-btn call-order" onclick="window.location.href='tel:+918699081813'">📞 Call: +91 8699081813</button>
+      <button class="checkout-btn swiggy" onclick="window.open('https://www.swiggy.com/search?query=Ishwar+Kitchen+Nakodar','_blank')"><img src="Logo/swiggy.png" alt="Swiggy" style="width:22px;height:22px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:7px;"> Order via Swiggy</button>
+      <button class="checkout-btn zomato" onclick="window.open('https://www.zomato.com/nakodar/ishwar-kitchen-nakodar-locality/order','_blank')"><img src="Logo/zomato.jpg" alt="Zomato" style="width:22px;height:22px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:7px;"> Order via Zomato</button>
     </div>
-    <span class="checkout-label" style="margin-top:14px">Or find us on delivery apps:</span>
-    <div class="checkout-btns">
-      <button class="checkout-btn swiggy" onclick="orderSwiggy()"><img src="Logo/swiggy.png" alt="Swiggy" style="width:22px;height:22px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:7px;"> Order via Swiggy + Copy List</button>
-      <button class="checkout-btn zomato" onclick="orderZomato()"><img src="Logo/zomato.jpg" alt="Zomato" style="width:22px;height:22px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:7px;"> Order via Zomato + Copy List</button>
-    </div>
-    <div class="cart-note">ℹ️ <strong>Tip:</strong> Use <strong>Pay Now</strong> or <strong>WhatsApp</strong> to send your exact cart in one tap. Swiggy/Zomato copies your list so you can paste it in their app.</div>
   </div>
 </div>
 
@@ -876,7 +872,7 @@
 
 <!-- ══════════ FLOATING BUTTONS ══════════ -->
 <div class="floating-btns">
-   <button class="float-btn menu-f" onclick="openFloatMenu()" title="Browse Menu"><span class="tooltip">🍽️ Browse Menu</span>🍽️</button>
+  <button class="float-btn menu-f" onclick="openFloatMenu()" title="Browse Menu"><span class="tooltip">🍽️ Browse Menu</span>🍽️</button>
   <a href="tel:+918699081813" class="float-btn call-f" title="Call"><span class="tooltip">📞 +91 8699081813</span>📞</a>
   <a href="https://wa.me/918699081813?text=Hello%20Ishwar%20Kitchen!" target="_blank" class="float-btn wa-f" title="WhatsApp"><span class="tooltip">💬 WhatsApp Order</span><img src="Logo/whatsapp.jpg" alt="WhatsApp" style="width:30px;height:30px;border-radius:50%;object-fit:cover;"/></a>
   <button class="float-btn top-f" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Top"><span class="tooltip">↑ Back to Top</span>↑</button>
