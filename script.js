@@ -259,8 +259,13 @@ function orderZomato() {
 // ══════════ // PETPOOJA ORDER ══════════
 
 function openOrderModal() {
-  if (!cart.length) { showToast('🛒 Add items first!'); return; }
-  showCheckoutModal();
+  showOrderForm();
+}
+
+// Called from "Order from Website" sidebar button — no cart needed
+function showOrderForm() {
+  toggleCart(); // close sidebar first
+  setTimeout(showCheckoutModal, 280);
 }
 
 function showCheckoutModal() {
@@ -271,11 +276,10 @@ function showCheckoutModal() {
 <div class="ck-overlay" id="ckOverlay" onclick="closeCheckoutModal()"></div>
 <div class="ck-drawer" id="ckDrawer">
   <div class="ck-head">
-    <span>🛒 Complete Your Order</span>
+    <span>🍽️ Place Your Order</span>
     <button class="ck-close" onclick="closeCheckoutModal()">✕</button>
   </div>
-  <div class="ck-summary" id="ckSummary"></div>
-  <div class="ck-divider"></div>
+  <p style="font-size:.82rem;color:var(--muted);margin:0 0 .8rem;text-align:center">Fill your details and swipe to proceed to our online menu</p>
   <div class="ck-field-group">
     <label class="ck-label" for="ckName">Your Name *</label>
     <input class="ck-input" type="text" id="ckName" placeholder="Rajesh Kumar" autocomplete="name">
@@ -288,7 +292,7 @@ function showCheckoutModal() {
     <label class="ck-label" for="ckEmail">Email Address *</label>
     <input class="ck-input" type="email" id="ckEmail" placeholder="you@email.com" autocomplete="email">
   </div>
-  <p class="ck-note">🍽️ You'll be taken to our PetPooja menu page to complete your order.</p>
+  <p class="ck-note">🍽️ You'll be taken to our online menu to complete your order.</p>
   <div class="swipe-btn" id="swipeBtn">
     <div class="swipe-fill" id="swipeFill"></div>
     <div class="swipe-thumb" id="swipeThumb">➜</div>
@@ -299,11 +303,6 @@ function showCheckoutModal() {
     document.body.appendChild(el);
     initSwipeBtn();
   }
-
-  const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
-  document.getElementById('ckSummary').innerHTML =
-    cart.map(i => `<div class="ck-item"><span>${i.name} × ${i.qty}</span><span>₹${i.price * i.qty}</span></div>`).join('') +
-    `<div class="ck-item ck-total"><span>Total</span><span>₹${total}</span></div>`;
 
   document.getElementById('ckOverlay').classList.add('open');
   document.getElementById('ckDrawer').classList.add('open');
@@ -383,17 +382,17 @@ function redirectToPetPooja(customerName, customerPhone, customerEmail) {
   // Send order summary to WhatsApp as backup notification to kitchen
   const msg = buildOrderText() +
     `\n\nCustomer: ${customerName}\nPhone: ${customerPhone}\nEmail: ${customerEmail}` +
-    `\n\n🍽️ Redirected to PetPooja to complete order. Total: ₹${amount}`;
+    `\n\n🍽️ Customer is placing an order online.`;
   window.open(`https://wa.me/918699081813?text=${encodeURIComponent(msg)}`, '_blank');
 
   // Open PetPooja ordering page
   if (PETPOOJA_URL === 'REPLACE_WITH_PETPOOJA_URL') {
-    showToast('⚠️ PetPooja URL not set yet. WhatsApp order sent!');
+    showToast('⚠️ Online ordering coming soon! WhatsApp order sent.');
     return;
   }
   setTimeout(() => window.open(PETPOOJA_URL, '_blank'), 800);
   cart = []; renderCart();
-  showToast('✅ Redirecting to PetPooja menu...');
+  showToast('✅ Opening our online menu...');
 }
 function copyClip(text) {
   navigator.clipboard ? navigator.clipboard.writeText(text).catch(() => legacyCopy(text)) : legacyCopy(text);
