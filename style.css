@@ -940,13 +940,28 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 
 /* ── ORDER PANEL SIDEBAR ── */
 .order-panel-body{padding:1.2rem;display:flex;flex-direction:column;gap:10px;overflow-y:auto;height:calc(100% - 60px)}
-.order-panel-intro{text-align:center;padding:1rem 0 .5rem}
-.order-panel-icon{font-size:2.8rem;margin-bottom:.6rem}
-.order-panel-intro h4{font-size:1rem;font-weight:700;color:var(--text);margin-bottom:.4rem}
-.order-panel-intro p{font-size:.8rem;color:var(--muted);line-height:1.5}
 .order-panel-divider{height:1px;background:var(--border);margin:.3rem 0}
 .order-panel-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:.2rem}
 .order-panel-btn{display:block;text-align:center;text-decoration:none;width:100%;box-sizing:border-box}
+/* PetPooja hero block */
+.op-hero{background:linear-gradient(135deg,#1a1400 0%,#2a1f00 100%);border:1.5px solid var(--gold);border-radius:14px;padding:1.4rem 1.2rem;text-align:center;display:flex;flex-direction:column;align-items:center;gap:.55rem}
+.op-hero-icon{font-size:2.6rem;line-height:1}
+.op-hero-title{font-size:1.1rem;font-weight:800;color:var(--gold);letter-spacing:.02em}
+.op-hero-sub{font-size:.78rem;color:var(--muted);line-height:1.5;max-width:220px}
+.op-primary-btn{display:block;width:100%;box-sizing:border-box;background:var(--gold);color:#0D0B09;font-weight:800;font-size:.95rem;letter-spacing:.03em;text-align:center;text-decoration:none;padding:.85rem 1rem;border-radius:10px;margin-top:.3rem;transition:opacity .2s,transform .15s}
+.op-primary-btn:hover{opacity:.88;transform:translateY(-1px)}
+
+/* ── INTERACTIVE PULSE ORDER BUTTON ── */
+.op-pulse-btn{position:relative;display:flex;align-items:center;justify-content:center;gap:.5rem;width:100%;box-sizing:border-box;background:linear-gradient(135deg,#D4AF37,#f0cd60);color:#0D0B09;font-weight:800;font-size:1rem;border:none;border-radius:50px;padding:.9rem 1.4rem;margin-top:.5rem;cursor:pointer;overflow:visible;transition:transform .15s,box-shadow .15s}
+.op-pulse-btn:hover{transform:scale(1.03);box-shadow:0 6px 24px rgba(212,175,55,.45)}
+.op-pulse-btn:active{transform:scale(.97)}
+.op-pulse-ring{position:absolute;inset:0;border-radius:50px;border:2px solid #D4AF37;opacity:.7;animation:op-pulse 2s ease-out infinite}
+.op-pulse-ring-2{animation-delay:.7s;opacity:.4}
+@keyframes op-pulse{0%{transform:scale(1);opacity:.7}100%{transform:scale(1.22);opacity:0}}
+.op-pulse-icon{font-size:1.2rem;z-index:1}
+.op-pulse-text{z-index:1;letter-spacing:.04em}
+.op-pulse-arrow{z-index:1;font-size:1.1rem;transition:transform .2s}
+.op-pulse-btn:hover .op-pulse-arrow{transform:translateX(4px)}
 
 /* ── MENU CARDS: remove add-to-cart, make clickable ── */
 .add-to-cart-overlay{background:rgba(0,0,0,.55)!important}
