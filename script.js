@@ -250,7 +250,6 @@ function payRazorpay() {
 }
 
 function showCheckoutModal() {
-  // Inject modal HTML once
   if (!document.getElementById('ckModal')) {
     const el = document.createElement('div');
     el.id = 'ckModal';
@@ -258,29 +257,35 @@ function showCheckoutModal() {
 <div class="ck-overlay" id="ckOverlay" onclick="closeCheckoutModal()"></div>
 <div class="ck-drawer" id="ckDrawer">
   <div class="ck-head">
-    <span>Complete Your Order</span>
+    <span>🛒 Complete Your Order</span>
     <button class="ck-close" onclick="closeCheckoutModal()">✕</button>
   </div>
-  <div class="ck-body">
-    <div class="ck-summary" id="ckSummary"></div>
-    <div class="ck-divider"></div>
-    <label class="ck-label">Your Name *</label>
+  <div class="ck-summary" id="ckSummary"></div>
+  <div class="ck-divider"></div>
+  <div class="ck-field-group">
+    <label class="ck-label" for="ckName">Your Name *</label>
     <input class="ck-input" type="text" id="ckName" placeholder="Rajesh Kumar" autocomplete="name">
-    <label class="ck-label">Phone Number *</label>
+  </div>
+  <div class="ck-field-group">
+    <label class="ck-label" for="ckPhone">Phone Number *</label>
     <input class="ck-input" type="tel" id="ckPhone" placeholder="+91 98765 43210" autocomplete="tel">
-    <label class="ck-label">Email Address *</label>
+  </div>
+  <div class="ck-field-group">
+    <label class="ck-label" for="ckEmail">Email Address *</label>
     <input class="ck-input" type="email" id="ckEmail" placeholder="you@email.com" autocomplete="email">
-    <p class="ck-note">📦 We'll send your order confirmation on WhatsApp & email.</p>
   </div>
-  <div class="ck-foot">
-    <button class="ck-cancel" onclick="closeCheckoutModal()">Cancel</button>
-    <button class="ck-pay" onclick="submitCheckoutModal()">💳 Proceed to Pay</button>
+  <p class="ck-note">📦 Confirmation sent on WhatsApp & email after payment.</p>
+  <div class="swipe-btn" id="swipeBtn">
+    <div class="swipe-fill" id="swipeFill"></div>
+    <div class="swipe-thumb" id="swipeThumb">➜</div>
+    <span class="swipe-label">SWIPE TO PAY &nbsp;→</span>
   </div>
+  <button class="ck-cancel" onclick="closeCheckoutModal()" style="width:100%;margin-top:.6rem">Cancel</button>
 </div>`;
     document.body.appendChild(el);
+    initSwipeBtn();
   }
 
-  // Fill summary
   const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
   document.getElementById('ckSummary').innerHTML =
     cart.map(i => `<div class="ck-item"><span>${i.name} × ${i.qty}</span><span>₹${i.price * i.qty}</span></div>`).join('') +
@@ -289,7 +294,56 @@ function showCheckoutModal() {
   document.getElementById('ckOverlay').classList.add('open');
   document.getElementById('ckDrawer').classList.add('open');
   document.body.style.overflow = 'hidden';
-  document.getElementById('ckName').focus();
+  setTimeout(() => document.getElementById('ckName').focus(), 300);
+}
+
+function initSwipeBtn() {
+  const btn   = document.getElementById('swipeBtn');
+  const thumb = document.getElementById('swipeThumb');
+  const fill  = document.getElementById('swipeFill');
+  if (!btn) return;
+
+  let dragging = false, startX = 0;
+
+  function getMax() { return btn.offsetWidth - thumb.offsetWidth - 8; }
+
+  function startDrag(x) {
+    dragging = true;
+    startX = x - thumb.offsetLeft;
+    thumb.style.transition = 'none';
+    fill.style.transition  = 'none';
+  }
+  function moveDrag(x) {
+    if (!dragging) return;
+    const pos = Math.max(4, Math.min(x - startX, getMax()));
+    thumb.style.left  = pos + 'px';
+    fill.style.width  = (pos + thumb.offsetWidth) + 'px';
+    thumb.textContent = pos >= getMax() * 0.82 ? '✓' : '➜';
+  }
+  function endDrag(x) {
+    if (!dragging) return;
+    dragging = false;
+    const pos = thumb.offsetLeft;
+    if (pos >= getMax() * 0.82) {
+      thumb.style.left = getMax() + 'px';
+      fill.style.width = btn.offsetWidth + 'px';
+      thumb.textContent = '✓';
+      setTimeout(submitCheckoutModal, 350);
+    } else {
+      thumb.style.transition = 'left .3s';
+      fill.style.transition  = 'width .3s';
+      thumb.style.left = '4px';
+      fill.style.width = thumb.offsetWidth + 4 + 'px';
+      thumb.textContent = '➜';
+    }
+  }
+
+  thumb.addEventListener('mousedown',  e => { e.preventDefault(); startDrag(e.clientX); });
+  document.addEventListener('mousemove', e => moveDrag(e.clientX));
+  document.addEventListener('mouseup',   e => endDrag(e.clientX));
+  thumb.addEventListener('touchstart',  e => { e.preventDefault(); startDrag(e.touches[0].clientX); }, { passive: false });
+  document.addEventListener('touchmove', e => { if (dragging) { e.preventDefault(); moveDrag(e.touches[0].clientX); } }, { passive: false });
+  document.addEventListener('touchend',  e => endDrag(e.changedTouches[0].clientX));
 }
 
 function closeCheckoutModal() {
