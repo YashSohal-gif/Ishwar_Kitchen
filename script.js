@@ -420,6 +420,117 @@ function legacyCopy(text) {
 }
 
 // ══════════ // ══════════
+// ══════════ // FLOATING MENU DRAWER ══════════
+// ══════════ // ══════════
+function openFloatMenu() {
+  if (!document.getElementById('fmenuDrawer')) _buildFloatMenu();
+  document.getElementById('fmenuOverlay').classList.add('open');
+  document.getElementById('fmenuDrawer').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  _showFmenuCats();
+}
+function closeFloatMenu() {
+  document.getElementById('fmenuOverlay').classList.remove('open');
+  document.getElementById('fmenuDrawer').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function _buildFloatMenu() {
+  const wrap = document.createElement('div');
+  wrap.innerHTML = `
+<div id="fmenuOverlay" class="fmenu-overlay" onclick="closeFloatMenu()"></div>
+<div id="fmenuDrawer" class="fmenu-drawer">
+  <div class="fmenu-drag"></div>
+  <div class="fmenu-head">
+    <span class="fmenu-title">🍽️ Our Menu</span>
+    <button class="fmenu-cart-chip" onclick="closeFloatMenu();toggleCart()">
+      🛒 <span id="fmenuCartCount">0</span> item(s)
+    </button>
+    <button class="fmenu-close" onclick="closeFloatMenu()">✕</button>
+  </div>
+  <div id="fmenuCatsPage" class="fmenu-page">
+    <div class="fmenu-cat-list" id="fmenuCatList"></div>
+  </div>
+  <div id="fmenuItemsPage" class="fmenu-page hidden">
+    <button class="fmenu-back" onclick="_showFmenuCats()">← Back to Categories</button>
+    <div class="fmenu-items-grid" id="fmenuItemsGrid"></div>
+  </div>
+</div>`;
+  document.body.appendChild(wrap);
+
+  // Build categories from existing menu tabs + grids
+  const cats = [];
+  document.querySelectorAll('.menu-tab').forEach(tab => {
+    const id   = tab.dataset.tab;
+    const grid = document.getElementById('menu-' + id);
+    if (!grid) return;
+    const cards = grid.querySelectorAll('.menu-card');
+    const items = [];
+    cards.forEach(card => {
+      const btn   = card.querySelector('.add-btn');
+      const match = btn?.getAttribute('onclick')?.match(/addToCart\('(.+?)',(\d+),'(.+?)'\)/);
+      if (!match) return;
+      const img  = card.querySelector('.menu-card-img')?.src || '';
+      const desc = card.querySelector('.menu-card-body p')?.textContent || '';
+      items.push({ name: match[1], price: +match[2], img, desc });
+    });
+    if (items.length) cats.push({ id, label: tab.textContent.trim(), items });
+  });
+
+  const catList = document.getElementById('fmenuCatList');
+  cats.forEach(cat => {
+    const el = document.createElement('div');
+    el.className = 'fmenu-cat-item';
+    const parts = cat.label.match(/^(\S+)\s(.+)$/) || ['', '', cat.label];
+    el.innerHTML = `
+      <div class="fmenu-cat-icon">${parts[1]}</div>
+      <div class="fmenu-cat-name">${parts[2] || cat.label}</div>
+      <div class="fmenu-cat-count">${cat.items.length}</div>
+      <div class="fmenu-cat-arrow">›</div>`;
+    el.onclick = () => _showFmenuItems(cat);
+    catList.appendChild(el);
+  });
+}
+
+function _showFmenuCats() {
+  document.getElementById('fmenuCatsPage').classList.remove('hidden');
+  document.getElementById('fmenuItemsPage').classList.add('hidden');
+  document.getElementById('fmenuDrawer').querySelector('.fmenu-title').textContent = '🍽️ Our Menu';
+  _updateFmenuCart();
+}
+
+function _showFmenuItems(cat) {
+  document.getElementById('fmenuCatsPage').classList.add('hidden');
+  document.getElementById('fmenuItemsPage').classList.remove('hidden');
+  document.getElementById('fmenuDrawer').querySelector('.fmenu-title').textContent = cat.label;
+  const grid = document.getElementById('fmenuItemsGrid');
+  grid.innerHTML = cat.items.map(item => `
+    <div class="fmenu-item-card">
+      <img class="fmenu-item-img" src="${item.img}" alt="${item.name}" loading="lazy" onerror="this.style.display='none'">
+      <div class="fmenu-item-info">
+        <div class="fmenu-item-name">${item.name}</div>
+        <div class="fmenu-item-desc">${item.desc}</div>
+        <div class="fmenu-item-price">₹${item.price}</div>
+      </div>
+      <button class="fmenu-add-btn" onclick="_fmenuAdd(this,'${item.name.replace(/'/g,"\\'")}',${item.price},'${item.img}')">+ Add</button>
+    </div>`).join('');
+  _updateFmenuCart();
+}
+
+function _fmenuAdd(btn, name, price, img) {
+  addToCart(name, price, img);
+  btn.textContent = '✓ Added';
+  btn.classList.add('added');
+  setTimeout(() => { btn.textContent = '+ Add'; btn.classList.remove('added'); }, 1200);
+  _updateFmenuCart();
+}
+
+function _updateFmenuCart() {
+  const el = document.getElementById('fmenuCartCount');
+  if (el) el.textContent = cart.reduce((s, i) => s + i.qty, 0);
+}
+
+// ══════════ // ══════════
 // ══════════ // GALLERY LIGHTBOX ══════════
 // ══════════ // ══════════
 function openLightbox(src, caption) {
