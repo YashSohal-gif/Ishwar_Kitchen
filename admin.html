@@ -348,7 +348,7 @@ if (sessionStorage.getItem('ik_admin')) {
 //  SUPABASE HELPERS
 // ════════════════════════════════════════════════════════
 function isConfigured() {
-  return SUPABASE_URL !== 'REPLACE_SUPABASE_URL' && SUPABASE_KEY !== 'REPLACE_SUPABASE_ANON_KEY';
+  return SUPABASE_URL !== 'https://myusocxvkspfjlzhfncz.supabase.co' && SUPABASE_KEY !== 'sb_publishable_Mi004oFramS3Qcui4BG1Wg_18bGKhzW';
 }
 
 async function fetchOrders(showFeedback = false) {
@@ -464,7 +464,7 @@ function renderOrders() {
   if (!list.length) {
     container.innerHTML = `<div class="orders-empty">
       <div class="icon">${activeFilter === 'done' ? '✅' : '🍽️'}</div>
-      <p>${allOrders.length === 0 ? 'No orders yet — they'll appear here automatically.' : 'No orders match your filter.'}</p>
+      <p>${allOrders.length === 0 ? "No orders yet — they'll appear here automatically." : 'No orders match your filter.'}</p>
     </div>`;
     return;
   }
