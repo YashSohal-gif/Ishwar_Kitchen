@@ -217,7 +217,7 @@ function orderZomato() {
 // IMPORTANT: replace with the restaurant's real Razorpay Key ID from
 // dashboard.razorpay.com  → Settings → API Keys. Use rzp_test_... while testing,
 // then swap to rzp_live_... once the restaurant's account is activated.
-const RAZORPAY_KEY_ID = 'rzp_test_REPLACE_WITH_REAL_KEY';
+const RAZORPAY_KEY_ID = 'rzp_test_T6xwQN9bGxnlQS';
 
 function payRazorpay() {
   if (!cart.length) { showToast('🛒 Add items first!'); return; }
