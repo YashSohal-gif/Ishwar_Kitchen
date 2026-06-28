@@ -572,14 +572,17 @@
     <button class="cart-close" onclick="toggleCart()">✕</button>
   </div>
   <div class="order-panel-body">
-    <div class="order-panel-intro">
-      <div class="order-panel-icon">🍽️</div>
-      <h4>Ready to order?</h4>
-      <p>Click any dish image to go directly to our online menu, or choose an option below.</p>
+
+    <!-- PRIMARY: PetPooja direct order -->
+    <div class="op-hero">
+      <div class="op-hero-icon">🍽️</div>
+      <p class="op-hero-title">Order Online</p>
+      <p class="op-hero-sub">Browse our full menu &amp; place your order directly on PetPooja</p>
+      <button onclick="showOrderForm()" class="op-primary-btn" id="petpoojaMainBtn">
+        Order from Website →
+      </button>
     </div>
-    <div class="order-panel-divider"></div>
-    <p class="order-panel-label">Order from our website</p>
-    <a href="REPLACE_WITH_PETPOOJA_URL" target="_blank" class="checkout-btn pay-now order-panel-btn" id="petpoojaMainBtn">🍽️ Order from website</a>
+
     <div class="order-panel-divider"></div>
     <p class="order-panel-label">Other ways to order</p>
     <div class="checkout-btns">
