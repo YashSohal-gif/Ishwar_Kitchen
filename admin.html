@@ -118,11 +118,6 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'I
 }
 .refresh-btn:hover{background:var(--card2)}
 
-/* setup warning */
-.setup-warn{
-  background:rgba(226,55,68,0.07);border:1px solid rgba(226,55,68,0.2);
-  border-radius:12px;padding:1rem 1.1rem;font-size:.8rem;color:#ff7b85;
-  margin-bottom:1rem;line-height:1.65;
 }
 .setup-warn code{background:rgba(255,255,255,0.08);padding:1px 5px;border-radius:3px;font-family:monospace;font-size:.78rem}
 .setup-warn strong{color:var(--red)}
@@ -233,14 +228,7 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'I
 
   <main class="admin-main">
 
-    <!-- Setup warning -->
-    <div class="setup-warn hidden" id="setupWarn">
-      ⚠️ <strong>Supabase not configured yet.</strong> Open <code>admin.html</code> and replace
-      <code>REPLACE_SUPABASE_URL</code> and <code>REPLACE_SUPABASE_ANON_KEY</code> at the top of the script.
-      See the setup guide below or ask your developer.
-    </div>
-
-    <!-- Stats -->
+   <!-- Stats -->
     <div class="stats-grid">
       <div class="stat-card">
         <div class="stat-label">Today's Orders</div>
