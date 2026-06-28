@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Ishwar Kitchen</title>
+<link rel="icon" href="logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0D0B09;--bg2:#131009;--bg3:#1a1612;
+  --card:rgba(255,255,255,0.04);--card2:rgba(255,255,255,0.07);
+  --gold:#D4AF37;--gold-light:#f0cc55;
+  --text:#F5F0E8;--muted:rgba(245,240,232,0.5);--muted2:rgba(245,240,232,0.25);
+  --border:rgba(212,175,55,0.15);--border2:rgba(255,255,255,0.08);
+  --red:#e23744;--green:#25D366;--blue:#3395ff;--orange:#FF6B35;
+  --radius:14px;
+}
+html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'Inter',sans-serif}
+
+/* ── LOGIN ── */
+#loginWrap{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(ellipse at 50% 0%,rgba(212,175,55,0.1) 0%,transparent 65%),var(--bg);
+  padding:1rem;
+}
+.login-card{
+  background:var(--card);border:1px solid var(--border);border-radius:20px;
+  padding:2.5rem 2rem;width:100%;max-width:380px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.5);text-align:center;
+}
+.login-logo{width:72px;height:72px;border-radius:50%;border:2px solid var(--gold);margin:0 auto 1.2rem;display:block;object-fit:cover}
+.login-title{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--gold);margin-bottom:.3rem}
+.login-sub{font-size:.8rem;color:var(--muted);margin-bottom:1.8rem}
+.login-label{display:block;text-align:left;font-size:.72rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem}
+.login-input{
+  width:100%;padding:12px 16px;background:rgba(255,255,255,0.06);
+  border:1px solid var(--border2);border-radius:10px;color:var(--text);
+  font-size:.95rem;font-family:'Inter',sans-serif;outline:none;transition:.2s;
+}
+.login-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(212,175,55,0.12)}
+.login-btn{
+  width:100%;margin-top:1.2rem;padding:13px;
+  background:linear-gradient(135deg,var(--gold),#b8922a);color:#0D0B09;
+  font-size:.95rem;font-weight:700;border:none;border-radius:10px;cursor:pointer;
+  font-family:'Inter',sans-serif;letter-spacing:.03em;transition:.2s;
+}
+.login-btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.login-err{color:var(--red);font-size:.8rem;margin-top:.8rem;display:none}
+
+/* ── DASHBOARD ── */
+#dashboard{display:none;min-height:100vh;flex-direction:column}
+
+.admin-header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(13,11,9,0.92);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);padding:.85rem 1.5rem;
+  display:flex;align-items:center;gap:.9rem;
+}
+.header-logo{width:38px;height:38px;border-radius:50%;border:1.5px solid var(--gold);object-fit:cover}
+.header-title{font-family:'Playfair Display',serif;font-size:1rem;color:var(--gold);flex:1}
+.header-title span{display:block;font-family:'Inter',sans-serif;font-size:.68rem;color:var(--muted);font-style:normal;font-weight:400}
+.live-badge{
+  display:flex;align-items:center;gap:5px;font-size:.7rem;font-weight:600;color:var(--green);
+  background:rgba(37,211,102,0.1);border:1px solid rgba(37,211,102,0.2);
+  padding:4px 10px;border-radius:20px;
+}
+.live-dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:blink 1.5s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.logout-btn{
+  padding:7px 14px;background:rgba(226,55,68,0.08);border:1px solid rgba(226,55,68,0.2);
+  color:var(--red);border-radius:8px;font-size:.73rem;font-weight:600;cursor:pointer;
+  font-family:'Inter',sans-serif;transition:.2s;
+}
+.logout-btn:hover{background:rgba(226,55,68,0.18)}
+
+.admin-main{padding:1.2rem 1.2rem 3rem;flex:1;max-width:900px;margin:0 auto;width:100%}
+
+/* stats */
+.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.7rem;margin-bottom:1.1rem}
+@media(min-width:600px){.stats-grid{grid-template-columns:repeat(4,1fr)}}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:.9rem 1rem}
+.stat-label{font-size:.68rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.25rem}
+.stat-value{font-size:1.7rem;font-weight:800}
+.stat-value.gold{color:var(--gold)}
+.stat-value.green{color:var(--green)}
+.stat-value.orange{color:var(--orange)}
+.stat-sub{font-size:.68rem;color:var(--muted);margin-top:.15rem}
+
+/* controls */
+.controls{display:flex;flex-direction:column;gap:.65rem;margin-bottom:.9rem}
+.filter-tabs{display:flex;gap:.35rem;flex-wrap:wrap}
+.tab{
+  padding:6px 13px;border-radius:20px;font-size:.76rem;font-weight:600;
+  border:1px solid var(--border2);background:transparent;color:var(--muted);
+  cursor:pointer;font-family:'Inter',sans-serif;transition:.2s;
+}
+.tab:hover{border-color:var(--gold);color:var(--text)}
+.tab.active{background:var(--gold);color:#0D0B09;border-color:var(--gold)}
+.tab .cnt{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:17px;height:17px;border-radius:20px;font-size:.62rem;
+  background:rgba(0,0,0,0.2);margin-left:4px;padding:0 3px;
+}
+.search-row{display:flex;gap:.55rem}
+.search-input{
+  flex:1;padding:10px 14px;background:var(--card);border:1px solid var(--border2);
+  border-radius:10px;color:var(--text);font-size:.84rem;font-family:'Inter',sans-serif;outline:none;transition:.2s;
+}
+.search-input:focus{border-color:var(--gold)}
+.search-input::placeholder{color:var(--muted2)}
+.refresh-btn{
+  padding:10px 14px;background:var(--card);border:1px solid var(--border);
+  border-radius:10px;color:var(--gold);cursor:pointer;font-size:.82rem;
+  font-family:'Inter',sans-serif;font-weight:600;transition:.2s;white-space:nowrap;
+}
+.refresh-btn:hover{background:var(--card2)}
+
+/* setup warning */
+.setup-warn{
+  background:rgba(226,55,68,0.07);border:1px solid rgba(226,55,68,0.2);
+  border-radius:12px;padding:1rem 1.1rem;font-size:.8rem;color:#ff7b85;
+  margin-bottom:1rem;line-height:1.65;
+}
+.setup-warn code{background:rgba(255,255,255,0.08);padding:1px 5px;border-radius:3px;font-family:monospace;font-size:.78rem}
+.setup-warn strong{color:var(--red)}
+
+/* order cards */
+.orders-empty{text-align:center;padding:3rem 1rem;color:var(--muted)}
+.orders-empty .icon{font-size:2.8rem;margin-bottom:.8rem}
+
+.order-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  margin-bottom:.8rem;overflow:hidden;transition:.3s;
+}
+.order-card.new{border-left:3px solid var(--gold)}
+.order-card.preparing{border-left:3px solid var(--orange)}
+.order-card.ready{border-left:3px solid var(--blue)}
+.order-card.done{border-left:3px solid var(--green);opacity:.65}
+
+.card-header{
+  display:flex;align-items:center;gap:.6rem;padding:.85rem 1.1rem .65rem;
+  border-bottom:1px solid var(--border2);flex-wrap:wrap;
+}
+.order-id{font-weight:700;font-size:.82rem;font-family:'Playfair Display',serif;color:var(--text)}
+.order-time{font-size:.7rem;color:var(--muted);flex:1}
+.status-badge{
+  padding:3px 10px;border-radius:20px;font-size:.68rem;font-weight:700;
+  letter-spacing:.05em;text-transform:uppercase;
+}
+.status-badge.new{background:rgba(212,175,55,0.12);color:var(--gold)}
+.status-badge.preparing{background:rgba(255,107,53,0.12);color:var(--orange)}
+.status-badge.ready{background:rgba(51,149,255,0.12);color:var(--blue)}
+.status-badge.done{background:rgba(37,211,102,0.12);color:var(--green)}
+
+.card-customer{padding:.7rem 1.1rem;border-bottom:1px solid var(--border2)}
+.cust-name{font-weight:600;font-size:.87rem;margin-bottom:.3rem}
+.cust-row{font-size:.77rem;color:var(--muted);display:flex;align-items:center;gap:.4rem;margin:.12rem 0}
+.cust-row a{color:var(--muted);text-decoration:none;transition:.15s}
+.cust-row a:hover{color:var(--gold)}
+
+.card-items{padding:.7rem 1.1rem;border-bottom:1px solid var(--border2)}
+.item-row{display:flex;justify-content:space-between;font-size:.79rem;padding:.18rem 0;color:var(--muted)}
+.item-row strong{color:var(--text);font-weight:600}
+.items-total{
+  display:flex;justify-content:space-between;font-weight:700;font-size:.9rem;
+  padding-top:.5rem;margin-top:.3rem;border-top:1px solid var(--border2);color:var(--text);
+}
+.pay-id{font-size:.68rem;color:var(--muted2);margin-top:.3rem;font-family:monospace;word-break:break-all}
+
+.card-actions{padding:.8rem 1.1rem;display:flex;flex-direction:column;gap:.5rem}
+.action-primary{
+  padding:11px;border-radius:10px;font-size:.83rem;font-weight:700;
+  border:none;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s;width:100%;
+  letter-spacing:.02em;
+}
+.action-primary.start{background:linear-gradient(135deg,var(--orange),#cc4400);color:#fff}
+.action-primary.rdy{background:linear-gradient(135deg,var(--blue),#0b63ce);color:#fff}
+.action-primary.done{background:linear-gradient(135deg,var(--green),#1a9e4d);color:#fff}
+.action-primary:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.action-secondary{display:flex;gap:.5rem}
+.sec-btn{
+  flex:1;padding:9px;border-radius:9px;font-size:.77rem;font-weight:600;
+  border:1px solid var(--border);background:var(--card2);color:var(--text);
+  cursor:pointer;font-family:'Inter',sans-serif;transition:.2s;
+}
+.sec-btn.wa{border-color:rgba(37,211,102,0.25);color:var(--green)}
+.sec-btn.wa:hover{background:rgba(37,211,102,0.1)}
+.sec-btn.em{border-color:rgba(51,149,255,0.25);color:var(--blue)}
+.sec-btn.em:hover{background:rgba(51,149,255,0.1)}
+
+/* toast */
+.admin-toast{
+  position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(90px);
+  background:var(--bg3);border:1px solid var(--border);border-radius:10px;
+  padding:.65rem 1.2rem;font-size:.81rem;font-weight:500;
+  z-index:9999;transition:.3s cubic-bezier(.34,1.56,.64,1);white-space:nowrap;
+  box-shadow:0 8px 30px rgba(0,0,0,0.4);
+}
+.admin-toast.show{transform:translateX(-50%) translateY(0)}
+
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+
+<!-- ── LOGIN SCREEN ── -->
+<div id="loginWrap">
+  <div class="login-card">
+    <img src="logo.png" class="login-logo" alt="Ishwar Kitchen">
+    <h1 class="login-title">Admin Portal</h1>
+    <p class="login-sub">Ishwar Kitchen · Nakodar, Punjab</p>
+    <label class="login-label" for="pwdInput">Admin Password</label>
+    <input type="password" id="pwdInput" class="login-input" placeholder="Enter password" autocomplete="current-password">
+    <button class="login-btn" onclick="doLogin()">Login →</button>
+    <p class="login-err" id="loginErr">❌ Incorrect password. Try again.</p>
+  </div>
+</div>
+
+<!-- ── DASHBOARD ── -->
+<div id="dashboard">
+  <header class="admin-header">
+    <img src="logo.png" class="header-logo" alt="">
+    <div class="header-title">
+      Ishwar Kitchen
+      <span>Admin Dashboard</span>
+    </div>
+    <div class="live-badge"><span class="live-dot"></span>Live</div>
+    <button class="logout-btn" onclick="doLogout()">Logout</button>
+  </header>
+
+  <main class="admin-main">
+
+    <!-- Setup warning -->
+    <div class="setup-warn hidden" id="setupWarn">
+      ⚠️ <strong>Supabase not configured yet.</strong> Open <code>admin.html</code> and replace
+      <code>REPLACE_SUPABASE_URL</code> and <code>REPLACE_SUPABASE_ANON_KEY</code> at the top of the script.
+      See the setup guide below or ask your developer.
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Today's Orders</div>
+        <div class="stat-value gold" id="statOrders">—</div>
+        <div class="stat-sub" id="statLast">Auto-refreshing</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Today's Revenue</div>
+        <div class="stat-value green" id="statRevenue">—</div>
+        <div class="stat-sub">Online payments</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Pending</div>
+        <div class="stat-value orange" id="statPending">—</div>
+        <div class="stat-sub">Need action</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Completed</div>
+        <div class="stat-value" id="statDone">—</div>
+        <div class="stat-sub">Today</div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+      <div class="filter-tabs">
+        <button class="tab active" onclick="setFilter('all',this)">All <span class="cnt" id="cAll">0</span></button>
+        <button class="tab" onclick="setFilter('new',this)">New <span class="cnt" id="cNew">0</span></button>
+        <button class="tab" onclick="setFilter('preparing',this)">Preparing <span class="cnt" id="cPre">0</span></button>
+        <button class="tab" onclick="setFilter('ready',this)">Ready <span class="cnt" id="cRdy">0</span></button>
+        <button class="tab" onclick="setFilter('done',this)">Done <span class="cnt" id="cDone">0</span></button>
+      </div>
+      <div class="search-row">
+        <input type="text" class="search-input" id="searchInput" placeholder="🔍  Search by name, phone, or order ID…" oninput="renderOrders()">
+        <button class="refresh-btn" onclick="fetchOrders(true)">↻ Refresh</button>
+      </div>
+    </div>
+
+    <!-- Orders list -->
+    <div id="ordersContainer">
+      <div class="orders-empty"><div class="icon">🍽️</div><p>Loading orders…</p></div>
+    </div>
+
+  </main>
+</div>
+
+<div class="admin-toast" id="adminToast"></div>
+
+<script>
+// ════════════════════════════════════════════════════════
+//  CONFIG  — fill these in after setup (see guide below)
+// ════════════════════════════════════════════════════════
+const ADMIN_PASSWORD      = 'ishwar2024';            // ← change this
+const SUPABASE_URL        = 'REPLACE_SUPABASE_URL';  // e.g. https://xyz.supabase.co
+const SUPABASE_KEY        = 'REPLACE_SUPABASE_ANON_KEY';
+const RESTAURANT_PHONE    = '918699081813';
+const RESTAURANT_NAME     = 'Ishwar Kitchen, Nakodar';
+
+// EmailJS — fill after emailjs.com setup (optional but recommended)
+const EMAILJS_PUBLIC_KEY  = 'REPLACE_EMAILJS_PUBLIC_KEY';
+const EMAILJS_SERVICE_ID  = 'REPLACE_EMAILJS_SERVICE_ID';
+const EMAILJS_TPL_PREP    = 'REPLACE_TEMPLATE_PREPARING'; // template id
+const EMAILJS_TPL_DONE    = 'REPLACE_TEMPLATE_DONE';      // template id
+
+// ════════════════════════════════════════════════════════
+//  STATE
+// ════════════════════════════════════════════════════════
+let allOrders    = [];
+let activeFilter = 'all';
+let knownIds     = new Set();
+let pollTimer;
+
+// ════════════════════════════════════════════════════════
+//  AUTH
+// ════════════════════════════════════════════════════════
+function doLogin() {
+  const v = document.getElementById('pwdInput').value;
+  if (v === ADMIN_PASSWORD) {
+    sessionStorage.setItem('ik_admin', '1');
+    document.getElementById('loginWrap').style.display = 'none';
+    document.getElementById('dashboard').style.display  = 'flex';
+    document.getElementById('loginErr').style.display   = 'none';
+    initDashboard();
+  } else {
+    document.getElementById('loginErr').style.display = 'block';
+    document.getElementById('pwdInput').value = '';
+  }
+}
+document.getElementById('pwdInput').addEventListener('keydown', e => { if (e.key==='Enter') doLogin(); });
+
+function doLogout() {
+  sessionStorage.removeItem('ik_admin');
+  clearInterval(pollTimer);
+  document.getElementById('loginWrap').style.display = 'flex';
+  document.getElementById('dashboard').style.display  = 'none';
+}
+
+if (sessionStorage.getItem('ik_admin')) {
+  document.getElementById('loginWrap').style.display = 'none';
+  document.getElementById('dashboard').style.display  = 'flex';
+  initDashboard();
+}
+
+// ════════════════════════════════════════════════════════
+//  SUPABASE HELPERS
+// ════════════════════════════════════════════════════════
+function isConfigured() {
+  return SUPABASE_URL !== 'REPLACE_SUPABASE_URL' && SUPABASE_KEY !== 'REPLACE_SUPABASE_ANON_KEY';
+}
+
+async function fetchOrders(showFeedback = false) {
+  if (!isConfigured()) {
+    document.getElementById('setupWarn').classList.remove('hidden');
+    document.getElementById('ordersContainer').innerHTML =
+      '<div class="orders-empty"><div class="icon">⚙️</div><p>Configure Supabase to see orders here.</p></div>';
+    updateStats([]);
+    return;
+  }
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/orders?select=*&order=created_at.desc&limit=200`, {
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+    });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+
+    // New order detection
+    if (knownIds.size > 0) {
+      data.forEach(o => {
+        if (!knownIds.has(o.id)) {
+          playChime();
+          showToast('🔔 New order: ' + o.id);
+          browserNotify('New Order Received!', `${o.customer_name} — ₹${o.total}`);
+        }
+      });
+    }
+    data.forEach(o => knownIds.add(o.id));
+
+    allOrders = data;
+    updateStats(data);
+    renderOrders();
+    if (showFeedback) showToast('✅ Orders refreshed');
+    document.getElementById('statLast').textContent = 'Last refresh: just now';
+  } catch (e) {
+    showToast('⚠️ Could not load orders — check connection');
+    console.error(e);
+  }
+}
+
+async function patchStatus(orderId, status) {
+  if (!isConfigured()) return;
+  await fetch(`${SUPABASE_URL}/rest/v1/orders?id=eq.${orderId}`, {
+    method: 'PATCH',
+    headers: {
+      'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`,
+      'Content-Type': 'application/json', 'Prefer': 'return=minimal'
+    },
+    body: JSON.stringify({ status, updated_at: new Date().toISOString() })
+  });
+  const o = allOrders.find(x => x.id === orderId);
+  if (o) o.status = status;
+  updateStats(allOrders);
+  renderOrders();
+}
+
+// ════════════════════════════════════════════════════════
+//  INIT
+// ════════════════════════════════════════════════════════
+function initDashboard() {
+  if (EMAILJS_PUBLIC_KEY !== 'REPLACE_EMAILJS_PUBLIC_KEY') {
+    emailjs.init(EMAILJS_PUBLIC_KEY);
+  }
+  requestNotifPermission();
+  fetchOrders();
+  pollTimer = setInterval(fetchOrders, 10000); // poll every 10s
+}
+
+// ════════════════════════════════════════════════════════
+//  STATS
+// ════════════════════════════════════════════════════════
+function updateStats(orders) {
+  const today = new Date().toDateString();
+  const todayO = orders.filter(o => new Date(o.created_at).toDateString() === today);
+  const revenue = todayO.reduce((s, o) => s + (o.total || 0), 0);
+  const pending = orders.filter(o => o.status === 'new' || o.status === 'preparing').length;
+  const doneToday = todayO.filter(o => o.status === 'done').length;
+
+  document.getElementById('statOrders').textContent  = todayO.length;
+  document.getElementById('statRevenue').textContent = '₹' + revenue.toLocaleString('en-IN');
+  document.getElementById('statPending').textContent = pending;
+  document.getElementById('statDone').textContent    = doneToday;
+
+  document.getElementById('cAll').textContent  = orders.length;
+  document.getElementById('cNew').textContent  = orders.filter(o=>o.status==='new').length;
+  document.getElementById('cPre').textContent  = orders.filter(o=>o.status==='preparing').length;
+  document.getElementById('cRdy').textContent  = orders.filter(o=>o.status==='ready').length;
+  document.getElementById('cDone').textContent = orders.filter(o=>o.status==='done').length;
+}
+
+// ════════════════════════════════════════════════════════
+//  RENDER
+// ════════════════════════════════════════════════════════
+function setFilter(f, el) {
+  activeFilter = f;
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  renderOrders();
+}
+
+function renderOrders() {
+  const q = (document.getElementById('searchInput').value || '').toLowerCase();
+  let list = allOrders;
+  if (activeFilter !== 'all') list = list.filter(o => o.status === activeFilter);
+  if (q) list = list.filter(o =>
+    (o.customer_name  || '').toLowerCase().includes(q) ||
+    (o.customer_phone || '').includes(q)               ||
+    (o.customer_email || '').toLowerCase().includes(q) ||
+    (o.id             || '').toLowerCase().includes(q)
+  );
+
+  const container = document.getElementById('ordersContainer');
+  if (!list.length) {
+    container.innerHTML = `<div class="orders-empty">
+      <div class="icon">${activeFilter === 'done' ? '✅' : '🍽️'}</div>
+      <p>${allOrders.length === 0 ? 'No orders yet — they'll appear here automatically.' : 'No orders match your filter.'}</p>
+    </div>`;
+    return;
+  }
+  container.innerHTML = list.map(orderCard).join('');
+}
+
+function orderCard(o) {
+  const items = typeof o.items === 'string' ? JSON.parse(o.items) : (o.items || []);
+  const t = new Date(o.created_at);
+  const timeStr = t.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+
+  const statusLabel = { new: 'New Order', preparing: 'Preparing', ready: 'Ready for Pickup', done: 'Done' };
+
+  const actionBtn = o.status === 'new'
+    ? `<button class="action-primary start" onclick="handleStatus('${o.id}','preparing')">▶ Start Preparing</button>`
+    : o.status === 'preparing'
+    ? `<button class="action-primary rdy" onclick="handleStatus('${o.id}','ready')">✔ Mark as Ready</button>`
+    : o.status === 'ready'
+    ? `<button class="action-primary done" onclick="handleStatus('${o.id}','done')">✅ Mark as Done / Delivered</button>`
+    : `<div style="font-size:.75rem;color:var(--green);text-align:center;padding:.4rem">✅ Order Complete</div>`;
+
+  const itemsHtml = items.map(i =>
+    `<div class="item-row"><span>${i.name} × ${i.qty}</span><strong>₹${i.price * i.qty}</strong></div>`
+  ).join('');
+
+  return `
+<div class="order-card ${o.status}" id="card-${o.id}">
+  <div class="card-header">
+    <span class="order-id">${o.id}</span>
+    <span class="order-time">⏰ ${timeStr} · ${timeAgo(t)}</span>
+    <span class="status-badge ${o.status}">${statusLabel[o.status] || o.status}</span>
+  </div>
+  <div class="card-customer">
+    <div class="cust-name">👤 ${o.customer_name || '—'}</div>
+    <div class="cust-row">📞 <a href="tel:+${o.customer_phone}">${o.customer_phone || '—'}</a></div>
+    <div class="cust-row">✉️ <a href="mailto:${o.customer_email}">${o.customer_email || '—'}</a></div>
+  </div>
+  <div class="card-items">
+    ${itemsHtml}
+    <div class="items-total"><span>Total</span><span>₹${o.total}</span></div>
+    <div class="pay-id">🔑 ${o.payment_id || 'WhatsApp order (no payment ID)'}</div>
+  </div>
+  <div class="card-actions">
+    ${actionBtn}
+    <div class="action-secondary">
+      <button class="sec-btn wa" onclick="waNotify('${o.id}')">💬 WhatsApp</button>
+      <button class="sec-btn em" onclick="emailNotify('${o.id}')">📧 Email</button>
+    </div>
+  </div>
+</div>`;
+}
+
+// ════════════════════════════════════════════════════════
+//  STATUS CHANGE + NOTIFICATIONS
+// ════════════════════════════════════════════════════════
+async function handleStatus(orderId, newStatus) {
+  await patchStatus(orderId, newStatus);
+  const o = allOrders.find(x => x.id === orderId);
+  if (!o) return;
+
+  const messages = {
+    preparing: `🍳 Hi ${o.customer_name}! Great news — we've started preparing your order at ${RESTAURANT_NAME}.\n\nOrder ID: ${o.id}\nTotal Paid: ₹${o.total}\n\nEstimated time: 20–30 mins. We'll notify you when ready! 🙏`,
+    ready:     `✅ Hi ${o.customer_name}! Your order is READY at ${RESTAURANT_NAME}! 🎉\n\nOrder ID: ${o.id}\nTotal: ₹${o.total}\n\nPlease collect it from the counter. Thank you! 🙏`,
+    done:      `🙏 Hi ${o.customer_name}! Your order from ${RESTAURANT_NAME} is complete. We hope you enjoyed the meal! ⭐\n\nVisit us again — Ishwar Kitchen, Nakodar 🌟`
+  };
+
+  const subjects = {
+    preparing: `Your order is being prepared — ${RESTAURANT_NAME}`,
+    ready:     `Your order is READY — ${RESTAURANT_NAME}`,
+    done:      `Thank you for your order! — ${RESTAURANT_NAME}`
+  };
+
+  const msg = messages[newStatus];
+  if (!msg) return;
+
+  // WhatsApp to customer
+  if (o.customer_phone) {
+    const ph = String(o.customer_phone).replace(/\D/g, '');
+    const waNum = ph.startsWith('91') ? ph : '91' + ph;
+    window.open(`https://wa.me/${waNum}?text=${encodeURIComponent(msg)}`, '_blank');
+  }
+
+  // Auto email via EmailJS
+  if (o.customer_email) {
+    tryEmailJS(o, subjects[newStatus], msg, newStatus);
+  }
+
+  const labels = { preparing: 'Preparing', ready: 'Ready', done: 'Done' };
+  showToast(`✅ Order ${orderId} → ${labels[newStatus]}`);
+}
+
+// Manual WhatsApp button (order summary)
+function waNotify(orderId) {
+  const o = allOrders.find(x => x.id === orderId);
+  if (!o) return;
+  const items = typeof o.items === 'string' ? JSON.parse(o.items) : (o.items || []);
+  let msg = `Hi ${o.customer_name}! 👋\n\nHere's your order summary from ${RESTAURANT_NAME}:\n\n`;
+  items.forEach(i => { msg += `• ${i.name} × ${i.qty} = ₹${i.price * i.qty}\n`; });
+  msg += `\nTotal: ₹${o.total}\nStatus: ${o.status.toUpperCase()}\n\nThank you for your order! 🙏`;
+  const ph = String(o.customer_phone || '').replace(/\D/g, '');
+  const waNum = ph.startsWith('91') ? ph : '91' + ph;
+  window.open(`https://wa.me/${waNum}?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+// Manual email button (opens default mail client)
+function emailNotify(orderId) {
+  const o = allOrders.find(x => x.id === orderId);
+  if (!o || !o.customer_email) { showToast('⚠️ No email address on this order'); return; }
+  const items = typeof o.items === 'string' ? JSON.parse(o.items) : (o.items || []);
+  let body = `Hi ${o.customer_name},\n\nYour order from ${RESTAURANT_NAME}:\n\n`;
+  items.forEach(i => { body += `• ${i.name} × ${i.qty} = ₹${i.price * i.qty}\n`; });
+  body += `\nTotal: ₹${o.total}\nPayment ID: ${o.payment_id || 'N/A'}\nStatus: ${o.status}\n\nThank you!`;
+  window.open(`mailto:${o.customer_email}?subject=Your Order — ${RESTAURANT_NAME}&body=${encodeURIComponent(body)}`);
+}
+
+async function tryEmailJS(o, subject, bodyText, status) {
+  if (EMAILJS_PUBLIC_KEY === 'REPLACE_EMAILJS_PUBLIC_KEY') return;
+  const items = typeof o.items === 'string' ? JSON.parse(o.items) : (o.items || []);
+  const itemsText = items.map(i => `${i.name} × ${i.qty} — ₹${i.price * i.qty}`).join('\n');
+  const tpl = status === 'done' ? EMAILJS_TPL_DONE : EMAILJS_TPL_PREP;
+  try {
+    await emailjs.send(EMAILJS_SERVICE_ID, tpl, {
+      to_name:    o.customer_name,
+      to_email:   o.customer_email,
+      order_id:   o.id,
+      items:      itemsText,
+      total:      '₹' + o.total,
+      payment_id: o.payment_id || 'N/A',
+      restaurant: RESTAURANT_NAME,
+      message:    bodyText
+    });
+  } catch (e) { console.error('EmailJS:', e); }
+}
+
+// ════════════════════════════════════════════════════════
+//  HELPERS
+// ════════════════════════════════════════════════════════
+function timeAgo(d) {
+  const s = Math.floor((Date.now() - d) / 1000);
+  if (s < 60)   return 'just now';
+  if (s < 3600) return Math.floor(s / 60) + 'm ago';
+  if (s < 86400) return Math.floor(s / 3600) + 'h ago';
+  return d.toLocaleDateString('en-IN');
+}
+
+function showToast(msg) {
+  const el = document.getElementById('adminToast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 3000);
+}
+
+function playChime() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    [[523,.0],[659,.15],[784,.3]].forEach(([f,t]) => {
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.connect(g); g.connect(ctx.destination);
+      o.frequency.value = f;
+      g.gain.setValueAtTime(.35, ctx.currentTime + t);
+      g.gain.exponentialRampToValueAtTime(.01, ctx.currentTime + t + .35);
+      o.start(ctx.currentTime + t); o.stop(ctx.currentTime + t + .35);
+    });
+  } catch(e) {}
+}
+
+function requestNotifPermission() {
+  if ('Notification' in window && Notification.permission === 'default') {
+    Notification.requestPermission();
+  }
+}
+
+function browserNotify(title, body) {
+  if ('Notification' in window && Notification.permission === 'granted') {
+    new Notification(title, { body, icon: 'logo.png' });
+  }
+}
+</script>
+</body>
+</html>
