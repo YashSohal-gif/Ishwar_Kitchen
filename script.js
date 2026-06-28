@@ -154,6 +154,29 @@ initTilt();
 // ══════════ // ══════════
 let cart = [];
 
+// ── Supabase config (same values as admin.html) ──
+const SUPABASE_URL = 'https://myusocxvkspfjlzhfncz.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_Mi004oFramS3Qcui4BG1Wg_18bGKhzW';
+
+async function saveOrderToSupabase(order) {
+  if (SUPABASE_URL === 'https://myusocxvkspfjlzhfncz.supabase.co') return; // not configured yet
+  try {
+    await fetch(`${SUPABASE_URL}/rest/v1/orders`, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify(order)
+    });
+  } catch (e) {
+    console.error('Order save failed:', e);
+    // WhatsApp notification already sent — order is not lost
+  }
+}
+
 function addToCart(name, price, img) {
   const ex = cart.find(i => i.name === name);
   if (ex) { ex.qty++; } else { cart.push({ name, price, img, qty: 1 }); }
@@ -207,39 +230,123 @@ function orderWhatsApp() {
   toggleCart();
 }
 function orderSwiggy() {
-  window.open('https://www.swiggy.com/search?query=Ishwar+Kitchen+Nakodar', '_blank');
+  if (!cart.length) { showToast('🛒 Add items first!'); return; }
+  copyClip(buildOrderText()); showToast('📋 Copied! Paste in Swiggy order notes.');
+  setTimeout(() => window.open('https://www.swiggy.com/search?query=Ishwar+Kitchen+Nakodar', '_blank'), 1200);
 }
 function orderZomato() {
-  window.open('https://www.zomato.com/nakodar/ishwar-kitchen-nakodar-locality/order', '_blank');
+  if (!cart.length) { showToast('🛒 Add items first!'); return; }
+  copyClip(buildOrderText()); showToast('📋 Copied! Paste in Zomato order notes.');
+  setTimeout(() => window.open('https://www.zomato.com/nakodar/ishwar-kitchen-nakodar-locality/order', '_blank'), 1200);
 }
 
 // ══════════ // RAZORPAY PAYMENT ══════════
-// IMPORTANT: replace with the restaurant's real Razorpay Key ID from
-// dashboard.razorpay.com  → Settings → API Keys. Use rzp_test_... while testing,
-// then swap to rzp_live_... once the restaurant's account is activated.
+// Replace with restaurant's real Key ID from dashboard.razorpay.com → Settings → API Keys
 const RAZORPAY_KEY_ID = 'rzp_test_T6xwQN9bGxnlQS';
 
 function payRazorpay() {
   if (!cart.length) { showToast('🛒 Add items first!'); return; }
-  const amount = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  showCheckoutModal();
+}
+
+function showCheckoutModal() {
+  // Inject modal HTML once
+  if (!document.getElementById('ckModal')) {
+    const el = document.createElement('div');
+    el.id = 'ckModal';
+    el.innerHTML = `
+<div class="ck-overlay" id="ckOverlay" onclick="closeCheckoutModal()"></div>
+<div class="ck-drawer" id="ckDrawer">
+  <div class="ck-head">
+    <span>Complete Your Order</span>
+    <button class="ck-close" onclick="closeCheckoutModal()">✕</button>
+  </div>
+  <div class="ck-body">
+    <div class="ck-summary" id="ckSummary"></div>
+    <div class="ck-divider"></div>
+    <label class="ck-label">Your Name *</label>
+    <input class="ck-input" type="text" id="ckName" placeholder="Rajesh Kumar" autocomplete="name">
+    <label class="ck-label">Phone Number *</label>
+    <input class="ck-input" type="tel" id="ckPhone" placeholder="+91 98765 43210" autocomplete="tel">
+    <label class="ck-label">Email Address *</label>
+    <input class="ck-input" type="email" id="ckEmail" placeholder="you@email.com" autocomplete="email">
+    <p class="ck-note">📦 We'll send your order confirmation on WhatsApp & email.</p>
+  </div>
+  <div class="ck-foot">
+    <button class="ck-cancel" onclick="closeCheckoutModal()">Cancel</button>
+    <button class="ck-pay" onclick="submitCheckoutModal()">💳 Proceed to Pay</button>
+  </div>
+</div>`;
+    document.body.appendChild(el);
+  }
+
+  // Fill summary
+  const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  document.getElementById('ckSummary').innerHTML =
+    cart.map(i => `<div class="ck-item"><span>${i.name} × ${i.qty}</span><span>₹${i.price * i.qty}</span></div>`).join('') +
+    `<div class="ck-item ck-total"><span>Total</span><span>₹${total}</span></div>`;
+
+  document.getElementById('ckOverlay').classList.add('open');
+  document.getElementById('ckDrawer').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('ckName').focus();
+}
+
+function closeCheckoutModal() {
+  document.getElementById('ckOverlay').classList.remove('open');
+  document.getElementById('ckDrawer').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function submitCheckoutModal() {
+  const name  = (document.getElementById('ckName').value  || '').trim();
+  const phone = (document.getElementById('ckPhone').value || '').trim();
+  const email = (document.getElementById('ckEmail').value || '').trim();
+  if (!name)  { document.getElementById('ckName').focus();  showToast('⚠️ Please enter your name');   return; }
+  if (!phone) { document.getElementById('ckPhone').focus(); showToast('⚠️ Please enter your phone');  return; }
+  if (!email) { document.getElementById('ckEmail').focus(); showToast('⚠️ Please enter your email');  return; }
+  closeCheckoutModal();
+  openRazorpay(name, phone, email);
+}
+
+async function openRazorpay(customerName, customerPhone, customerEmail) {
+  const amount  = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  const orderId = 'IK-' + Date.now();
+  const cartSnap = JSON.parse(JSON.stringify(cart)); // snapshot before clearing
 
   const options = {
     key: RAZORPAY_KEY_ID,
-    amount: amount * 100,              // Razorpay expects the amount in paise
+    amount: amount * 100,
     currency: 'INR',
     name: 'Ishwar Kitchen, Nakodar',
     description: 'Food order',
     image: 'logo.png',
-    handler: function (response) {
-      // Payment succeeded. Notify the kitchen on WhatsApp with the order + payment id.
+    prefill: { name: customerName, contact: customerPhone, email: customerEmail },
+    handler: async function (response) {
+      const paymentId = response.razorpay_payment_id;
+
+      // 1. Save to Supabase (admin portal picks it up in real-time)
+      await saveOrderToSupabase({
+        id: orderId,
+        customer_name:  customerName,
+        customer_phone: customerPhone,
+        customer_email: customerEmail,
+        items:  cartSnap,
+        total:  amount,
+        payment_id: paymentId,
+        status: 'new'
+      });
+
+      // 2. WhatsApp to kitchen as backup
       const msg = buildOrderText() +
-        `\n\n✅ *PAID online* — Payment ID: ${response.razorpay_payment_id}`;
+        `\n\nCustomer: ${customerName}\nPhone: ${customerPhone}\nEmail: ${customerEmail}` +
+        `\n\n✅ *PAID online* — Payment ID: ${paymentId}`;
       window.open(`https://wa.me/918699081813?text=${encodeURIComponent(msg)}`, '_blank');
+
       cart = []; renderCart();
-      showToast('✅ Payment successful! Order sent to the kitchen.');
+      showToast('✅ Order placed! We\'ll start preparing shortly.');
     },
-    prefill: {},                       // Razorpay will ask the customer for name/phone
-    theme: { color: '#e23744' },
+    theme: { color: '#D4AF37' },
     modal: { ondismiss: function () { showToast('Payment cancelled.'); } }
   };
 
@@ -997,4 +1104,3 @@ window.addEventListener('resize', () => {
     globeCanvas.width = globeW;
   }
 });
-
