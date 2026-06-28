@@ -572,15 +572,15 @@
     <span class="checkout-label">Order directly from us:</span>
     <div class="checkout-btns">
       <button class="checkout-btn pay-now" onclick="payRazorpay()">💳 Pay Now &amp; Order</button>
-      <button class="checkout-btn whatsapp" onclick="orderWhatsApp()">💬 Order via WhatsApp</button>
+      <button class="checkout-btn whatsapp" onclick="orderWhatsApp()"><img src="Logo/whatsapp.jpg" alt="WhatsApp" style="width:22px;height:22px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:7px;"> Order via WhatsApp</button>
       <button class="checkout-btn call-order" onclick="window.location.href='tel:+918699081813'">📞 Call to Order: +91 8699081813</button>
     </div>
     <span class="checkout-label" style="margin-top:14px">Or find us on delivery apps:</span>
     <div class="checkout-btns">
-      <button class="checkout-btn swiggy" onclick="orderSwiggy()">🟠 View on Swiggy</button>
-      <button class="checkout-btn zomato" onclick="orderZomato()">🔴 View on Zomato</button>
+      <button class="checkout-btn swiggy" onclick="orderSwiggy()"><img src="Logo/swiggy.png" alt="Swiggy" style="width:22px;height:22px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:7px;"> Order via Swiggy + Copy List</button>
+      <button class="checkout-btn zomato" onclick="orderZomato()"><img src="Logo/zomato.jpg" alt="Zomato" style="width:22px;height:22px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:7px;"> Order via Zomato + Copy List</button>
     </div>
-    <div class="cart-note">ℹ️ <strong>Swiggy/Zomato:</strong> These open the restaurant's page on the app, where you re-select items there. To send your exact cart in one tap, use <strong>Pay Now</strong> or <strong>WhatsApp</strong> above.</div>
+    <div class="cart-note">ℹ️ <strong>Tip:</strong> Use <strong>Pay Now</strong> or <strong>WhatsApp</strong> to send your exact cart in one tap. Swiggy/Zomato copies your list so you can paste it in their app.</div>
   </div>
 </div>
 
@@ -866,7 +866,7 @@
 <!-- ══════════ FLOATING BUTTONS ══════════ -->
 <div class="floating-btns">
   <a href="tel:+918699081813" class="float-btn call-f" title="Call"><span class="tooltip">📞 +91 8699081813</span>📞</a>
-  <a href="https://wa.me/918699081813?text=Hello%20Ishwar%20Kitchen!" target="_blank" class="float-btn wa-f" title="WhatsApp"><span class="tooltip">💬 WhatsApp Order</span>💬</a>
+  <a href="https://wa.me/918699081813?text=Hello%20Ishwar%20Kitchen!" target="_blank" class="float-btn wa-f" title="WhatsApp"><span class="tooltip">💬 WhatsApp Order</span><img src="Logo/whatsapp.jpg" alt="WhatsApp" style="width:30px;height:30px;border-radius:50%;object-fit:cover;"/></a>
   <button class="float-btn top-f" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Top"><span class="tooltip">↑ Back to Top</span>↑</button>
 </div>
 
@@ -876,5 +876,3 @@
 <script src="script.js"></script>
 </body>
 </html>
-
-
