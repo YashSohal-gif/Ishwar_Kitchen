@@ -150,38 +150,54 @@ function initTilt() {
 initTilt();
 
 // ══════════ // ══════════
-// ══════════ // CART ══════════
+// ══════════ // ORDER PANEL & MENU IMAGES → PETPOOJA ══════════
 // ══════════ // ══════════
-let cart = [];
 
-// ── Supabase config (same values as admin.html) ──
-const SUPABASE_URL = 'https://myusocxvkspfjlzhfncz.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_Mi004oFramS3Qcui4BG1Wg_18bGKhzW';
+// ⬇ Paste your PetPooja URL here once you get it
+const PETPOOJA_URL = 'REPLACE_WITH_PETPOOJA_URL'; // e.g. https://order.petpooja.com/ishwar-kitchen
 
-async function saveOrderToSupabase(order) {
-  if (SUPABASE_URL === 'https://myusocxvkspfjlzhfncz.supabase.co') return; // not configured yet
-  try {
-    await fetch(`${SUPABASE_URL}/rest/v1/orders`, {
-      method: 'POST',
-      headers: {
-        'apikey': SUPABASE_KEY,
-        'Authorization': `Bearer ${SUPABASE_KEY}`,
-        'Content-Type': 'application/json',
-        'Prefer': 'return=minimal'
-      },
-      body: JSON.stringify(order)
+// Make every menu card image open PetPooja
+function initMenuImageLinks() {
+  document.querySelectorAll('.menu-card-img-wrap').forEach(wrap => {
+    if (wrap._pp) return;
+    wrap._pp = true;
+    wrap.addEventListener('click', () => {
+      if (PETPOOJA_URL === 'REPLACE_WITH_PETPOOJA_URL') {
+        showToast('🍽️ PetPooja link coming soon!');
+      } else {
+        window.open(PETPOOJA_URL, '_blank');
+      }
     });
-  } catch (e) {
-    console.error('Order save failed:', e);
-    // WhatsApp notification already sent — order is not lost
-  }
+  });
 }
+initMenuImageLinks();
 
-function addToCart(name, price, img) {
-  const ex = cart.find(i => i.name === name);
-  if (ex) { ex.qty++; } else { cart.push({ name, price, img, qty: 1 }); }
-  renderCart(); showToast('✅ ' + name + ' added!');
-  if (!document.getElementById('cartDrawer').classList.contains('open')) toggleCart();
+// Re-run when tabs switch (new cards become visible)
+document.querySelectorAll('.menu-tab').forEach(tab => {
+  tab.addEventListener('click', () => setTimeout(initMenuImageLinks, 80));
+});
+
+// Update PetPooja button href dynamically
+function syncPetpoojaLinks() {
+  document.querySelectorAll('[id="petpoojaMainBtn"], .petpooja-link-btn').forEach(el => {
+    if (PETPOOJA_URL !== 'REPLACE_WITH_PETPOOJA_URL') el.href = PETPOOJA_URL;
+  });
+}
+syncPetpoojaLinks();
+
+// Toggle order panel sidebar (repurposed cart panel)
+let cart = []; // kept so existing code doesn't break
+function renderCart() {} // no-op — cart display removed
+function addToCart() {}  // no-op — images now open PetPooja directly
+function buildOrderText() { return 'Hello Ishwar Kitchen! I want to place an order.'; }
+function orderWhatsApp() {
+  window.open('https://wa.me/918699081813?text=' + encodeURIComponent(buildOrderText()), '_blank');
+}
+function orderSwiggy() {
+  window.open('https://www.swiggy.com/search?query=Ishwar+Kitchen+Nakodar', '_blank');
+}
+function orderZomato() {
+  window.open('https://www.zomato.com/nakodar/ishwar-kitchen-nakodar-locality/order', '_blank');
 }
 
 function renderCart() {
@@ -240,11 +256,9 @@ function orderZomato() {
   setTimeout(() => window.open('https://www.zomato.com/nakodar/ishwar-kitchen-nakodar-locality/order', '_blank'), 1200);
 }
 
-// ══════════ // RAZORPAY PAYMENT ══════════
-// Replace with restaurant's real Key ID from dashboard.razorpay.com → Settings → API Keys
-const RAZORPAY_KEY_ID = 'rzp_test_T6xwQN9bGxnlQS';
+// ══════════ // PETPOOJA ORDER ══════════
 
-function payRazorpay() {
+function openOrderModal() {
   if (!cart.length) { showToast('🛒 Add items first!'); return; }
   showCheckoutModal();
 }
@@ -274,11 +288,11 @@ function showCheckoutModal() {
     <label class="ck-label" for="ckEmail">Email Address *</label>
     <input class="ck-input" type="email" id="ckEmail" placeholder="you@email.com" autocomplete="email">
   </div>
-  <p class="ck-note">📦 Confirmation sent on WhatsApp & email after payment.</p>
+  <p class="ck-note">🍽️ You'll be taken to our PetPooja menu page to complete your order.</p>
   <div class="swipe-btn" id="swipeBtn">
     <div class="swipe-fill" id="swipeFill"></div>
     <div class="swipe-thumb" id="swipeThumb">➜</div>
-    <span class="swipe-label">SWIPE TO PAY &nbsp;→</span>
+    <span class="swipe-label">SWIPE TO ORDER &nbsp;→</span>
   </div>
   <button class="ck-cancel" onclick="closeCheckoutModal()" style="width:100%;margin-top:.6rem">Cancel</button>
 </div>`;
@@ -360,55 +374,26 @@ function submitCheckoutModal() {
   if (!phone) { document.getElementById('ckPhone').focus(); showToast('⚠️ Please enter your phone');  return; }
   if (!email) { document.getElementById('ckEmail').focus(); showToast('⚠️ Please enter your email');  return; }
   closeCheckoutModal();
-  openRazorpay(name, phone, email);
+  redirectToPetPooja(name, phone, email);
 }
 
-async function openRazorpay(customerName, customerPhone, customerEmail) {
-  const amount  = cart.reduce((s, i) => s + i.price * i.qty, 0);
-  const orderId = 'IK-' + Date.now();
-  const cartSnap = JSON.parse(JSON.stringify(cart)); // snapshot before clearing
+function redirectToPetPooja(customerName, customerPhone, customerEmail) {
+  const amount = cart.reduce((s, i) => s + i.price * i.qty, 0);
 
-  const options = {
-    key: RAZORPAY_KEY_ID,
-    amount: amount * 100,
-    currency: 'INR',
-    name: 'Ishwar Kitchen, Nakodar',
-    description: 'Food order',
-    image: 'logo.png',
-    prefill: { name: customerName, contact: customerPhone, email: customerEmail },
-    handler: async function (response) {
-      const paymentId = response.razorpay_payment_id;
+  // Send order summary to WhatsApp as backup notification to kitchen
+  const msg = buildOrderText() +
+    `\n\nCustomer: ${customerName}\nPhone: ${customerPhone}\nEmail: ${customerEmail}` +
+    `\n\n🍽️ Redirected to PetPooja to complete order. Total: ₹${amount}`;
+  window.open(`https://wa.me/918699081813?text=${encodeURIComponent(msg)}`, '_blank');
 
-      // 1. Save to Supabase (admin portal picks it up in real-time)
-      await saveOrderToSupabase({
-        id: orderId,
-        customer_name:  customerName,
-        customer_phone: customerPhone,
-        customer_email: customerEmail,
-        items:  cartSnap,
-        total:  amount,
-        payment_id: paymentId,
-        status: 'new'
-      });
-
-      // 2. WhatsApp to kitchen as backup
-      const msg = buildOrderText() +
-        `\n\nCustomer: ${customerName}\nPhone: ${customerPhone}\nEmail: ${customerEmail}` +
-        `\n\n✅ *PAID online* — Payment ID: ${paymentId}`;
-      window.open(`https://wa.me/918699081813?text=${encodeURIComponent(msg)}`, '_blank');
-
-      cart = []; renderCart();
-      showToast('✅ Order placed! We\'ll start preparing shortly.');
-    },
-    theme: { color: '#D4AF37' },
-    modal: { ondismiss: function () { showToast('Payment cancelled.'); } }
-  };
-
-  if (typeof Razorpay === 'undefined') {
-    showToast('⚠️ Payment library not loaded. Check your internet.');
+  // Open PetPooja ordering page
+  if (PETPOOJA_URL === 'REPLACE_WITH_PETPOOJA_URL') {
+    showToast('⚠️ PetPooja URL not set yet. WhatsApp order sent!');
     return;
   }
-  new Razorpay(options).open();
+  setTimeout(() => window.open(PETPOOJA_URL, '_blank'), 800);
+  cart = []; renderCart();
+  showToast('✅ Redirecting to PetPooja menu...');
 }
 function copyClip(text) {
   navigator.clipboard ? navigator.clipboard.writeText(text).catch(() => legacyCopy(text)) : legacyCopy(text);
@@ -504,15 +489,16 @@ function _showFmenuItems(cat) {
   document.getElementById('fmenuItemsPage').classList.remove('hidden');
   document.getElementById('fmenuDrawer').querySelector('.fmenu-title').textContent = cat.label;
   const grid = document.getElementById('fmenuItemsGrid');
+  const pp = PETPOOJA_URL !== 'REPLACE_WITH_PETPOOJA_URL' ? PETPOOJA_URL : '#';
   grid.innerHTML = cat.items.map(item => `
-    <div class="fmenu-item-card">
+    <div class="fmenu-item-card" onclick="window.open('${pp}','_blank')" style="cursor:pointer">
       <img class="fmenu-item-img" src="${item.img}" alt="${item.name}" loading="lazy" onerror="this.style.display='none'">
       <div class="fmenu-item-info">
         <div class="fmenu-item-name">${item.name}</div>
         <div class="fmenu-item-desc">${item.desc}</div>
         <div class="fmenu-item-price">₹${item.price}</div>
       </div>
-      <button class="fmenu-add-btn" onclick="_fmenuAdd(this,'${item.name.replace(/'/g,"\\'")}',${item.price},'${item.img}')">+ Add</button>
+      <button class="fmenu-add-btn">Order →</button>
     </div>`).join('');
   _updateFmenuCart();
 }
@@ -1269,3 +1255,12 @@ window.addEventListener('resize', () => {
     globeCanvas.width = globeW;
   }
 });
+
+// ══════════ // SERVICE WORKER (PWA) ══════════
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => console.log('SW registered:', reg.scope))
+      .catch(err => console.warn('SW failed:', err));
+  });
+}
