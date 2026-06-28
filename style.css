@@ -938,6 +938,30 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 [data-aos].in{opacity:1;transform:translateY(0)}
 [data-delay="100"]{transition-delay:.1s}[data-delay="200"]{transition-delay:.2s}[data-delay="300"]{transition-delay:.3s}[data-delay="400"]{transition-delay:.4s}[data-delay="500"]{transition-delay:.5s}
 
+/* ── ORDER PANEL SIDEBAR ── */
+.order-panel-body{padding:1.2rem;display:flex;flex-direction:column;gap:10px;overflow-y:auto;height:calc(100% - 60px)}
+.order-panel-intro{text-align:center;padding:1rem 0 .5rem}
+.order-panel-icon{font-size:2.8rem;margin-bottom:.6rem}
+.order-panel-intro h4{font-size:1rem;font-weight:700;color:var(--text);margin-bottom:.4rem}
+.order-panel-intro p{font-size:.8rem;color:var(--muted);line-height:1.5}
+.order-panel-divider{height:1px;background:var(--border);margin:.3rem 0}
+.order-panel-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:.2rem}
+.order-panel-btn{display:block;text-align:center;text-decoration:none;width:100%;box-sizing:border-box}
+
+/* ── MENU CARDS: remove add-to-cart, make clickable ── */
+.add-to-cart-overlay{background:rgba(0,0,0,.55)!important}
+.add-btn{display:none!important}
+.menu-card-img-wrap{cursor:pointer}
+.menu-card-img-wrap::after{
+  content:'🍽️ Order Now';
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.55);
+  color:#D4AF37;font-size:.82rem;font-weight:700;letter-spacing:.05em;
+  opacity:0;transition:.25s;border-radius:inherit;
+}
+.menu-card:hover .menu-card-img-wrap::after{opacity:1}
+
 /* Toast */
 .toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--bg-card);border:1px solid var(--gold);color:var(--gold-light);padding:12px 24px;border-radius:50px;font-size:.85rem;font-weight:600;z-index:99000;opacity:0;transition:.4s var(--e);white-space:nowrap;pointer-events:none}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
