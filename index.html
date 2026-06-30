@@ -67,15 +67,14 @@
       <li><a href="#menu">Menu</a></li>
       <li><a href="#order">Order</a></li>
       <li><a href="#gallery">Gallery</a></li>
-      <li><a href="#reservation">Reserve</a></li>
       <li><a href="#reviews">Reviews</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
     <button class="cart-nav-btn" id="cartNavBtn" onclick="toggleCart()" aria-label="Order Now">
       🍽️<span class="cart-count" style="background:#D4AF37;color:#0D0B09;font-size:.65rem;padding:2px 6px">ORDER</span>
     </button>
-    <button class="reserve-btn" onclick="document.getElementById('reservation').scrollIntoView({behavior:'smooth'})">📅 Book Table</button>
-    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <button class="reserve-btn" onclick="document.getElementById('hamburger').click()">🛒 Order Now</button>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu" style="display:none">
       <span></span><span></span><span></span>
     </button>
   </div>
@@ -654,8 +653,8 @@
 </section>
 <div class="lightbox" id="lightbox" onclick="closeLightbox()"><div class="lightbox-inner" onclick="event.stopPropagation()"><button class="lightbox-close" onclick="closeLightbox()">✕</button><img src="" alt="" id="lightboxImg"/><p id="lightboxCaption"></p></div></div>
 
-<!-- ══════════ RESERVATION ══════════ -->
-<section class="reservation-section section" id="reservation">
+<!-- RESERVATION SECTION REMOVED -->
+<section class="reservation-section section" id="reservation" style="display:none">
   <div class="container">
     <div class="reservation-grid">
       <div class="reservation-info" data-aos>
@@ -868,7 +867,7 @@
             <a href="https://www.google.com/maps/search/Ishwar+Kitchen+Nakodar" target="_blank" class="social-btn" title="Maps">📍</a>
           </div>
         </div>
-        <div><h4>Quick Links</h4><ul><li><a href="#home">Home</a></li><li><a href="#about">About Us</a></li><li><a href="#menu">Our Menu</a></li><li><a href="#order">Order Online</a></li><li><a href="#gallery">Gallery</a></li><li><a href="#reservation">Reservation</a></li><li><a href="#contact">Contact</a></li></ul></div>
+        <div><h4>Quick Links</h4><ul><li><a href="#home">Home</a></li><li><a href="#about">About Us</a></li><li><a href="#menu">Our Menu</a></li><li><a href="#order">Order Online</a></li><li><a href="#gallery">Gallery</a></li><li><a href="#contact">Contact</a></li></ul></div>
         <div><h4>Popular Dishes</h4><ul><li>Dal Makhani</li><li>Butter Paneer Masala</li><li>Chole Bhature</li><li>Chaap Tikka</li><li>Veg Hakka Noodles</li><li>Sweet Lassi</li><li>Keema Naan</li></ul></div>
         <div class="footer-contact-info"><h4>Contact Info</h4><p>📍 Nurmahal Road, near AU Bank,<br/>&nbsp;&nbsp;&nbsp; GTB Nagar, Nakodar, Punjab</p><p>🕒 10:30 AM – 10:30 PM (Daily)</p><p>📞 <a href="tel:+918699081813">+91 8699081813</a></p><p>💬 <a href="https://wa.me/918699081813">WhatsApp Us</a></p></div>
       </div>
@@ -879,9 +878,7 @@
 
 <!-- ══════════ FLOATING BUTTONS ══════════ -->
 <div class="floating-btns">
-  <button class="float-btn menu-f" onclick="openFloatMenu()" title="Browse Menu"><span class="tooltip">🍽️ Browse Menu</span>🍽️</button>
   <a href="tel:+918699081813" class="float-btn call-f" title="Call"><span class="tooltip">📞 +91 8699081813</span>📞</a>
-  <a href="https://wa.me/918699081813?text=Hello%20Ishwar%20Kitchen!" target="_blank" class="float-btn wa-f" title="WhatsApp"><span class="tooltip">💬 WhatsApp Order</span><img src="Logo/whatsapp.jpg" alt="WhatsApp" style="width:30px;height:30px;border-radius:50%;object-fit:cover;"/></a>
   <button class="float-btn top-f" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Top"><span class="tooltip">↑ Back to Top</span>↑</button>
 </div>
 
