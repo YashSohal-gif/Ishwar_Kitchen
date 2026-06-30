@@ -1263,3 +1263,164 @@ if ('serviceWorker' in navigator) {
       .catch(err => console.warn('SW failed:', err));
   });
 }
+
+// ══════════ // ══════════
+// ══════════ // WRITE A REVIEW FORM ══════════
+// ══════════ // ══════════
+(function initReviewForm() {
+
+  // ── Star Rating Picker ──────────────────────────────────────
+  const stars     = document.querySelectorAll('.star-pick');
+  const ratingInput = document.getElementById('ratingVal');
+  const starLabel = document.getElementById('starLabel');
+  const starTexts = ['', 'Poor 😞', 'Fair 😐', 'Good 🙂', 'Great 😊', 'Excellent 🤩'];
+
+  stars.forEach(star => {
+    star.addEventListener('mouseover', () => {
+      const val = +star.dataset.val;
+      stars.forEach(s => {
+        s.classList.toggle('hovered', +s.dataset.val <= val);
+        s.classList.remove('selected');
+      });
+      starLabel.textContent = starTexts[val];
+    });
+
+    star.addEventListener('mouseleave', () => {
+      const cur = +ratingInput.value;
+      stars.forEach(s => {
+        s.classList.remove('hovered');
+        s.classList.toggle('selected', +s.dataset.val <= cur);
+      });
+      starLabel.textContent = cur > 0 ? starTexts[cur] : 'Tap to rate';
+    });
+
+    star.addEventListener('click', () => {
+      const val = +star.dataset.val;
+      ratingInput.value = val;
+      stars.forEach(s => s.classList.toggle('selected', +s.dataset.val <= val));
+      starLabel.textContent = starTexts[val];
+    });
+  });
+
+  // ── Character Counter ───────────────────────────────────────
+  const rvText = document.getElementById('rvText');
+  const rvChar = document.getElementById('rvChar');
+  if (rvText && rvChar) {
+    rvText.addEventListener('input', () => {
+      rvChar.textContent = rvText.value.length + ' / 300';
+      rvChar.style.color = rvText.value.length > 270 ? '#e23744' : '';
+    });
+  }
+
+  // ── Load saved reviews from localStorage ───────────────────
+  renderUserReviews();
+
+})();
+
+// ── Submit Handler ────────────────────────────────────────────
+function submitReview(e) {
+  e.preventDefault();
+
+  const rating   = +document.getElementById('ratingVal').value;
+  const name     = document.getElementById('rvName').value.trim();
+  const location = document.getElementById('rvLocation').value.trim();
+  const text     = document.getElementById('rvText').value.trim();
+  const btn      = document.getElementById('rfSubmitBtn');
+
+  // Validation
+  if (rating === 0) { showToast('⭐ Please select a star rating!'); return; }
+  if (!name)        { showToast('📝 Please enter your name!');       document.getElementById('rvName').focus(); return; }
+  if (!text)        { showToast('💬 Please write your review!');     document.getElementById('rvText').focus(); return; }
+
+  // Button loading state
+  btn.disabled = true;
+  btn.innerHTML = '<span>⏳ Submitting…</span>';
+
+  // Build review object
+  const review = {
+    rating,
+    name,
+    location: location || 'Punjab',
+    text,
+    date: new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
+  };
+
+  // ── Send to Formspree ─────────────────────────────────────
+  fetch('https://formspree.io/f/mbdvaaee', {
+    method: 'POST',
+    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      name:     name,
+      location: review.location,
+      rating:   '★'.repeat(rating) + '☆'.repeat(5 - rating) + '  (' + rating + '/5)',
+      review:   text,
+      date:     review.date
+    })
+  })
+  .then(res => {
+    if (!res.ok) throw new Error('Formspree error');
+
+    // Save to localStorage only after successful send
+    const saved = JSON.parse(localStorage.getItem('ik_reviews') || '[]');
+    saved.unshift(review);
+    localStorage.setItem('ik_reviews', JSON.stringify(saved));
+
+    // Reset form
+    document.getElementById('reviewForm').reset();
+    document.getElementById('ratingVal').value = '0';
+    document.getElementById('rvChar').textContent = '0 / 300';
+    document.getElementById('starLabel').textContent = 'Tap to rate';
+    document.querySelectorAll('.star-pick').forEach(s => s.classList.remove('selected', 'hovered'));
+
+    // Re-render and thank user
+    renderUserReviews();
+    showToast('🙏 Thank you! Your review has been submitted.');
+  })
+  .catch(() => {
+    // Still save locally even if network fails
+    const saved = JSON.parse(localStorage.getItem('ik_reviews') || '[]');
+    saved.unshift(review);
+    localStorage.setItem('ik_reviews', JSON.stringify(saved));
+
+    document.getElementById('reviewForm').reset();
+    document.getElementById('ratingVal').value = '0';
+    document.getElementById('rvChar').textContent = '0 / 300';
+    document.getElementById('starLabel').textContent = 'Tap to rate';
+    document.querySelectorAll('.star-pick').forEach(s => s.classList.remove('selected', 'hovered'));
+
+    renderUserReviews();
+    showToast('✅ Review saved! (Offline — will sync later)');
+  })
+  .finally(() => {
+    btn.disabled = false;
+    btn.innerHTML = '<span>✍️ Submit Review</span>';
+  });
+}
+
+// ── Render User Reviews ───────────────────────────────────────
+function renderUserReviews() {
+  const wrap = document.getElementById('userReviewsWrap');
+  if (!wrap) return;
+
+  const saved = JSON.parse(localStorage.getItem('ik_reviews') || '[]');
+  if (!saved.length) { wrap.innerHTML = ''; return; }
+
+  wrap.innerHTML = '<h4 style="font-family:\'Playfair Display\',serif;color:var(--gold);font-size:1rem;margin-bottom:.8rem;">💬 Recent Reviews from Customers</h4>' +
+    saved.map(rv => {
+      const stars   = '★'.repeat(rv.rating) + '☆'.repeat(5 - rv.rating);
+      const initials = rv.name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+      return `
+        <div class="user-review-card">
+          <div class="user-review-stars">${stars}</div>
+          <p class="user-review-text">"${rv.text}"</p>
+          <div class="user-review-author">
+            <div class="user-review-avatar">${initials}</div>
+            <div>
+              <div class="user-review-name">${rv.name}</div>
+              <div class="user-review-location">${rv.location}</div>
+            </div>
+            <div class="user-review-date">${rv.date}</div>
+          </div>
+        </div>`;
+    }).join('');
+}
