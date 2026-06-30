@@ -715,16 +715,7 @@
                   <span class="ticket-value" id="ticketZone">-</span>
                 </div>
               </div>
-              <div class="ticket-divider"></div>
-              <div class="ticket-qrcode-wrap">
-                <div id="qrcode" class="ticket-qrcode"></div>
-                <p class="ticket-scan-text">Present this ticket at the host stand upon arrival</p>
-              </div>
             </div>
-          </div>
-          <div class="ticket-actions" style="margin-top: 25px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
-            <button class="btn btn-outline" onclick="window.print()">🖨️ Print Ticket</button>
-            <button class="btn btn-primary" onclick="resetForm()">Make Another Booking</button>
           </div>
         </div>
       </div>
@@ -744,7 +735,50 @@
       <div class="review-card"><div class="review-stars">⭐⭐⭐⭐</div><p class="review-text">"Great spot for family dining. Kids loved the pizza and burgers while adults enjoyed Punjabi dishes. Highly recommend!"</p><div class="review-author"><div class="review-avatar">GK</div><div><strong>Gurpreet Kaur</strong><span>Phagwara, Punjab</span></div></div></div>
       <div class="review-card"><div class="review-stars">⭐⭐⭐⭐⭐</div><p class="review-text">"The food here reminds me of home-cooked Punjabi meals. The shahi paneer and butter naan combo is unbeatable!"</p><div class="review-author"><div class="review-avatar">HB</div><div><strong>Harjeet Bains</strong><span>Nakodar, Punjab</span></div></div></div>
     </div>
-    <div class="rating-summary" data-aos><div class="rating-big">4.0</div><div class="rating-stars">⭐⭐⭐⭐</div><p>Based on 200+ reviews across Google, Swiggy & Zomato</p></div>
+    <div class="rating-summary" data-aos><div class="rating-big">4.0</div><div class="rating-stars">⭐⭐⭐⭐</div><p>Based on 200+ reviews across Google, Swiggy &amp; Zomato</p></div>
+
+    <!-- ══════════ WRITE A REVIEW FORM ══════════ -->
+    <div class="write-review-wrap" data-aos>
+      <div class="write-review-header">
+        <p class="section-tag" style="margin-bottom:.2rem">Share Your Experience</p>
+        <h3 class="write-review-title">Write a <em>Review</em></h3>
+        <p class="write-review-sub">Loved the food? Tell the world about Ishwar Kitchen! 🍽️</p>
+      </div>
+      <form class="review-form" id="reviewForm" onsubmit="submitReview(event)">
+        <div class="rf-field">
+          <label class="rf-label">Your Rating *</label>
+          <div class="star-picker" id="starPicker">
+            <span class="star-pick" data-val="1">★</span>
+            <span class="star-pick" data-val="2">★</span>
+            <span class="star-pick" data-val="3">★</span>
+            <span class="star-pick" data-val="4">★</span>
+            <span class="star-pick" data-val="5">★</span>
+          </div>
+          <span class="star-label" id="starLabel">Tap to rate</span>
+          <input type="hidden" id="ratingVal" value="0"/>
+        </div>
+        <div class="rf-row">
+          <div class="rf-field">
+            <label class="rf-label" for="rvName">Your Name *</label>
+            <input class="rf-input" type="text" id="rvName" placeholder="e.g. Gurpreet Singh" maxlength="40" autocomplete="name"/>
+          </div>
+          <div class="rf-field">
+            <label class="rf-label" for="rvLocation">City / Location</label>
+            <input class="rf-input" type="text" id="rvLocation" placeholder="e.g. Nakodar, Punjab" maxlength="40"/>
+          </div>
+        </div>
+        <div class="rf-field">
+          <label class="rf-label" for="rvText">Your Review *</label>
+          <textarea class="rf-input rf-textarea" id="rvText" rows="4" placeholder="What did you enjoy most? Tell us about the food, service, ambiance…" maxlength="300"></textarea>
+          <span class="rf-char" id="rvChar">0 / 300</span>
+        </div>
+        <button type="submit" class="rf-submit-btn" id="rfSubmitBtn">
+          <span>✍️ Submit Review</span>
+        </button>
+      </form>
+      <div id="userReviewsWrap"></div>
+    </div>
+
   </div>
 </section>
 
