@@ -259,7 +259,7 @@ function orderZomato() {
 // ══════════ // PETPOOJA ORDER ══════════
 
 function openOrderModal() {
-  showOrderForm();
+  showPetpoojaPopup();
 }
 
 // Called from "Order from Website" sidebar button — no cart needed
@@ -267,6 +267,52 @@ function showOrderForm() {
   toggleCart(); // close sidebar first
   setTimeout(showCheckoutModal, 280);
 }
+
+// ══════════ // PETPOOJA COMING SOON POPUP ══════════
+function showPetpoojaPopup() {
+  // Close the cart drawer first if open
+  const drawer = document.getElementById('cartDrawer');
+  if (drawer && drawer.classList.contains('open')) toggleCart();
+
+  // Remove old popup if exists
+  const existing = document.getElementById('ppPopup');
+  if (existing) existing.remove();
+
+  const el = document.createElement('div');
+  el.id = 'ppPopup';
+  el.innerHTML = `
+<div class="pp-overlay" id="ppOverlay" onclick="closePetpoojaPopup()"></div>
+<div class="pp-modal" id="ppModal">
+  <button class="pp-close" onclick="closePetpoojaPopup()">✕</button>
+  <div class="pp-icon">🛒</div>
+  <h3 class="pp-title">Online Ordering<br/><em>Coming Soon!</em></h3>
+  <p class="pp-desc">We are setting up our direct online ordering system powered by PetPooja. Until then, you can call us or order via Swiggy / Zomato.</p>
+  <div class="pp-actions">
+    <a href="tel:+918699081813" class="pp-btn pp-btn-primary" onclick="closePetpoojaPopup()">📞 Call to Order</a>
+    <a href="https://www.swiggy.com/search?query=Ishwar+Kitchen+Nakodar" target="_blank" class="pp-btn pp-btn-swiggy" onclick="closePetpoojaPopup()">Order on Swiggy</a>
+    <a href="https://www.zomato.com/nakodar/ishwar-kitchen-nakodar-locality/order" target="_blank" class="pp-btn pp-btn-zomato" onclick="closePetpoojaPopup()">Order on Zomato</a>
+  </div>
+</div>`;
+  document.body.appendChild(el);
+
+  // Animate in
+  requestAnimationFrame(() => {
+    document.getElementById('ppOverlay').classList.add('open');
+    document.getElementById('ppModal').classList.add('open');
+  });
+  document.body.style.overflow = 'hidden';
+}
+
+function closePetpoojaPopup() {
+  const overlay = document.getElementById('ppOverlay');
+  const modal   = document.getElementById('ppModal');
+  if (!overlay) return;
+  overlay.classList.remove('open');
+  modal.classList.remove('open');
+  document.body.style.overflow = '';
+  setTimeout(() => { const el = document.getElementById('ppPopup'); if (el) el.remove(); }, 350);
+}
+
 
 function showCheckoutModal() {
   if (!document.getElementById('ckModal')) {
