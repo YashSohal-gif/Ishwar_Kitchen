@@ -950,6 +950,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 }
 .float-btn:hover .tooltip{opacity:1;right:66px}
 .float-btn.menu-f{
+  display:none; /* Hidden on desktop */
   background:linear-gradient(145deg,#2a2318,#1a1612);
   color:#D4AF37;font-size:1.4rem;
   border:1.5px solid rgba(212,175,55,.5);
@@ -1117,7 +1118,8 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   .ck-drawer.open{transform:translate(0,0) scale(1)}
   /* hide desktop floating button tooltip on mobile — use label instead */
   .float-btn .tooltip{display:none}
-  /* float menu button larger touch target on mobile */
+  /* float menu button larger touch target on mobile and visible */
+  .float-btn.menu-f{display:flex}
   .float-btn{width:56px;height:56px}
 }
 
