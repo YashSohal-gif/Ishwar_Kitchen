@@ -156,6 +156,39 @@ function initTilt() {
 }
 initTilt();
 
+// ══════════ // FLOATING MENU DRAWER (Zomato/Swiggy Style) ══════════
+function toggleFloatMenu() {
+  const overlay = document.getElementById('fmenuOverlay');
+  const drawer = document.getElementById('fmenuDrawer');
+  if (overlay && drawer) {
+    overlay.classList.toggle('open');
+    drawer.classList.toggle('open');
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const fmenuCatList = document.getElementById('fmenuCatList');
+  const tabs = document.querySelectorAll('.menu-tab');
+  if (fmenuCatList && tabs.length > 0) {
+    tabs.forEach(tab => {
+      const btn = document.createElement('div');
+      btn.className = 'fmenu-cat-item';
+      btn.innerHTML = `<div class="fmenu-cat-name">${tab.textContent}</div><div class="fmenu-cat-arrow">→</div>`;
+      btn.onclick = () => {
+        toggleFloatMenu();
+        tab.click();
+        const menuSection = document.getElementById('menu');
+        if (menuSection) {
+          const yOffset = -80; // Offset for sticky navbar
+          const y = menuSection.getBoundingClientRect().top + window.scrollY + yOffset;
+          window.scrollTo({top: y, behavior: 'smooth'});
+        }
+      };
+      fmenuCatList.appendChild(btn);
+    });
+  }
+});
+
 // ══════════ // ══════════
 // ══════════ // ORDER PANEL & MENU IMAGES → PETPOOJA ══════════
 // ══════════ // ══════════
