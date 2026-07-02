@@ -63,6 +63,13 @@ navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
   hamburger.classList.remove('open'); navLinks.classList.remove('open');
 }));
 
+document.addEventListener('click', (e) => {
+  if (navLinks.classList.contains('open') && !navbar.contains(e.target)) {
+    hamburger.classList.remove('open');
+    navLinks.classList.remove('open');
+  }
+});
+
 // ══════════ // Apple liquid glass mouse tracking ══════════
 function trackMouse(sel, xv, yv) {
   document.querySelectorAll(sel).forEach(el => {
