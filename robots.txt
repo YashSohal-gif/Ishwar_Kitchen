@@ -13,7 +13,7 @@
 # 
 # -------------------------------------------------------------------
 
-Sitemap: https://www.hvcgen.in/sitemap.xml
+Sitemap: https://www.ishwarkitchen.in/sitemap.xml
 
 User-agent: *
 Allow: /
