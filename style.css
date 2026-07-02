@@ -322,11 +322,13 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 }
 .cart-count.visible{opacity:1;transform:scale(1)}
 
-.hamburger{display:none;flex-direction:column;gap:5px;padding:4px}
-.hamburger span{width:22px;height:2px;background:var(--gold);border-radius:2px;display:block;transition:.3s var(--e)}
-.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
-.hamburger.open span:nth-child(2){opacity:0}
-.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+.hamburger{display:none;flex-direction:column;justify-content:center;align-items:center;gap:6px;width:42px;height:42px;padding:0;border-radius:50%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);transition:all .3s var(--e);cursor:pointer;backdrop-filter:blur(10px)}
+.hamburger:active{transform:scale(0.92);background:rgba(212,175,55,0.15);border-color:rgba(212,175,55,0.4)}
+.hamburger span{width:20px;height:2px;background:var(--gold);border-radius:2px;display:block;transition:all .4s cubic-bezier(0.68,-0.55,0.265,1.55);transform-origin:center}
+.hamburger.open{background:rgba(212,175,55,0.15);border-color:rgba(212,175,55,0.4)}
+.hamburger.open span:nth-child(1){transform:translateY(8px) rotate(45deg);background:#fff}
+.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.hamburger.open span:nth-child(3){transform:translateY(-8px) rotate(-45deg);background:#fff}
 
 /* ============================================================
    HERO
@@ -1130,10 +1132,53 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   .navbar{width:calc(100% - 32px)}
 }
 @media(max-width:768px){
-  .nav-links,.reserve-btn{display:none}
-  .hamburger{display:flex}
-  .nav-links.open{display:flex;flex-direction:column;position:absolute;top:calc(100% + 8px);left:0;right:0;background:rgba(10,8,5,.97);backdrop-filter:blur(20px);padding:16px 20px;border-radius:0 0 16px 16px;border-top:1px solid var(--border);gap:4px}
-  .nav-links.open a{padding:10px 16px;border-radius:10px}
+  .reserve-btn{display:none}
+  .hamburger{display:flex;z-index:1001}
+  .nav-links{
+    display:flex;flex-direction:column;position:absolute;
+    top:calc(100% + 14px);left:10px;right:10px;
+    background:rgba(18,15,10,0.96);
+    backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+    padding:24px 20px;border-radius:20px;
+    border:1px solid rgba(212,175,55,0.3);
+    box-shadow:0 16px 50px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.1);
+    gap:10px;
+    opacity:0;visibility:hidden;transform:translateY(-15px) scale(0.98);
+    transition:opacity .4s cubic-bezier(0.4,0,0.2,1), transform .4s cubic-bezier(0.4,0,0.2,1), visibility .4s;
+    transform-origin:top center;
+    z-index:1000;
+  }
+  .nav-links.open{
+    opacity:1;visibility:visible;transform:translateY(0) scale(1);
+  }
+  .nav-links a{
+    padding:14px 20px;border-radius:14px;
+    font-size:1.05rem;font-weight:600;
+    color:rgba(245,230,200,0.85);
+    background:rgba(255,255,255,0.03);
+    border:1px solid transparent;
+    transition:.3s ease;
+    display:flex;align-items:center;justify-content:center;
+    transform-origin:center;
+  }
+  .nav-links a:hover, .nav-links a:active{
+    background:rgba(212,175,55,0.12);
+    color:var(--gold);
+    border-color:rgba(212,175,55,0.3);
+    transform:scale(1.02);
+  }
+  /* Staggered entrance animation for nav links on mobile */
+  .nav-links.open a:nth-child(1){animation:fadeInUp .4s ease forwards .05s}
+  .nav-links.open a:nth-child(2){animation:fadeInUp .4s ease forwards .1s}
+  .nav-links.open a:nth-child(3){animation:fadeInUp .4s ease forwards .15s}
+  .nav-links.open a:nth-child(4){animation:fadeInUp .4s ease forwards .2s}
+  .nav-links.open a:nth-child(5){animation:fadeInUp .4s ease forwards .25s}
+  .nav-links.open a:nth-child(6){animation:fadeInUp .4s ease forwards .3s}
+  .nav-links a{opacity:0;transform:translateY(10px)}
+}
+@keyframes fadeInUp{
+  to{opacity:1;transform:translateY(0)}
+
   .info-divider{display:none}
   .info-item{min-width:140px;padding:10px 14px}
   .form-row{grid-template-columns:1fr}
