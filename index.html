@@ -907,8 +907,24 @@
   <div class="footer-bottom"><div class="container"><p>© 2026 Ishwar Kitchen, Nakodar. All rights reserved.</p><p>Made with ❤️ for authentic Punjabi food lovers</p></div></div>
 </footer>
 
+<!-- ══════════ FLOATING MENU DRAWER (Bottom Sheet) ══════════ -->
+<div class="fmenu-overlay" id="fmenuOverlay" onclick="toggleFloatMenu()"></div>
+<div class="fmenu-drawer" id="fmenuDrawer">
+  <div class="fmenu-drag" onclick="toggleFloatMenu()"></div>
+  <div class="fmenu-head">
+    <div class="fmenu-title">🍽️ Browse Menu</div>
+    <button class="fmenu-close" onclick="toggleFloatMenu()">✕</button>
+  </div>
+  <div class="fmenu-page">
+    <div class="fmenu-cat-list" id="fmenuCatList">
+      <!-- Categories injected by JS -->
+    </div>
+  </div>
+</div>
+
 <!-- ══════════ FLOATING BUTTONS ══════════ -->
 <div class="floating-btns">
+  <button class="float-btn menu-f" onclick="toggleFloatMenu()" title="Menu"><span class="tooltip">🍽️ Menu</span>🍽️</button>
   <a href="tel:+918699081813" class="float-btn call-f" title="Call"><span class="tooltip">📞 +91 8699081813</span>📞</a>
   <button class="float-btn top-f" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Top"><span class="tooltip">↑ Back to Top</span>↑</button>
 </div>
