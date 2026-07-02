@@ -203,7 +203,7 @@ function initMenuImageLinks() {
     wrap._pp = true;
     wrap.addEventListener('click', () => {
       if (PETPOOJA_URL === 'REPLACE_WITH_PETPOOJA_URL') {
-        showToast('🍽️ PetPooja link coming soon!');
+        showToast('⏳ Our ordering system is coming soon!');
       } else {
         window.open(PETPOOJA_URL, '_blank');
       }
@@ -326,7 +326,7 @@ function showPetpoojaPopup() {
   <button class="pp-close" onclick="closePetpoojaPopup()">✕</button>
   <div class="pp-icon">🛒</div>
   <h3 class="pp-title">Online Ordering<br/><em>Coming Soon!</em></h3>
-  <p class="pp-desc">We are setting up our direct online ordering system powered by PetPooja. Until then, you can call us or order via Swiggy / Zomato.</p>
+  <p class="pp-desc">Our ordering system is coming soon. Until then, you can call us or order via Swiggy / Zomato.</p>
   <div class="pp-actions">
     <a href="tel:+918699081813" class="pp-btn pp-btn-primary" onclick="closePetpoojaPopup()">📞 Call to Order</a>
     <a href="https://www.swiggy.com/search?query=Ishwar+Kitchen+Nakodar" target="_blank" class="pp-btn pp-btn-swiggy" onclick="closePetpoojaPopup()">Order on Swiggy</a>
