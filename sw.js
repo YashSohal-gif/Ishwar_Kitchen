@@ -33,25 +33,24 @@ self.addEventListener('activate', e => {
   );
 });
 
-// Fetch — cache-first for static, network-first for API
+// Fetch — network-first for immediate updates, fallback to cache for offline
 self.addEventListener('fetch', e => {
   const url = new URL(e.request.url);
 
-  // Skip non-GET and cross-origin API calls (Supabase, Razorpay, etc.)
+  // Skip non-GET and cross-origin API calls
   if (e.request.method !== 'GET') return;
   if (url.hostname !== self.location.hostname) return;
 
   e.respondWith(
-    caches.match(e.request).then(cached => {
-      if (cached) return cached;
-      return fetch(e.request).then(res => {
-        // Cache successful image/css/js responses
-        if (res.ok && ['image','script','style'].includes(e.request.destination)) {
-          const clone = res.clone();
-          caches.open(CACHE).then(c => c.put(e.request, clone));
-        }
-        return res;
-      }).catch(() => {
+    fetch(e.request).then(res => {
+      // Network succeeded: update the cache with the fresh response
+      const clone = res.clone();
+      caches.open(CACHE).then(c => c.put(e.request, clone));
+      return res;
+    }).catch(() => {
+      // Network failed (offline): serve from cache
+      return caches.match(e.request).then(cached => {
+        if (cached) return cached;
         // Offline fallback for HTML pages
         if (e.request.destination === 'document') return caches.match('/index.html');
       });
