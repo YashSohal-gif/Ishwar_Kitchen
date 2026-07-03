@@ -12,9 +12,14 @@
 #  |_|\_\___| |_| \____|_| |_|_____|_| \_|
 # 
 # -------------------------------------------------------------------
-
-Sitemap: https://www.ishwarkitchen.in/sitemap.xml
+#                                                                           
+#   Ishwar Kitchen - The Best Food in Nakodar
+#   Welcome, friendly bots! Grab a seat and enjoy the food! 🥘
+#
+#   "To plant a garden is to believe in tomorrow."
 
 User-agent: *
 Allow: /
-Disallow: /admin
+
+# Sitemap definition for search engines
+Sitemap: https://www.ishwarkitchen.in/sitemap.xml
