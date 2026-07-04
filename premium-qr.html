@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ishwar Kitchen - Premium QR Generator</title>
+    <!-- We use the incredibly powerful qr-code-styling library to make it look premium -->
+    <link rel="apple-touch-icon" href="favicon-192.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="favicon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png">
+    <script type="text/javascript" src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: radial-gradient(circle at center, #191510, #080705);
+            color: #D4AF37;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #F5E6C8;
+            text-shadow: 0 4px 20px rgba(212,175,55,0.2);
+        }
+        p {
+            color: #8E7E63;
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+        #canvas {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 30px;
+            border-radius: 24px;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.1);
+            border: 1px solid rgba(212,175,55,0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        button {
+            margin-top: 40px;
+            padding: 16px 36px;
+            background: linear-gradient(135deg, #E8C84A, #C8981A);
+            color: #0D0B09;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.45), 0 8px 32px rgba(212,175,55,0.4);
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: 'Inter', sans-serif;
+        }
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.45), 0 12px 40px rgba(212,175,55,0.6);
+            filter: brightness(1.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>Ishwar Kitchen</h1>
+    <p>Premium 4K QR Code Generator</p>
+    
+    <div id="canvas"></div>
+    <button id="downloadBtn">Download 4K Image</button>
+
+    <script type="text/javascript">
+        // Create a highly stylized QR Code
+        const qrCode = new QRCodeStyling({
+            width: 1024,
+            height: 1024,
+            type: "canvas",
+            data: "https://www.ishwarkitchen.in/",
+            margin: 10,
+            qrOptions: {
+                errorCorrectionLevel: "H" // High error correction so it scans easily even if stylized
+            },
+            // The tiny dots making up the code
+            dotsOptions: {
+                type: "rounded", // Makes it look fluid and modern
+                gradient: {
+                    type: "linear",
+                    rotation: Math.PI / 4,
+                    colorStops: [{ offset: 0, color: "#D4AF37" }, { offset: 1, color: "#F5E6C8" }]
+                }
+            },
+            // The background color of the QR code itself
+            backgroundOptions: {
+                color: "#080705", // Matches your website's exact deep black background
+            },
+            // The three big squares in the corners
+            cornersSquareOptions: {
+                type: "extra-rounded",
+                color: "#D4AF37"
+            },
+            // The tiny dots inside the big squares
+            cornersDotOptions: {
+                type: "dot",
+                color: "#F5E6C8"
+            }
+        });
+
+        // Inject the QR Code into the page so you can see it
+        qrCode.append(document.getElementById("canvas"));
+
+        // Download functionality
+        document.getElementById("downloadBtn").addEventListener("click", () => {
+            qrCode.download({ name: "ishwar-kitchen-premium-qr", extension: "png" });
+        });
+    </script>
+</body>
+</html>
