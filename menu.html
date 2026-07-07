@@ -1,0 +1,1984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu | Ishwar Kitchen - Best North Indian & Chinese in Nakodar</title>
+    <meta name="description" content="Explore the authentic taste of Punjab at Ishwar Kitchen. View our full interactive menu of North Indian, Punjabi, and Chinese cuisine in Nakodar.">
+    <meta name="keywords" content="Ishwar Kitchen menu, best restaurant in Nakodar, North Indian food, Punjabi food, Chinese food, Nakodar restaurants">
+    <meta name="author" content="Ishwar Kitchen">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Menu | Ishwar Kitchen">
+    <meta property="og:description" content="Explore the authentic taste of Punjab at Ishwar Kitchen. View our full interactive menu!">
+    <meta property="og:image" content="https://www.ishwarkitchen.in/logo.webp">
+    <meta property="og:url" content="https://www.ishwarkitchen.in/menu">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Menu | Ishwar Kitchen">
+    <meta name="twitter:description" content="Explore the authentic taste of Punjab at Ishwar Kitchen. View our full interactive menu!">
+    <meta name="twitter:image" content="https://www.ishwarkitchen.in/logo.webp">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://www.ishwarkitchen.in/menu">
+
+    <!-- Preconnect for performance (if needed in future) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+<style>
+        body {
+            background: #111;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+            overflow: hidden;
+        }
+        
+        .book-container {
+            overflow: visible;
+            position: relative;
+            width: 800px;
+            height: 600px;
+            perspective: 99999px;
+        }
+
+        .page { box-sizing: border-box;
+            width: 50%;
+            height: 100%;
+            position: absolute;
+            right: 0;
+            top: 0;
+            transform-origin: left center;
+            transform-style: preserve-3d;
+            transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+            background: transparent;
+            border: none;
+        }
+
+        .page.flipped {
+            transform: rotateY(-180deg);
+        }
+
+        .page-front, .page-back {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            padding: 30px;
+            box-sizing: border-box;
+            overflow-y: auto; /* Restore scrollbar */
+            background: #fdfaf0;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.05), 0 0 5px rgba(0,0,0,0.2);
+            border-radius: 2px 10px 10px 2px;
+            border: 1px solid #e0dcd0;
+        }
+
+        .page-back {
+            transform: rotateY(180deg);
+            background: #fcf9ee;
+            border-radius: 10px 2px 2px 10px;
+            border-left: 1px solid #e0dcd0;
+        }
+
+                        /* Cover Styles */
+        .cover {
+            background: #000;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border: 2px solid #332610;
+            padding: 20px;
+            box-sizing: border-box;
+            position: absolute;
+            overflow: hidden !important; /* Prevent scrollbar on cover */
+        }
+        /* Inner thin border */
+        .cover::after {
+            content: '';
+            position: absolute;
+            top: 15px; left: 15px; right: 15px; bottom: 15px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            pointer-events: none;
+        }
+        .cover-top-text {
+            font-size: 0.6em;
+            letter-spacing: 2px;
+            color: #d8c386;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            z-index: 2;
+        }
+        .cover-logo {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #fceca1 0%, #a27c1f 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.8);
+            z-index: 2;
+            overflow: hidden;
+        }
+        .cover-logo img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+        .cover-sub {
+            font-size: 0.55em;
+            letter-spacing: 2px;
+            color: #ccc;
+            margin-bottom: 12px;
+            z-index: 2;
+        }
+        .cover-title {
+            margin: 0;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 2.8em;
+            font-weight: bold;
+            color: #fff;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            line-height: 1;
+            z-index: 2;
+        }
+        .cover-subtitle {
+            margin: 0;
+            font-family: 'Georgia', serif;
+            font-size: 2.4em;
+            font-style: italic;
+            color: #d8c386;
+            margin-top: -5px;
+            margin-bottom: 12px;
+            z-index: 2;
+        }
+        .cover-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50%;
+            margin: 0 auto 12px auto;
+            color: #d8c386;
+            z-index: 2;
+        }
+        .cover-divider::before, .cover-divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #d8c386;
+            margin: 0 10px;
+        }
+        .cover-desc {
+            font-size: 0.6em;
+            letter-spacing: 2px;
+            line-height: 1.4;
+            color: #fff;
+            margin-bottom: 12px;
+            z-index: 2;
+        }
+        .cover-para {
+            font-family: 'Georgia', serif;
+            font-style: italic;
+            font-size: 0.9em;
+            line-height: 1.3;
+            color: #eee;
+            margin-bottom: 15px;
+            padding: 0 30px;
+            z-index: 2;
+        }
+        .cover-thin-line {
+            width: 80%;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 15px;
+            z-index: 2;
+        }
+        .cover-footer {
+            font-size: 0.55em;
+            letter-spacing: 1px;
+            line-height: 1.6;
+            color: #fff;
+            text-transform: uppercase;
+            z-index: 2;
+            font-weight: 600;
+        }
+        .cover-footer-quote {
+            font-family: 'Georgia', serif;
+            font-style: italic;
+            color: #d8c386;
+            text-transform: none;
+            font-size: 1.2em;
+            margin-top: 5px;
+            z-index: 2;
+            font-weight: normal;
+        }
+
+        /* Menu typography */
+        h2.section-title {
+            text-align: center;
+            color: #8b0000;
+            border-bottom: 2px solid #D4AF37;
+            padding-bottom: 5px;
+            margin-top: 20px;
+            text-transform: uppercase;
+            font-size: 1.2em;
+        }
+        
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px dotted #ccc;
+            cursor: pointer;
+            transition: background 0.3s, padding-left 0.3s;
+        }
+        .menu-item:hover {
+            background: #f0e6d2;
+            padding-left: 10px;
+        }
+        .menu-name {
+            font-weight: 600;
+            font-size: 1em;
+            color: #222;
+        }
+        .menu-price {
+            font-weight: bold;
+            color: #8b0000;
+        }
+
+        /* Controls */
+        .controls {
+            margin-top: 30px;
+            z-index: 100;
+        }
+        .btn {
+            background: #D4AF37;
+            color: #111;
+            border: none;
+            padding: 10px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            transition: transform 0.2s;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+            background: #e6c555;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .modal-content {
+            background: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transform: translateY(20px);
+            transition: transform 0.3s;
+        }
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+        .modal-content h2 {
+            color: #8b0000;
+            margin-top: 0;
+        }
+        .close-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    
+        @media screen and (max-width: 768px) {
+            body {
+                justify-content: flex-start; /* Move to top to fit better */
+            }
+            .book-container {
+                width: 100vw;
+                height: 100vh;
+                perspective: 3000px; /* Slight 3D for in-place flip */
+                margin-top: 0;
+            }
+            .page {
+                width: 100%;
+                transform-origin: center center; /* Flip in place */
+                border-radius: 0; /* Remove rounded corners for full screen */
+            }
+            .page-front, .page-back {
+                border-radius: 0;
+                border: none;
+                padding: 15px; /* Smaller padding for mobile */
+            }
+            .page.mobile-half-flipped {
+                transform: rotateY(-180deg);
+            }
+            .page.flipped {
+                transform: translateX(-100%); /* Slide completely off screen */
+            }
+            .controls {
+                display: none !important; /* Hide buttons, use swipe */
+            }
+            .cover-title { font-size: 2em; }
+            .cover-subtitle { font-size: 1.8em; }
+            .cover-para { padding: 0 10px; font-size: 0.8em; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="book-container" id="book">
+
+        <div class="page" id="page-0" style="z-index: 100;">
+            <div class="page-front cover">
+                <div class="cover-top-text">Nakodar &bull; Punjab &bull; Taste The Soul</div>
+                <div class="cover-logo">
+                    <img src="./logo.webp" alt="Ishwar Kitchen Logo" width="120" height="120" loading="lazy">
+                </div>
+                <div class="cover-sub">EST. 2014 &bull; NAKODAR &bull; FINE DINING</div>
+                <h1 class="cover-title">ISHWAR</h1>
+                <h2 class="cover-subtitle">Kitchen</h2>
+                <div class="cover-divider">&bull;</div>
+                <div class="cover-desc">NORTH INDIAN &bull;<br>PUNJAB &bull; CHINESE</div>
+                <div class="cover-para">Explore our menu, view the story behind<br>every dish, and reserve your table &mdash; all<br>in one place.</div>
+                <div class="cover-thin-line"></div>
+                <div class="cover-footer">
+                    <div>NURMALHAL ROAD, NEAR AU BANK, NAKODAR, PUNJAB</div>
+                    <div>OPEN DAILY &bull; 10:50 AM &bull; 10:50 PM</div>
+                    <div>CALL &bull; +91 86990 81815</div>
+                    <div class="cover-footer-quote">"Taste the Soul of Punjab"</div>
+                </div>
+            </div>
+            <div class="page-back">
+                <div style="height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+                    <h2 style="font-size:3em; color:#8b0000; border:none; margin: 0; padding-bottom: 10px;">Welcome &#128591;</h2>
+                    <p style="font-size:1.2em; font-style:italic; color:#555; margin: 0;">Explore the taste of Punjab.<br>Select any item to order.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="page" id="page-1" style="z-index: 99;">
+            <div class="page-front">
+                
+        <h2 class="section-title">Veg Chaap Tandoori</h2>
+        
+            <div class="menu-item" onclick="openModal('Achari Chaap')">
+                <span class="menu-name">Achari Chaap</span>
+                <span class="menu-price">₹110/210</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Tandoori Chaap')">
+                <span class="menu-name">Tandoori Chaap</span>
+                <span class="menu-price">₹126/221</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Paneer Stuffed Chaap')">
+                <span class="menu-name">Paneer Stuffed Chaap</span>
+                <span class="menu-price">₹147/278</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Sufi Chaap')">
+                <span class="menu-name">Sufi Chaap</span>
+                <span class="menu-price">₹110/210</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Afgani Chaap')">
+                <span class="menu-name">Afgani Chaap</span>
+                <span class="menu-price">₹116/210</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Irani Chaap (spicy)')">
+                <span class="menu-name">Irani Chaap (spicy)</span>
+                <span class="menu-price">₹126/221</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Garlic Mushroom Malai')">
+                <span class="menu-name">Garlic Mushroom Malai</span>
+                <span class="menu-price">₹200</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Tomato Chaap')">
+                <span class="menu-name">Tomato Chaap</span>
+                <span class="menu-price">₹110/210</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Garlic Malai Chaap')">
+                <span class="menu-name">Garlic Malai Chaap</span>
+                <span class="menu-price">₹189</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Banajara Chaap (spicy)')">
+                <span class="menu-name">Banajara Chaap (spicy)</span>
+                <span class="menu-price">₹110/210</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Malai Chaap')">
+                <span class="menu-name">Malai Chaap</span>
+                <span class="menu-price">₹126/226</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Paneer Tikka')">
+                <span class="menu-name">Paneer Tikka</span>
+                <span class="menu-price">₹158/289</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Paneer Achari Tikka')">
+                <span class="menu-name">Paneer Achari Tikka</span>
+                <span class="menu-price">₹158/289</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Paneer Malai Tikka')">
+                <span class="menu-name">Paneer Malai Tikka</span>
+                <span class="menu-price">₹179/305</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Paneer Pudina Tikka')">
+                <span class="menu-name">Paneer Pudina Tikka</span>
+                <span class="menu-price">₹158/289</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Ishwar Malai Mushroom Paneer Mix')">
+                <span class="menu-name">Ishwar Malai Mushroom Paneer Mix</span>
+                <span class="menu-price">₹263</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Pudina Chaap')">
+                <span class="menu-name">Pudina Chaap</span>
+                <span class="menu-price">₹110/210</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Masala Chaap')">
+                <span class="menu-name">Masala Chaap</span>
+                <span class="menu-price">₹110/210</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Bbq Chaap')">
+                <span class="menu-name">Bbq Chaap</span>
+                <span class="menu-price">₹121/221</span>
+            </div>
+        
+    
+            </div>
+            <div class="page-back">
+                
+        <h2 class="section-title">Continental Snacks</h2>
+        
+            <div class="menu-item" onclick="openModal('Paneer London Stuff Cheese')">
+                <span class="menu-name">Paneer London Stuff Cheese</span>
+                <span class="menu-price">₹194</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Veg Grilled')">
+                <span class="menu-name">Veg Grilled</span>
+                <span class="menu-price">₹136</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Mushroom Duplex')">
+                <span class="menu-name">Mushroom Duplex</span>
+                <span class="menu-price">₹147</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Mushroom Veg Stick')">
+                <span class="menu-name">Mushroom Veg Stick</span>
+                <span class="menu-price">₹147</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Cheese Corn Roll')">
+                <span class="menu-name">Cheese Corn Roll</span>
+                <span class="menu-price">₹136</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Hara Bhara Kebab')">
+                <span class="menu-name">Hara Bhara Kebab</span>
+                <span class="menu-price">₹136</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Veg Spring Roll')">
+                <span class="menu-name">Veg Spring Roll</span>
+                <span class="menu-price">₹136</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Noodle Spring Roll')">
+                <span class="menu-name">Noodle Spring Roll</span>
+                <span class="menu-price">₹136</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Cheese Spring Roll')">
+                <span class="menu-name">Cheese Spring Roll</span>
+                <span class="menu-price">₹136</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Chana Dal Kebab')">
+                <span class="menu-name">Chana Dal Kebab</span>
+                <span class="menu-price">₹235</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Crispy Mushroom')">
+                <span class="menu-name">Crispy Mushroom</span>
+                <span class="menu-price">₹120</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Veg Seekh Kebab')">
+                <span class="menu-name">Veg Seekh Kebab</span>
+                <span class="menu-price">₹120</span>
+            </div>
+        
+    
+            </div>
+        </div>
+    
+        <div class="page" id="page-2" style="z-index: 98;">
+            <div class="page-front">
+                
+        <h2 class="section-title">Indian Main Course</h2>
+        
+            <div class="menu-item" onclick="openModal('Dal Fry')">
+                <span class="menu-name">Dal Fry</span>
+                <span class="menu-price">₹84/147</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Dal Makhni')">
+                <span class="menu-name">Dal Makhni</span>
+                <span class="menu-price">₹100/168</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Dal Ghar Wali (yellow)')">
+                <span class="menu-name">Dal Ghar Wali (yellow)</span>
+                <span class="menu-price">₹84/152</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Dal Handi')">
+                <span class="menu-name">Dal Handi</span>
+                <span class="menu-price">₹104/179</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Dal Double Tadka')">
+                <span class="menu-name">Dal Double Tadka</span>
+                <span class="menu-price">₹104/173</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Dal Masaladar')">
+                <span class="menu-name">Dal Masaladar</span>
+                <span class="menu-price">₹110/173</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Jeera Aloo')">
+                <span class="menu-name">Jeera Aloo</span>
+                <span class="menu-price">₹95/158</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Mix Vegetable')">
+                <span class="menu-name">Mix Vegetable</span>
+                <span class="menu-price">₹104/205</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Paneer Bhurji')">
+                <span class="menu-name">Paneer Bhurji</span>
+                <span class="menu-price">₹168/278</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Chana Masala')">
+                <span class="menu-name">Chana Masala</span>
+                <span class="menu-price">₹121/209</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Malai Kofta')">
+                <span class="menu-name">Malai Kofta</span>
+                <span class="menu-price">₹168/314</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Palak Kofta')">
+                <span class="menu-name">Palak Kofta</span>
+                <span class="menu-price">₹131/221</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Palak Chana')">
+                <span class="menu-name">Palak Chana</span>
+                <span class="menu-price">₹126/221</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Kadai Broccoli')">
+                <span class="menu-name">Kadai Broccoli</span>
+                <span class="menu-price">₹273</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Sabzi Masaladar')">
+                <span class="menu-name">Sabzi Masaladar</span>
+                <span class="menu-price">₹142/252</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Veg Angara')">
+                <span class="menu-name">Veg Angara</span>
+                <span class="menu-price">₹142/247</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Veg Banjara')">
+                <span class="menu-name">Veg Banjara</span>
+                <span class="menu-price">₹137/242</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Gravy')">
+                <span class="menu-name">Gravy</span>
+                <span class="menu-price">₹95</span>
+            </div>
+        
+    
+            </div>
+            <div class="page-back">
+                
+        <h2 class="section-title">Tari Wali Chaap</h2>
+        
+            <div class="menu-item" onclick="openModal('Tawa Chaap')">
+                <span class="menu-name">Tawa Chaap</span>
+                <span class="menu-price">₹137/221</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Kadai Chaap')">
+                <span class="menu-name">Kadai Chaap</span>
+                <span class="menu-price">₹142/242</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Shahi Chaap')">
+                <span class="menu-name">Shahi Chaap</span>
+                <span class="menu-price">₹142/242</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Ishwar Shahi Chaap')">
+                <span class="menu-name">Ishwar Shahi Chaap</span>
+                <span class="menu-price">₹163/289</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Chaap Malai Kofta')">
+                <span class="menu-name">Chaap Malai Kofta</span>
+                <span class="menu-price">₹173/314</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Handi Chaap')">
+                <span class="menu-name">Handi Chaap</span>
+                <span class="menu-price">₹137/252</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Chaap Do Piaza')">
+                <span class="menu-name">Chaap Do Piaza</span>
+                <span class="menu-price">₹142/257</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Palak Chaap')">
+                <span class="menu-name">Palak Chaap</span>
+                <span class="menu-price">₹126/221</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Pataka Chaap')">
+                <span class="menu-name">Pataka Chaap</span>
+                <span class="menu-price">₹137/247</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Angara Chaap')">
+                <span class="menu-name">Angara Chaap</span>
+                <span class="menu-price">₹137/247</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Chaap Dhaba Style')">
+                <span class="menu-name">Chaap Dhaba Style</span>
+                <span class="menu-price">₹137/257</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Chaap Butter Masala')">
+                <span class="menu-name">Chaap Butter Masala</span>
+                <span class="menu-price">₹147/252</span>
+            </div>
+        
+    
+            </div>
+        </div>
+    
+        <div class="page" id="page-3" style="z-index: 97;">
+            <div class="page-front">
+                
+        <h2 class="section-title">Tari Wala Mushroom</h2>
+        
+            <div class="menu-item" onclick="openModal('Mushroom Butter Masala')">
+                <span class="menu-name">Mushroom Butter Masala</span>
+                <span class="menu-price">₹158/284</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Mushroom Do Piaza')">
+                <span class="menu-name">Mushroom Do Piaza</span>
+                <span class="menu-price">₹158/284</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Kadai Mushroom')">
+                <span class="menu-name">Kadai Mushroom</span>
+                <span class="menu-price">₹147/284</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Matar Mushroom')">
+                <span class="menu-name">Matar Mushroom</span>
+                <span class="menu-price">₹142/284</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Palak Mushroom')">
+                <span class="menu-name">Palak Mushroom</span>
+                <span class="menu-price">₹142/242</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Mushroom Kali Mirch')">
+                <span class="menu-name">Mushroom Kali Mirch</span>
+                <span class="menu-price">₹168/294</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Handi Mushroom')">
+                <span class="menu-name">Handi Mushroom</span>
+                <span class="menu-price">₹168/294</span>
+            </div>
+        
+    
+            </div>
+            <div class="page-back">
+                
+        <h2 class="section-title">Tari Wala Paneer</h2>
+        
+            <div class="menu-item" onclick="openModal('Kadai Paneer')">
+                <span class="menu-name">Kadai Paneer</span>
+                <span class="menu-price">₹158/284</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Shahi Paneer')">
+                <span class="menu-name">Shahi Paneer</span>
+                <span class="menu-price">₹147/273</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Paneer Butter Masala')">
+                <span class="menu-name">Paneer Butter Masala</span>
+                <span class="menu-price">₹168/284</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Paneer Tikka Butter Masala')">
+                <span class="menu-name">Paneer Tikka Butter Masala</span>
+                <span class="menu-price">₹184/326</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Paneer Do Piaza')">
+                <span class="menu-name">Paneer Do Piaza</span>
+                <span class="menu-price">₹168/305</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Handi Paneer')">
+                <span class="menu-name">Handi Paneer</span>
+                <span class="menu-price">₹173/314</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Paneer Lababdar')">
+                <span class="menu-name">Paneer Lababdar</span>
+                <span class="menu-price">₹173/305</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Palak Paneer')">
+                <span class="menu-name">Palak Paneer</span>
+                <span class="menu-price">₹152/289</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Cheese Tomato')">
+                <span class="menu-name">Cheese Tomato</span>
+                <span class="menu-price">₹152/289</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Matar Paneer')">
+                <span class="menu-name">Matar Paneer</span>
+                <span class="menu-price">₹137/242</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Paneer Pataka')">
+                <span class="menu-name">Paneer Pataka</span>
+                <span class="menu-price">₹168/305</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Paneer Guldasta')">
+                <span class="menu-name">Paneer Guldasta</span>
+                <span class="menu-price">₹168/305</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Angara Paneer')">
+                <span class="menu-name">Angara Paneer</span>
+                <span class="menu-price">₹168/305</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Paneer Dhaba Style')">
+                <span class="menu-name">Paneer Dhaba Style</span>
+                <span class="menu-price">₹168/294</span>
+            </div>
+        
+    
+            </div>
+        </div>
+    
+        <div class="page" id="page-4" style="z-index: 96;">
+            <div class="page-front">
+                
+        <h2 class="section-title">Indian Breads</h2>
+        
+            <div class="menu-item" onclick="openModal('Tandoori Roti')">
+                <span class="menu-name">Tandoori Roti</span>
+                <span class="menu-price">₹13</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Butter Roti')">
+                <span class="menu-name">Butter Roti</span>
+                <span class="menu-price">₹15</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Rumali Roti')">
+                <span class="menu-name">Rumali Roti</span>
+                <span class="menu-price">₹21</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Lacha Parantha')">
+                <span class="menu-name">Lacha Parantha</span>
+                <span class="menu-price">₹42</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Mirchi Lacha Parantha')">
+                <span class="menu-name">Mirchi Lacha Parantha</span>
+                <span class="menu-price">₹58</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Missi Roti')">
+                <span class="menu-name">Missi Roti</span>
+                <span class="menu-price">₹42</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Plain Naan')">
+                <span class="menu-name">Plain Naan</span>
+                <span class="menu-price">₹37</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Butter Naan')">
+                <span class="menu-name">Butter Naan</span>
+                <span class="menu-price">₹53</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Garlic Naan')">
+                <span class="menu-name">Garlic Naan</span>
+                <span class="menu-price">₹105</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Bread Basket')">
+                <span class="menu-name">Bread Basket</span>
+                <span class="menu-price">₹126</span>
+            </div>
+        
+    
+            </div>
+            <div class="page-back">
+                
+        <h2 class="section-title">Rice Dishes</h2>
+        
+            <div class="menu-item" onclick="openModal('Vegetable Biryani With Gravy')">
+                <span class="menu-name">Vegetable Biryani With Gravy</span>
+                <span class="menu-price">₹147</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Veg Pulao')">
+                <span class="menu-name">Veg Pulao</span>
+                <span class="menu-price">₹137</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Jeera Rice')">
+                <span class="menu-name">Jeera Rice</span>
+                <span class="menu-price">₹105</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Plain Rice')">
+                <span class="menu-name">Plain Rice</span>
+                <span class="menu-price">₹95</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Handi Biryani')">
+                <span class="menu-name">Handi Biryani</span>
+                <span class="menu-price">₹158</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Hydrabadi Dum Biryani')">
+                <span class="menu-name">Hydrabadi Dum Biryani</span>
+                <span class="menu-price">₹168</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Kashmiri Biryani')">
+                <span class="menu-name">Kashmiri Biryani</span>
+                <span class="menu-price">₹179</span>
+            </div>
+        
+    
+            </div>
+        </div>
+    
+        <div class="page" id="page-5" style="z-index: 95;">
+            <div class="page-front">
+                
+        <h2 class="section-title">From Chef's Wok</h2>
+        
+            <div class="menu-item" onclick="openModal('Cheese Chilly')">
+                <span class="menu-name">Cheese Chilly</span>
+                <span class="menu-price">₹163/289</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Veg Manchurian Dry')">
+                <span class="menu-name">Veg Manchurian Dry</span>
+                <span class="menu-price">₹84/142</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Honey Chilli Potato')">
+                <span class="menu-name">Honey Chilli Potato</span>
+                <span class="menu-price">₹116/200</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Baby Corn')">
+                <span class="menu-name">Baby Corn</span>
+                <span class="menu-price">₹200</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Mushroom Chilly')">
+                <span class="menu-name">Mushroom Chilly</span>
+                <span class="menu-price">₹142/252</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Chaap Chilly')">
+                <span class="menu-name">Chaap Chilly</span>
+                <span class="menu-price">₹137/231</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Chilli Garlic Fried Rice')">
+                <span class="menu-name">Chilli Garlic Fried Rice</span>
+                <span class="menu-price">₹194</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Fried Rice')">
+                <span class="menu-name">Fried Rice</span>
+                <span class="menu-price">₹179</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Hakka Noodles')">
+                <span class="menu-name">Hakka Noodles</span>
+                <span class="menu-price">₹200</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Chilli Garlic Noodles')">
+                <span class="menu-name">Chilli Garlic Noodles</span>
+                <span class="menu-price">₹100/179</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Wok Tossed Spicy Noodles')">
+                <span class="menu-name">Wok Tossed Spicy Noodles</span>
+                <span class="menu-price">₹209</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Veg Manchurian Gravy')">
+                <span class="menu-name">Veg Manchurian Gravy</span>
+                <span class="menu-price">₹100/168</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Schezwan Fried Rice')">
+                <span class="menu-name">Schezwan Fried Rice</span>
+                <span class="menu-price">₹184</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Schezwan Noodles')">
+                <span class="menu-name">Schezwan Noodles</span>
+                <span class="menu-price">₹200</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Pad Thai Noodles')">
+                <span class="menu-name">Pad Thai Noodles</span>
+                <span class="menu-price">₹209</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Veg Noodle')">
+                <span class="menu-name">Veg Noodle</span>
+                <span class="menu-price">₹200</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Hydrabadi Noodles')">
+                <span class="menu-name">Hydrabadi Noodles</span>
+                <span class="menu-price">₹200</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Cheese Noodles')">
+                <span class="menu-name">Cheese Noodles</span>
+                <span class="menu-price">₹179</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Cheese Dimsups 6pcs')">
+                <span class="menu-name">Cheese Dimsups 6pcs</span>
+                <span class="menu-price">₹137</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Corn Salt N Pepper')">
+                <span class="menu-name">Corn Salt N Pepper</span>
+                <span class="menu-price">₹179</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Crispy Baby Corn')">
+                <span class="menu-name">Crispy Baby Corn</span>
+                <span class="menu-price">₹200</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Oriental Chopsuey')">
+                <span class="menu-name">Oriental Chopsuey</span>
+                <span class="menu-price">₹252</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Sighapuri Noodles')">
+                <span class="menu-name">Sighapuri Noodles</span>
+                <span class="menu-price">₹200</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Veg Dimsups 6pcs')">
+                <span class="menu-name">Veg Dimsups 6pcs</span>
+                <span class="menu-price">₹95</span>
+            </div>
+        
+    
+            </div>
+            <div class="page-back">
+                
+        <h2 class="section-title">South To Mouth</h2>
+        
+            <div class="menu-item" onclick="openModal('Plain Dosa')">
+                <span class="menu-name">Plain Dosa</span>
+                <span class="menu-price">₹131</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Masala Dosa')">
+                <span class="menu-name">Masala Dosa</span>
+                <span class="menu-price">₹163</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Onion Masala Dosa')">
+                <span class="menu-name">Onion Masala Dosa</span>
+                <span class="menu-price">₹163</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Rawa Masala Dosa')">
+                <span class="menu-name">Rawa Masala Dosa</span>
+                <span class="menu-price">₹173</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Onion Rawa Masala Dosa')">
+                <span class="menu-name">Onion Rawa Masala Dosa</span>
+                <span class="menu-price">₹184</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Veg Uttapam')">
+                <span class="menu-name">Veg Uttapam</span>
+                <span class="menu-price">₹173</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Paneer Dosa')">
+                <span class="menu-name">Paneer Dosa</span>
+                <span class="menu-price">₹185</span>
+            </div>
+        
+    
+            </div>
+        </div>
+    
+        <div class="page" id="page-6" style="z-index: 94;">
+            <div class="page-front">
+                
+        <h2 class="section-title">European Starters</h2>
+        
+            <div class="menu-item" onclick="openModal('Veg Nachos')">
+                <span class="menu-name">Veg Nachos</span>
+                <span class="menu-price">₹158</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Cream Bruschetta')">
+                <span class="menu-name">Cream Bruschetta</span>
+                <span class="menu-price">₹158</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Veg Lasagne')">
+                <span class="menu-name">Veg Lasagne</span>
+                <span class="menu-price">₹168</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Saute Vegetables')">
+                <span class="menu-name">Saute Vegetables</span>
+                <span class="menu-price">₹168</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Veg Light Noodles')">
+                <span class="menu-name">Veg Light Noodles</span>
+                <span class="menu-price">₹152</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Cheese Garlic Bread Stick')">
+                <span class="menu-name">Cheese Garlic Bread Stick</span>
+                <span class="menu-price">₹168</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Cream Mushroom Toast')">
+                <span class="menu-name">Cream Mushroom Toast</span>
+                <span class="menu-price">₹152</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Veggie Salad')">
+                <span class="menu-name">Veggie Salad</span>
+                <span class="menu-price">₹158</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Aloo Tikki Salad')">
+                <span class="menu-name">Aloo Tikki Salad</span>
+                <span class="menu-price">₹189</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Paneer Tikka Salad')">
+                <span class="menu-name">Paneer Tikka Salad</span>
+                <span class="menu-price">₹163</span>
+            </div>
+        
+    
+            </div>
+            <div class="page-back">
+                
+        <h2 class="section-title">Indian Style Snacks</h2>
+        
+            <div class="menu-item" onclick="openModal('Chaap Bullet')">
+                <span class="menu-name">Chaap Bullet</span>
+                <span class="menu-price">₹137</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Tandoori Spring Roll')">
+                <span class="menu-name">Tandoori Spring Roll</span>
+                <span class="menu-price">₹131</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Paneer Pakora (6pcs)')">
+                <span class="menu-name">Paneer Pakora (6pcs)</span>
+                <span class="menu-price">₹179</span>
+            </div>
+        
+    
+        <h2 class="section-title">Pizza</h2>
+        
+            <div class="menu-item" onclick="openModal('Indi Tandoori Paneer Pizza')">
+                <span class="menu-name">Indi Tandoori Paneer Pizza</span>
+                <span class="menu-price">₹252/462</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Farm House Pizza')">
+                <span class="menu-name">Farm House Pizza</span>
+                <span class="menu-price">₹252/462</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Veg Bbq Pizza')">
+                <span class="menu-name">Veg Bbq Pizza</span>
+                <span class="menu-price">₹252/488</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Extravaganza Pizza')">
+                <span class="menu-name">Extravaganza Pizza</span>
+                <span class="menu-price">₹299/524</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Veg Paradise Pizza')">
+                <span class="menu-name">Veg Paradise Pizza</span>
+                <span class="menu-price">₹252/462</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Ishwar&#x27;s Special Veg Club Atta Pizza')">
+                <span class="menu-name">Ishwar&#x27;s Special Veg Club Atta Pizza</span>
+                <span class="menu-price">₹160</span>
+            </div>
+        
+    
+            </div>
+        </div>
+    
+        <div class="page" id="page-7" style="z-index: 93;">
+            <div class="page-front">
+                
+        <h2 class="section-title">Pizza Mania</h2>
+        
+            <div class="menu-item" onclick="openModal('Cheese Corn Pizza')">
+                <span class="menu-name">Cheese Corn Pizza</span>
+                <span class="menu-price">₹104</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Fresh Veggie Pizza')">
+                <span class="menu-name">Fresh Veggie Pizza</span>
+                <span class="menu-price">₹104</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Paneer Onion Pizza')">
+                <span class="menu-name">Paneer Onion Pizza</span>
+                <span class="menu-price">₹142</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Veg Loaded Pizza')">
+                <span class="menu-name">Veg Loaded Pizza</span>
+                <span class="menu-price">₹179</span>
+            </div>
+        
+    
+            </div>
+            <div class="page-back">
+                
+        <h2 class="section-title">Burger & Fries</h2>
+        
+            <div class="menu-item" onclick="openModal('Veggie Burger')">
+                <span class="menu-name">Veggie Burger</span>
+                <span class="menu-price">₹58</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Veg Cheese Burger')">
+                <span class="menu-name">Veg Cheese Burger</span>
+                <span class="menu-price">₹68</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Noodle Burger')">
+                <span class="menu-name">Noodle Burger</span>
+                <span class="menu-price">₹63</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Tandoori Paneer Burger')">
+                <span class="menu-name">Tandoori Paneer Burger</span>
+                <span class="menu-price">₹95</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Spicy Paneer Burger')">
+                <span class="menu-name">Spicy Paneer Burger</span>
+                <span class="menu-price">₹104</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Big Bang Burger')">
+                <span class="menu-name">Big Bang Burger</span>
+                <span class="menu-price">₹137</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Maharaia Burger')">
+                <span class="menu-name">Maharaia Burger</span>
+                <span class="menu-price">₹131</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Masala Fries')">
+                <span class="menu-name">Masala Fries</span>
+                <span class="menu-price">₹116</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Peri Peri Fries')">
+                <span class="menu-name">Peri Peri Fries</span>
+                <span class="menu-price">₹137</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Loaded Cheesy Fries')">
+                <span class="menu-name">Loaded Cheesy Fries</span>
+                <span class="menu-price">₹158</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Salted Fries')">
+                <span class="menu-name">Salted Fries</span>
+                <span class="menu-price">₹104</span>
+            </div>
+        
+    
+            </div>
+        </div>
+    
+        <div class="page" id="page-8" style="z-index: 92;">
+            <div class="page-front">
+                
+        <h2 class="section-title">Pasta</h2>
+        
+            <div class="menu-item" onclick="openModal('Alfredo Pasta')">
+                <span class="menu-name">Alfredo Pasta</span>
+                <span class="menu-price">₹200</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Arrabiata Pasta')">
+                <span class="menu-name">Arrabiata Pasta</span>
+                <span class="menu-price">₹200</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Mix Sauce Pasta(chefs Special)')">
+                <span class="menu-name">Mix Sauce Pasta(chefs Special)</span>
+                <span class="menu-price">₹200</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Pesto Cream Pasta')">
+                <span class="menu-name">Pesto Cream Pasta</span>
+                <span class="menu-price">₹231</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Fussili Fries Pasta')">
+                <span class="menu-name">Fussili Fries Pasta</span>
+                <span class="menu-price">₹257</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Pink Sauce Pasta')">
+                <span class="menu-name">Pink Sauce Pasta</span>
+                <span class="menu-price">₹130</span>
+            </div>
+        
+    
+            </div>
+            <div class="page-back">
+                
+        <h2 class="section-title">Wrap & Rolls</h2>
+        
+            <div class="menu-item" onclick="openModal('Cottage Cheese Wrap')">
+                <span class="menu-name">Cottage Cheese Wrap</span>
+                <span class="menu-price">₹158</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Veg Wrap')">
+                <span class="menu-name">Veg Wrap</span>
+                <span class="menu-price">₹147</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Health Delight Wrap')">
+                <span class="menu-name">Health Delight Wrap</span>
+                <span class="menu-price">₹163</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Maxican Wrap')">
+                <span class="menu-name">Maxican Wrap</span>
+                <span class="menu-price">₹163</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Veg Shorma Wrap')">
+                <span class="menu-name">Veg Shorma Wrap</span>
+                <span class="menu-price">₹147</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Paneer Tikka Roll')">
+                <span class="menu-name">Paneer Tikka Roll</span>
+                <span class="menu-price">₹158</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Chaap Tikka Roll')">
+                <span class="menu-name">Chaap Tikka Roll</span>
+                <span class="menu-price">₹142</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Chatpata Chana Wrap')">
+                <span class="menu-name">Chatpata Chana Wrap</span>
+                <span class="menu-price">₹137</span>
+            </div>
+        
+    
+            </div>
+        </div>
+    
+        <div class="page" id="page-9" style="z-index: 91;">
+            <div class="page-front">
+                
+        <h2 class="section-title">Grilled Sandwich</h2>
+        
+            <div class="menu-item" onclick="openModal('Spicy South West Cottage Cheese')">
+                <span class="menu-name">Spicy South West Cottage Cheese</span>
+                <span class="menu-price">₹163</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Cream Veg Cheese')">
+                <span class="menu-name">Cream Veg Cheese</span>
+                <span class="menu-price">₹136</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Cottage Cheese Sandwich')">
+                <span class="menu-name">Cottage Cheese Sandwich</span>
+                <span class="menu-price">₹163</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Mix Veg Sandwich')">
+                <span class="menu-name">Mix Veg Sandwich</span>
+                <span class="menu-price">₹136</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Roasted Vegetable Sandwich')">
+                <span class="menu-name">Roasted Vegetable Sandwich</span>
+                <span class="menu-price">₹163</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Veg Herby Sandwich')">
+                <span class="menu-name">Veg Herby Sandwich</span>
+                <span class="menu-price">₹163</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Spinach Corn Cheese Sandwich')">
+                <span class="menu-name">Spinach Corn Cheese Sandwich</span>
+                <span class="menu-price">₹163</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Bombay Style Sandwich')">
+                <span class="menu-name">Bombay Style Sandwich</span>
+                <span class="menu-price">₹178</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Health Delight Sandwich')">
+                <span class="menu-name">Health Delight Sandwich</span>
+                <span class="menu-price">₹173</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Jumbo Sandwich')">
+                <span class="menu-name">Jumbo Sandwich</span>
+                <span class="menu-price">₹200</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Mushroom Tikka Sandwich')">
+                <span class="menu-name">Mushroom Tikka Sandwich</span>
+                <span class="menu-price">₹95</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Paneer Tikka Sandwich')">
+                <span class="menu-name">Paneer Tikka Sandwich</span>
+                <span class="menu-price">₹195</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Plain Cheese Sandwich')">
+                <span class="menu-name">Plain Cheese Sandwich</span>
+                <span class="menu-price">₹81</span>
+            </div>
+        
+    
+            </div>
+            <div class="page-back">
+                
+        <h2 class="section-title">Sizzlers</h2>
+        
+            <div class="menu-item" onclick="openModal('Chinese Sticks Sizzlers')">
+                <span class="menu-name">Chinese Sticks Sizzlers</span>
+                <span class="menu-price">₹462</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Chinese Calories Sizzlers')">
+                <span class="menu-name">Chinese Calories Sizzlers</span>
+                <span class="menu-price">₹462</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Chinese Sizzlers')">
+                <span class="menu-name">Chinese Sizzlers</span>
+                <span class="menu-price">₹462</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Tandoori Sizzler')">
+                <span class="menu-name">Tandoori Sizzler</span>
+                <span class="menu-price">₹462</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Desi Veg Indian Sizzler')">
+                <span class="menu-name">Desi Veg Indian Sizzler</span>
+                <span class="menu-price">₹630</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Veg Greeny Stick Sizzler')">
+                <span class="menu-name">Veg Greeny Stick Sizzler</span>
+                <span class="menu-price">₹630</span>
+            </div>
+        
+    
+            </div>
+        </div>
+    
+        <div class="page" id="page-10" style="z-index: 90;">
+            <div class="page-front">
+                
+        <h2 class="section-title">Salad & Raita</h2>
+        
+            <div class="menu-item" onclick="openModal('Garden Fresh Green Salad')">
+                <span class="menu-name">Garden Fresh Green Salad</span>
+                <span class="menu-price">₹74</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Roasted Papad')">
+                <span class="menu-name">Roasted Papad</span>
+                <span class="menu-price">₹32</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Masala Papad')">
+                <span class="menu-name">Masala Papad</span>
+                <span class="menu-price">₹32</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Plain Raita')">
+                <span class="menu-name">Plain Raita</span>
+                <span class="menu-price">₹52</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Pineapple Raita')">
+                <span class="menu-name">Pineapple Raita</span>
+                <span class="menu-price">₹105</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Mix Raita')">
+                <span class="menu-name">Mix Raita</span>
+                <span class="menu-price">₹105</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Boondi Raita')">
+                <span class="menu-name">Boondi Raita</span>
+                <span class="menu-price">₹105</span>
+            </div>
+        
+    
+            </div>
+            <div class="page-back">
+                
+        <h2 class="section-title">Ishwar's Meal</h2>
+        
+            <div class="menu-item" onclick="openModal('Keema Naan With Gravy')">
+                <span class="menu-name">Keema Naan With Gravy</span>
+                <span class="menu-price">₹104</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Paneer Naan With Gravy')">
+                <span class="menu-name">Paneer Naan With Gravy</span>
+                <span class="menu-price">₹152</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Onion Naan With Gravy')">
+                <span class="menu-name">Onion Naan With Gravy</span>
+                <span class="menu-price">₹95</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Garlic Naan With Gravy')">
+                <span class="menu-name">Garlic Naan With Gravy</span>
+                <span class="menu-price">₹173</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Keema Naan With Gravy Atta')">
+                <span class="menu-name">Keema Naan With Gravy Atta</span>
+                <span class="menu-price">₹131</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Mix Naan')">
+                <span class="menu-name">Mix Naan</span>
+                <span class="menu-price">₹158</span>
+            </div>
+        
+    
+            </div>
+        </div>
+    
+        <div class="page" id="page-11" style="z-index: 89;">
+            <div class="page-front">
+                
+        <h2 class="section-title">Thali</h2>
+        
+            <div class="menu-item" onclick="openModal('Special Thali')">
+                <span class="menu-name">Special Thali</span>
+                <span class="menu-price">₹147</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Lunch Thali')">
+                <span class="menu-name">Lunch Thali</span>
+                <span class="menu-price">₹126</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Maharaja Thali')">
+                <span class="menu-name">Maharaja Thali</span>
+                <span class="menu-price">₹209</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Ishwars Special Thali')">
+                <span class="menu-name">Ishwars Special Thali</span>
+                <span class="menu-price">₹231</span>
+            </div>
+        
+    
+            </div>
+            <div class="page-back">
+                
+        <h2 class="section-title">Mocktails</h2>
+        
+            <div class="menu-item" onclick="openModal('Fresh Lime Soda')">
+                <span class="menu-name">Fresh Lime Soda</span>
+                <span class="menu-price">₹95</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Masala Lemonade')">
+                <span class="menu-name">Masala Lemonade</span>
+                <span class="menu-price">₹95</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Apple Virgin Mojito')">
+                <span class="menu-name">Apple Virgin Mojito</span>
+                <span class="menu-price">₹137</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Mint Virgin Mojito')">
+                <span class="menu-name">Mint Virgin Mojito</span>
+                <span class="menu-price">₹137</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Watermelon Virgin Mojito')">
+                <span class="menu-name">Watermelon Virgin Mojito</span>
+                <span class="menu-price">₹137</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Kala Chashma')">
+                <span class="menu-name">Kala Chashma</span>
+                <span class="menu-price">₹147</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Blue Lagoon')">
+                <span class="menu-name">Blue Lagoon</span>
+                <span class="menu-price">₹147</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Blue Berry')">
+                <span class="menu-name">Blue Berry</span>
+                <span class="menu-price">₹147</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Tripple Flair')">
+                <span class="menu-name">Tripple Flair</span>
+                <span class="menu-price">₹147</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Fruit Punch')">
+                <span class="menu-name">Fruit Punch</span>
+                <span class="menu-price">₹147</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Virgin Summer Sunset')">
+                <span class="menu-name">Virgin Summer Sunset</span>
+                <span class="menu-price">₹147</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Green Apple')">
+                <span class="menu-name">Green Apple</span>
+                <span class="menu-price">₹152</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Lemon Ice Tea')">
+                <span class="menu-name">Lemon Ice Tea</span>
+                <span class="menu-price">₹152</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Peach Ice Tea')">
+                <span class="menu-name">Peach Ice Tea</span>
+                <span class="menu-price">₹152</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Pina Colada')">
+                <span class="menu-name">Pina Colada</span>
+                <span class="menu-price">₹152</span>
+            </div>
+        
+    
+            </div>
+        </div>
+    
+        <div class="page" id="page-12" style="z-index: 88;">
+            <div class="page-front">
+                
+        <h2 class="section-title">Milkshakes</h2>
+        
+            <div class="menu-item" onclick="openModal('Butterscotch Shake')">
+                <span class="menu-name">Butterscotch Shake</span>
+                <span class="menu-price">₹152</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Vanilla Shake')">
+                <span class="menu-name">Vanilla Shake</span>
+                <span class="menu-price">₹152</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Strawberry Shake')">
+                <span class="menu-name">Strawberry Shake</span>
+                <span class="menu-price">₹152</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Black Currant Shake')">
+                <span class="menu-name">Black Currant Shake</span>
+                <span class="menu-price">₹168</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Chocolate Shake')">
+                <span class="menu-name">Chocolate Shake</span>
+                <span class="menu-price">₹152</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Kitkat Shake')">
+                <span class="menu-name">Kitkat Shake</span>
+                <span class="menu-price">₹168</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Oreo Shake')">
+                <span class="menu-name">Oreo Shake</span>
+                <span class="menu-price">₹168</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Nutella Shake')">
+                <span class="menu-name">Nutella Shake</span>
+                <span class="menu-price">₹179</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Red Velvet Shake')">
+                <span class="menu-name">Red Velvet Shake</span>
+                <span class="menu-price">₹168</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Bubble Gum Shake')">
+                <span class="menu-name">Bubble Gum Shake</span>
+                <span class="menu-price">₹152</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Protein Shake')">
+                <span class="menu-name">Protein Shake</span>
+                <span class="menu-price">₹189</span>
+            </div>
+        
+    
+            </div>
+            <div class="page-back">
+                
+        <h2 class="section-title">Drinks (Beverages)</h2>
+        
+            <div class="menu-item" onclick="openModal('Hot Tea')">
+                <span class="menu-name">Hot Tea</span>
+                <span class="menu-price">₹42</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Cold Coffee')">
+                <span class="menu-name">Cold Coffee</span>
+                <span class="menu-price">₹147</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Milk Badam')">
+                <span class="menu-name">Milk Badam</span>
+                <span class="menu-price">₹147</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Coffee')">
+                <span class="menu-name">Coffee</span>
+                <span class="menu-price">₹40</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Lassi')">
+                <span class="menu-name">Lassi</span>
+                <span class="menu-price">₹40</span>
+            </div>
+        
+    
+            </div>
+        </div>
+    
+        <div class="page" id="page-13" style="z-index: 87;">
+            <div class="page-front">
+                
+        <h2 class="section-title">Extra</h2>
+        
+            <div class="menu-item" onclick="openModal('Butter Tikki')">
+                <span class="menu-name">Butter Tikki</span>
+                <span class="menu-price">₹120</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Chutney Packet')">
+                <span class="menu-name">Chutney Packet</span>
+                <span class="menu-price">₹120</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Extra Cream')">
+                <span class="menu-name">Extra Cream</span>
+                <span class="menu-price">₹120</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Hot Dip')">
+                <span class="menu-name">Hot Dip</span>
+                <span class="menu-price">₹120</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Mayo Dip')">
+                <span class="menu-name">Mayo Dip</span>
+                <span class="menu-price">₹120</span>
+            </div>
+        
+            <div class="menu-item" onclick="openModal('Onion Packet')">
+                <span class="menu-name">Onion Packet</span>
+                <span class="menu-price">₹120</span>
+            </div>
+        
+    
+        <h2 class="section-title">Desert</h2>
+        
+            <div class="menu-item" onclick="openModal('Ice Cream 2 Scoop')">
+                <span class="menu-name">Ice Cream 2 Scoop</span>
+                <span class="menu-price">₹80</span>
+            </div>
+        
+    
+            </div>
+            <div class="page-back">
+                
+            </div>
+        </div>
+    
+        <div class="page" id="page-14" style="z-index: 86;">
+            <div class="page-front">
+                <div style="text-align:center; margin-top:50%;">
+                    <h2>Thank You!</h2>
+                    <p>Hope to see you soon.</p>
+                </div>
+            </div>
+            <div class="page-back cover">
+                <div class="cover-logo" style="margin-bottom:30px;">
+                    <img src="./logo.webp" alt="Ishwar Kitchen Logo" width="120" height="120" loading="lazy">
+                </div>
+                <h1 class="cover-title">ISHWAR</h1>
+                <h2 class="cover-subtitle">Kitchen</h2>
+                <div class="cover-footer-quote">Nakodar, Punjab</div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="controls">
+        <button class="btn" onclick="prevPage()">&#8592; Previous</button>
+        <button class="btn" onclick="nextPage()">Next &#8594;</button>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modal" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <h2>Coming Soon!</h2>
+            <p>Our ordering system for <strong id="order-item"></strong> is coming soon.</p>
+            <button class="close-btn" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        let currentPage = 0;
+        let isMobileHalfFlipped = false;
+        const pages = document.querySelectorAll('.page');
+        
+        function nextPage() {
+            if (window.innerWidth <= 768) {
+                if (currentPage >= pages.length) return;
+                
+                if (!isMobileHalfFlipped) {
+                    // First swipe: flip in place to show the back of the page
+                    pages[currentPage].classList.add('mobile-half-flipped');
+                    isMobileHalfFlipped = true;
+                } else {
+                    // Second swipe: slide it off screen to reveal the next page
+                    pages[currentPage].classList.remove('mobile-half-flipped');
+                    pages[currentPage].classList.add('flipped');
+                    currentPage++;
+                    isMobileHalfFlipped = false;
+                }
+            } else {
+                if (currentPage < pages.length) {
+                    pages[currentPage].classList.add('flipped');
+                    pages[currentPage].style.zIndex = 100 + currentPage; // Fix z-index for left stack
+                    currentPage++;
+                }
+            }
+        }
+
+        function prevPage() {
+            if (window.innerWidth <= 768) {
+                if (isMobileHalfFlipped) {
+                    // Flip back to front
+                    pages[currentPage].classList.remove('mobile-half-flipped');
+                    isMobileHalfFlipped = false;
+                } else {
+                    // Bring previous page back from off-screen
+                    if (currentPage > 0) {
+                        currentPage--;
+                        pages[currentPage].classList.remove('flipped');
+                        pages[currentPage].classList.add('mobile-half-flipped');
+                        isMobileHalfFlipped = true;
+                    }
+                }
+            } else {
+                if (currentPage > 0) {
+                    currentPage--;
+                    pages[currentPage].classList.remove('flipped');
+                    pages[currentPage].style.zIndex = 100 + currentPage; // Stay high during swing
+                    let idx = currentPage;
+                    setTimeout(() => {
+                        pages[idx].style.zIndex = 100 - idx; // Restore z-index for right stack after animation
+                    }, 1000);
+                }
+            }
+        }
+
+        // Swipe Detection Logic
+        let touchstartX = 0;
+        let touchendX = 0;
+        const bookContainer = document.querySelector('.book-container');
+
+        function handleGesture() {
+            if (touchendX < touchstartX - 40) {
+                // Swiped left
+                nextPage();
+            }
+            if (touchendX > touchstartX + 40) {
+                // Swiped right
+                prevPage();
+            }
+        }
+
+        bookContainer.addEventListener('touchstart', e => {
+            touchstartX = e.changedTouches[0].screenX;
+        });
+
+        bookContainer.addEventListener('touchend', e => {
+            touchendX = e.changedTouches[0].screenX;
+            handleGesture();
+        });
+
+        function openModal(itemName) {
+            document.getElementById('order-item').innerText = itemName;
+            document.getElementById('modal').classList.add('active');
+        }
+
+        function closeModal(e) {
+            if (e && e.target !== document.getElementById('modal') && e.target.tagName !== 'BUTTON') return;
+            document.getElementById('modal').classList.remove('active');
+        }
+        
+        updateZIndex();
+    </script>
+</body>
+</html>

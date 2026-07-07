@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <title>Customer Reviews | Ishwar Kitchen</title>
+  <meta name="description" content="Visit Ishwar Kitchen for an authentic and heartwarming culinary experience in Nakodar. We serve delicious North Indian, Punjabi & Chinese cuisine made with love."/>
+
+  <!-- PWA -->
+  <link rel="manifest" href="../manifest.json"/>
+  <meta name="theme-color" content="#D4AF37"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="Ishwar Kitchen"/>
+  <link rel="apple-touch-icon" href="../favicon-192.png"/>
+  <link rel="icon" type="image/png" sizes="48x48" href="../favicon.png"/>
+  <link rel="icon" type="image/png" sizes="192x192" href="../favicon-192.png"/>
+
+  <link rel="stylesheet" href="../style.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <!-- Advanced SEO: JSON-LD Schema Markup -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "name": "Ishwar Kitchen",
+    "image": "https://www.ishwarkitchen.in/logo.png",
+    "url": "https://www.ishwarkitchen.in",
+    "telephone": "+918699081813",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Nakodar",
+      "addressRegion": "Punjab",
+      "addressCountry": "IN"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 31.1278,
+      "longitude": 75.4746
+    },
+    "servesCuisine": ["Punjabi", "North Indian", "Chinese"],
+    "priceRange": "₹₹",
+    "menu": "https://www.ishwarkitchen.in/menu.pdf"
+  }
+  </script>
+</head>
+<body>
+
+<!-- ══════════ SVG filter for Apple Liquid Glass effect animated turbulence ══════════ -->
+<svg style="display:none" aria-hidden="true">
+  <defs>
+    <filter id="liq" x="-40%" y="-40%" width="180%" height="180%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.028 0.02" numOctaves="4" seed="6" result="noise">
+        <animate attributeName="baseFrequency" values="0.028 0.02;0.048 0.038;0.028 0.02" dur="5s" repeatCount="indefinite"/>
+        <animate attributeName="seed" values="6;14;6" dur="5s" repeatCount="indefinite"/>
+      </feTurbulence>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="18" xChannelSelector="R" yChannelSelector="G" result="distorted"/>
+      <feComposite in="distorted" in2="SourceGraphic" operator="in"/>
+    </filter>
+  </defs>
+</svg>
+
+<!-- ══════════ NEW LOADING ANIMATION ══════════ -->
+<div id="loader">
+  <canvas id="loaderCanvas"></canvas>
+  <div class="loader-plate-wrap">
+    <div class="loader-logo-wrap">
+      <div class="loader-logo-circle">
+        <img src="../logo.png" alt="Ishwar Kitchen - Best Restaurant in Nakodar" title="Ishwar Kitchen - Best Restaurant in Nakodar" class="loader-logo-img"/>
+      </div>
+    </div>
+    <p class="loader-sub">Nakodar &nbsp;·&nbsp; Punjab &nbsp;·&nbsp; Taste the Soul</p>
+    <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
+  </div>
+</div>
+
+<!-- ══════════ NAVBAR ══════════ -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-circle">
+        <img src="../logo.png" alt="Ishwar Kitchen - Best Food in Nakodar" title="Ishwar Kitchen - Best Food in Nakodar" class="nav-logo-img"/>
+      </div>
+      <div class="nav-logo-text">
+        <span class="logo-name">Ishwar Kitchen</span>
+        <span class="logo-tagline">Nakodar · Punjab</span>
+      </div>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html#home">Home</a></li>
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="index.html#order">Order</a></li>
+      <li><a href="index.html#gallery">Gallery</a></li>
+      <li><a href="reviews.html">Reviews</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <button class="reserve-btn" onclick="toggleCart()">🛒 Order Now</button>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ══════════ REVIEWS ══════════ -->
+<section class="reviews-section section" id="reviews">
+  <div class="container">
+    <div class="section-header" data-aos><p class="section-tag">What People Say</p><h2 class="section-title">Customer <em>Reviews</em></h2><p class="section-desc">Real feedback from our happy customers</p></div>
+
+    <!-- ══════════ LATEST FEEDBACK (newest first, top of page) ══════════ -->
+    <div class="latest-feedback-wrap" data-aos>
+      <div class="latest-feedback-header">
+        <span class="live-dot" aria-hidden="true"></span>
+        <h3 class="latest-feedback-title">Latest <em>Feedback</em></h3>
+        <span class="latest-feedback-sub">Fresh from our guests, as it happens</span>
+      </div>
+      <div id="userReviewsWrap"></div>
+    </div>
+
+    <!-- ══════════ WRITE A REVIEW FORM ══════════ -->
+    <div class="write-review-wrap" data-aos>
+      <div class="write-review-header">
+        <p class="section-tag" style="margin-bottom:.2rem">Share Your Experience</p>
+        <h3 class="write-review-title">Write a <em>Review</em></h3>
+        <p class="write-review-sub">Loved the food? Tell the world about Ishwar Kitchen! 🍽️</p>
+      </div>
+      <form class="review-form" id="reviewForm" onsubmit="submitReview(event)">
+        <div class="rf-field">
+          <label class="rf-label">Your Rating *</label>
+          <div class="star-picker" id="starPicker">
+            <span class="star-pick" data-val="1">★</span>
+            <span class="star-pick" data-val="2">★</span>
+            <span class="star-pick" data-val="3">★</span>
+            <span class="star-pick" data-val="4">★</span>
+            <span class="star-pick" data-val="5">★</span>
+          </div>
+          <span class="star-label" id="starLabel">Tap to rate</span>
+          <input type="hidden" id="ratingVal" value="0"/>
+        </div>
+        <div class="rf-row">
+          <div class="rf-field">
+            <label class="rf-label" for="rvName">Your Name *</label>
+            <input class="rf-input" type="text" id="rvName" placeholder="e.g. Manjot Singh" maxlength="40" autocomplete="name"/>
+          </div>
+          <div class="rf-field">
+            <label class="rf-label" for="rvLocation">City / Location</label>
+            <input class="rf-input" type="text" id="rvLocation" placeholder="e.g. Nakodar, Punjab" maxlength="40"/>
+          </div>
+        </div>
+        <div class="rf-field">
+          <label class="rf-label" for="rvText">Your Review *</label>
+          <textarea class="rf-input rf-textarea" id="rvText" rows="4" placeholder="What did you enjoy most? Tell us about the food, service, ambiance…" maxlength="300"></textarea>
+          <span class="rf-char" id="rvChar">0 / 300</span>
+        </div>
+        <button type="submit" class="rf-submit-btn" id="rfSubmitBtn">
+          <span>✍️ Submit Review</span>
+        </button>
+      </form>
+    </div>
+
+    <!-- ══════════ OLDER / CURATED REVIEWS ══════════ -->
+    <div class="older-reviews-divider" data-aos><span></span><p>Earlier Reviews</p><span></span></div>
+    <div class="reviews-grid" data-aos>
+      <div class="review-card"><span class="review-source">Google</span><div class="review-stars">⭐⭐⭐⭐⭐</div><p class="review-text">"Beast service and nice staff."</p><div class="review-author"><div class="review-avatar">J</div><div><strong>Joseph</strong><span>Google review</span></div></div></div>
+      <div class="review-card"><span class="review-source">Google</span><div class="review-stars">⭐⭐⭐⭐⭐</div><p class="review-text">"I recently ordered a late-night snack from Ishwar Kitchen and I must say, I was pleasantly surprised. Their Thali Lunch was delicious and satisfied my late-night cravings perfectly. The delivery time was quick and the food arrived fresh and hot. Highly recommend for anyone who enjoys a good late-night meal — my go-to spot for late-night study sessions!"</p><div class="review-author"><div class="review-avatar">V</div><div><strong>Vishakha</strong><span>Google review</span></div></div></div>
+      <div class="review-card"><div class="review-stars">⭐⭐⭐⭐⭐</div><p class="review-text">"Best dal makhani in Nakodar! The chaap tikka is absolutely divine. Great value for money and very welcoming staff!"</p><div class="review-author"><div class="review-avatar">RS</div><div><strong>Rajveer Singh</strong><span>Nakodar, Punjab</span></div></div></div>
+      <div class="review-card featured"><div class="review-stars">⭐⭐⭐⭐⭐</div><p class="review-text">"Ishwar Kitchen is our family's go-to place. The paneer dishes are always fresh and naans are perfectly soft. Ordered on Swiggy too — quality maintained!"</p><div class="review-author"><div class="review-avatar">PK</div><div><strong>Priya Kapoor</strong><span>Jalandhar, Punjab</span></div></div></div>
+      <div class="review-card"><div class="review-stars">⭐⭐⭐⭐</div><p class="review-text">"Amazing Chinese food! The Manchurian was spot on. Portions are generous and prices are very reasonable. Must try!"</p><div class="review-author"><div class="review-avatar">AS</div><div><strong>Amit Sharma</strong><span>Ludhiana, Punjab</span></div></div></div>
+      <div class="review-card"><div class="review-stars">⭐⭐⭐⭐⭐</div><p class="review-text">"Warm ambiance, quick service, and delicious food. The lassi here is the best I've tasted in all of Jalandhar!"</p><div class="review-author"><div class="review-avatar">MV</div><div><strong>Manpreet Verma</strong><span>Nakodar, Punjab</span></div></div></div>
+      <div class="review-card"><div class="review-stars">⭐⭐⭐⭐</div><p class="review-text">"Great spot for family dining. Kids loved the pizza and burgers while adults enjoyed Punjabi dishes. Highly recommend!"</p><div class="review-author"><div class="review-avatar">GK</div><div><strong>Gurpreet Kaur</strong><span>Phagwara, Punjab</span></div></div></div>
+      <div class="review-card"><div class="review-stars">⭐⭐⭐⭐⭐</div><p class="review-text">"The food here reminds me of home-cooked Punjabi meals. The shahi paneer and butter naan combo is unbeatable!"</p><div class="review-author"><div class="review-avatar">HB</div><div><strong>Harjeet Bains</strong><span>Nakodar, Punjab</span></div></div></div>
+    </div>
+    <div class="rating-summary" data-aos><div class="rating-big">4.1</div><div class="rating-stars">⭐⭐⭐⭐</div><p>Based on 6k+ reviews across Google, Swiggy &amp; Zomato</p></div>
+
+  </div>
+</section>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer class="footer">
+  <div class="footer-top">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-logo">
+            <div class="footer-logo-circle">
+              <img src="../logo.png" alt="Ishwar Kitchen" title="Ishwar Kitchen" class="footer-logo-img"/>
+            </div>
+          </div>
+          <p class="footer-desc">Authentic North Indian, Punjabi & Chinese cuisine crafted with love in the heart of Nakodar, Punjab.</p>
+          <div class="footer-social">
+            <a href="https://wa.me/918699081813" target="_blank" class="social-btn" title="WhatsApp"><img src="../Logo/whatsapp.jpg" alt="WhatsApp" title="WhatsApp"/></a>
+            <a href="https://www.swiggy.com" target="_blank" class="social-btn" title="Swiggy"><img src="../Logo/swiggy.png" alt="Swiggy" title="Swiggy"/></a>
+            <a href="https://www.zomato.com/nakodar/ishwar-kitchen-nakodar-locality/order" target="_blank" class="social-btn" title="Zomato"><img src="../Logo/zomato.jpg" alt="Zomato" title="Zomato"/></a>
+            <a href="https://www.google.com/maps/search/Ishwar+Kitchen+Nakodar" target="_blank" class="social-btn" title="Maps">📍</a>
+          </div>
+        </div>
+        <div><h4>Quick Links</h4><ul><li><a href="index.html">Home</a></li><li><a href="index.html#about">About Us</a></li><li><a href="menu.html">Our Menu</a></li><li><a href="index.html#order">Order Online</a></li><li><a href="index.html#gallery">Gallery</a></li><li><a href="index.html#contact">Contact</a></li></ul></div>
+        <div><h4>Popular Dishes</h4><ul><li>Dal Makhani</li><li>Butter Paneer Masala</li><li>Chole Bhature</li><li>Chaap Tikka</li><li>Veg Hakka Noodles</li><li>Sweet Lassi</li><li>Keema Naan</li></ul></div>
+        <div class="footer-contact-info"><h4>Contact Info</h4><p>📍 Nurmahal Road, near AU Bank,<br/>&nbsp;&nbsp;&nbsp; GTB Nagar, Nakodar, Punjab</p><p>🕒 10:30 AM – 10:30 PM (Daily)</p><p>📞 <a href="tel:+918699081813">+91 8699081813</a></p><p>💬 <a href="https://wa.me/918699081813">WhatsApp Us</a></p></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom"><div class="container"><p>© 2026 Ishwar Kitchen, Nakodar. All rights reserved.</p><p>Made with ❤️ for authentic Punjabi food lovers</p></div></div>
+</footer>
+
+<!-- ══════════ FLOATING MENU DRAWER (Bottom Sheet) ══════════ -->
+<div class="fmenu-overlay" id="fmenuOverlay" onclick="toggleFloatMenu()"></div>
+<div class="fmenu-drawer" id="fmenuDrawer">
+  <div class="fmenu-drag" onclick="toggleFloatMenu()"></div>
+  <div class="fmenu-head">
+    <div class="fmenu-title">🍽️ Browse Menu</div>
+    <button class="fmenu-close" onclick="toggleFloatMenu()">✕</button>
+  </div>
+  <div class="fmenu-page">
+    <div class="fmenu-cat-list" id="fmenuCatList">
+      <!-- Categories injected by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ FLOATING BUTTONS ══════════ -->
+<div class="floating-btns">
+  <button class="float-btn menu-f" onclick="toggleFloatMenu()" title="Menu"><span class="tooltip">🍽️ Menu</span>🍽️</button>
+  <a href="tel:+918699081813" class="float-btn call-f" title="Call"><span class="tooltip">📞 +91 8699081813</span>📞</a>
+  <button class="float-btn top-f" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Top"><span class="tooltip">↑ Back to Top</span>↑</button>
+</div>
+
+<!-- ══════════ Toast ══════════ -->
+<div class="toast" id="toast"></div>
+
+<script src="../script.js"></script>
+</body>
+</html>

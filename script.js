@@ -158,6 +158,10 @@ initTilt();
 
 // ══════════ // FLOATING MENU DRAWER (Zomato/Swiggy Style) ══════════
 function toggleFloatMenu() {
+  if (!document.getElementById('menu')) {
+    window.location.href = 'menu.html';
+    return;
+  }
   const overlay = document.getElementById('fmenuOverlay');
   const drawer = document.getElementById('fmenuDrawer');
   if (overlay && drawer) {
