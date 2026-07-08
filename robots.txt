@@ -11,6 +11,10 @@
 
 User-agent: *
 Allow: /
+Allow: /menu
+Allow: /review
+Disallow: /menu.pdf
+Disallow: /admin.html
 
 # Sitemap definition for search engines
 Sitemap: https://www.ishwarkitchen.in/sitemap.xml
