@@ -13,12 +13,22 @@
 
 <url>
   <loc>https://www.ishwarkitchen.in/</loc>
-  <lastmod>2026-07-03T20:18:03+00:00</lastmod>
+  <lastmod>2026-07-08T08:13:17+00:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
+  <loc>https://www.ishwarkitchen.in/menu</loc>
+  <lastmod>2026-07-08T08:13:18+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.ishwarkitchen.in/reviews</loc>
+  <lastmod>2026-07-08T08:13:18+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
   <loc>https://www.ishwarkitchen.in/menu.pdf</loc>
-  <lastmod>2026-07-03T20:18:04+00:00</lastmod>
+  <lastmod>2026-07-08T08:13:18+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 
