@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <title>Contact & FAQs – Ishwar Kitchen</title>
+  <meta name="description" content="Contact Ishwar Kitchen and read our frequently asked questions about food, delivery, and website troubleshooting."/>
+
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json"/>
+  <meta name="theme-color" content="#D4AF37"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="Ishwar Kitchen"/>
+  <link rel="apple-touch-icon" href="favicon-192.png"/>
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon.png"/>
+  <link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png"/>
+
+  <link rel="stylesheet" href="style.min.css"/>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <style>
+    .contact-hero { padding: 120px 20px 60px; text-align: center; background: radial-gradient(ellipse at 50% 0%,rgba(212,175,55,0.1) 0%,transparent 65%),var(--bg); }
+    .call-btn-massive { display: inline-flex; align-items: center; justify-content: center; gap: 15px; background: linear-gradient(135deg,var(--gold),#b8922a); color: #0D0B09; font-size: 1.5rem; font-weight: 700; padding: 20px 40px; border-radius: 50px; text-decoration: none; margin-top: 30px; transition: 0.3s; box-shadow: 0 10px 30px rgba(212,175,55,0.3); }
+    .call-btn-massive:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(212,175,55,0.4); color: #0D0B09; }
+    .faq-wrapper { max-width: 900px; margin: 0 auto; padding: 2rem 1rem 5rem; }
+    .faq-category { color: var(--gold); font-family: 'Playfair Display', serif; font-size: 2rem; margin: 3rem 0 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+    .faq-item-large { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1rem; transition: 0.2s; }
+    .faq-item-large:hover { border-color: var(--gold); }
+    .faq-item-large h3 { color: var(--text); font-size: 1.15rem; margin-bottom: 0.8rem; display: flex; gap: 10px; }
+    .faq-item-large p { color: var(--muted); line-height: 1.6; font-size: 0.95rem; }
+    .tech-faq h3 { color: var(--blue); }
+  </style>
+</head>
+<body>
+
+<!-- ══════════ NAVBAR ══════════ -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-circle">
+        <img src="logo.webp" alt="Ishwar Kitchen - Best Food in Nakodar" title="Ishwar Kitchen - Best Food in Nakodar" class="nav-logo-img"/>
+      </div>
+      <div class="nav-logo-text">
+        <span class="logo-name">Ishwar Kitchen</span>
+        <span class="logo-tagline">Nakodar · Punjab</span>
+      </div>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="index.html#order">Order</a></li>
+      <li><a href="index.html#gallery">Gallery</a></li>
+      <li><a href="reviews.html">Reviews</a></li>
+      <li><a href="contact.html" style="color:var(--gold)">Contact</a></li>
+    </ul>
+    <button class="reserve-btn" onclick="window.location.href='index.html#order'">🛒 Order Now</button>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ══════════ CONTACT HERO ══════════ -->
+<header class="contact-hero">
+  <div class="container">
+    <p class="section-tag">Get in Touch</p>
+    <h1 class="section-title">Call Us <em>Instantly</em></h1>
+    <p style="color:var(--muted); max-width: 600px; margin: 1rem auto; font-size: 1.1rem; line-height: 1.6;">
+      No long forms, no waiting. Just tap the button below to call us directly for orders, reservations, or any inquiries. We're here to serve you!
+    </p>
+    <a href="tel:+918699081813" class="call-btn-massive">
+      <span style="font-size: 2rem;">📞</span> +91 8699081813
+    </a>
+  </div>
+</header>
+
+<!-- ══════════ FAQs ══════════ -->
+<main class="faq-wrapper">
+  
+  <h2 class="faq-category">Food & Ordering FAQs</h2>
+  
+  <div class="faq-item-large"><h3><span>1.</span> What type of cuisine does Ishwar Kitchen serve?</h3><p>We serve authentic North Indian, Punjabi, and Chinese cuisine, featuring traditional recipes and fresh spices.</p></div>
+  <div class="faq-item-large"><h3><span>2.</span> Is your restaurant 100% vegetarian?</h3><p>Yes, Ishwar Kitchen is a pure vegetarian family restaurant. All our dishes are prepared in a strictly vegetarian kitchen.</p></div>
+  <div class="faq-item-large"><h3><span>3.</span> What is your most popular dish?</h3><p>Our customers highly recommend our Butter Paneer Masala, Dal Makhani, and our famous Tandoori Chaap varieties.</p></div>
+  <div class="faq-item-large"><h3><span>4.</span> Do you offer home delivery in Nakodar?</h3><p>Absolutely! We deliver across Nakodar. You can order directly via WhatsApp or through Swiggy and Zomato.</p></div>
+  <div class="faq-item-large"><h3><span>5.</span> What are your opening hours?</h3><p>We are open every day from 10:30 AM to 10:30 PM, ready to serve you lunch, dinner, and snacks.</p></div>
+  <div class="faq-item-large"><h3><span>6.</span> Where exactly are you located?</h3><p>We are located on Nurmahal Road, near AU Bank in GTB Nagar, Nakodar, Punjab (144040).</p></div>
+  <div class="faq-item-large"><h3><span>7.</span> Do you use artificial food coloring?</h3><p>No, we rely on natural spices like turmeric, Kashmiri mirch, and fresh herbs to bring vibrant colors and flavors to our dishes.</p></div>
+  <div class="faq-item-large"><h3><span>8.</span> Can I customize the spice level of my food?</h3><p>Yes! Please let us know your preference when ordering, and our chefs will adjust the spice levels (mild, medium, or spicy) for you.</p></div>
+  <div class="faq-item-large"><h3><span>9.</span> Do you accept bulk or party orders?</h3><p>Yes, we cater to birthday parties, kitty parties, and corporate events. Please call us in advance to discuss the menu and pricing.</p></div>
+  <div class="faq-item-large"><h3><span>10.</span> Do you have Jain food options?</h3><p>Yes, we can prepare many of our dishes without onion and garlic upon request. Just mention it while placing your order.</p></div>
+  <div class="faq-item-large"><h3><span>11.</span> Is parking available at the restaurant?</h3><p>Yes, there is convenient street parking available right outside our restaurant on Nurmahal Road.</p></div>
+  <div class="faq-item-large"><h3><span>12.</span> Do you offer takeaways?</h3><p>Yes, we have robust packaging for takeaways so your food stays hot and fresh until you reach home.</p></div>
+  <div class="faq-item-large"><h3><span>13.</span> What payment methods do you accept?</h3><p>We accept Cash, UPI (Google Pay, PhonePe, Paytm), and major Credit/Debit cards at the restaurant.</p></div>
+  <div class="faq-item-large"><h3><span>14.</span> Are your ingredients sourced locally?</h3><p>Yes, we believe in supporting local farmers and vendors, sourcing fresh vegetables and dairy daily from Nakodar markets.</p></div>
+  <div class="faq-item-large"><h3><span>15.</span> Do you serve vegan options?</h3><p>Many of our dishes are naturally vegan (like Chana Masala and Yellow Dal). Inform us, and we will ensure no butter or ghee is used.</p></div>
+  <div class="faq-item-large"><h3><span>16.</span> Do you have seating for large families?</h3><p>Yes, our dining area is designed to comfortably accommodate large families and groups.</p></div>
+  <div class="faq-item-large"><h3><span>17.</span> How long does delivery usually take?</h3><p>Standard delivery within Nakodar takes about 30 to 45 minutes, depending on the distance and order size.</p></div>
+  <div class="faq-item-large"><h3><span>18.</span> Are your Chinese dishes authentic?</h3><p>We serve a beloved "Desi-Chinese" fusion style that perfectly balances Chinese cooking techniques with Indian spices.</p></div>
+  <div class="faq-item-large"><h3><span>19.</span> Can I reserve a table in advance?</h3><p>Yes, simply click the Call button above to reserve a table, especially recommended for weekends and festivals.</p></div>
+  <div class="faq-item-large"><h3><span>20.</span> Do you offer any daily specials?</h3><p>Yes! Check the "Today's Special" banner on our homepage to see our Chef's pick of the day at a special price.</p></div>
+
+  <h2 class="faq-category" style="color:var(--blue)">Technical & Website Help</h2>
+
+  <div class="faq-item-large tech-faq">
+    <h3><span>21.</span> What should I do if the website isn't working properly?</h3>
+    <p>If buttons aren't clicking or pages aren't loading, you may need to clear your browser cache/cookies. <br><br>
+    <strong>Step-by-step guide (Chrome/Android):</strong><br>
+    1. Tap the three dots (menu) in Chrome.<br>
+    2. Go to "Settings" > "Privacy and Security".<br>
+    3. Tap "Clear browsing data".<br>
+    4. Select "Cookies and site data" and "Cached images and files".<br>
+    5. Tap "Clear Data" and refresh our website.</p>
+  </div>
+  
+  <div class="faq-item-large tech-faq">
+    <h3><span>22.</span> Why is the menu data or images not loading?</h3>
+    <p>This usually happens due to a poor internet connection or strict ad-blockers. Try turning off your Wi-Fi and using mobile data, or temporarily disable your ad-blocker. If the issue persists, clear your cache as described above.</p>
+  </div>
+
+  <div class="faq-item-large tech-faq">
+    <h3><span>23.</span> I'm having navigation problems (links aren't working). What should I do?</h3>
+    <p>Sometimes older devices struggle with modern website animations. Try clicking the "Refresh" icon in your browser URL bar. If that fails, completely close the browser tab and open a new one and go to `ishwarkitchen.in` again.</p>
+  </div>
+
+  <div class="faq-item-large tech-faq">
+    <h3><span>24.</span> How do I refresh the page on mobile vs desktop?</h3>
+    <p><strong>Mobile:</strong> Swipe down from the very top of the screen until you see a spinning loading circle, then release.<br>
+    <strong>Desktop:</strong> Press `Ctrl + R` (Windows) or `Cmd + R` (Mac), or click the circular arrow next to the address bar.</p>
+  </div>
+
+  <div class="faq-item-large tech-faq">
+    <h3><span>25.</span> The "Order Now" cart isn't opening, how do I fix it?</h3>
+    <p>Ensure you have JavaScript enabled in your browser settings. If you are using a very strict privacy browser (like Brave on maximum shields), it might block the cart script. Lower the shield settings for our site and refresh.</p>
+  </div>
+
+</main>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer class="footer">
+  <div class="footer-top">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-logo">
+            <div class="footer-logo-circle">
+              <img src="logo.webp" alt="Ishwar Kitchen" title="Ishwar Kitchen" class="footer-logo-img"/>
+            </div>
+          </div>
+          <p class="footer-desc">Authentic North Indian, Punjabi & Chinese cuisine crafted with love in the heart of Nakodar, Punjab.</p>
+          <div class="footer-social">
+            <a href="https://wa.me/918699081813" target="_blank" class="social-btn" title="WhatsApp"><img src="Logo/whatsapp.webp" alt="WhatsApp" title="WhatsApp"/></a>
+            <a href="https://www.swiggy.com" target="_blank" class="social-btn" title="Swiggy"><img src="Logo/swiggy.webp" alt="Swiggy" title="Swiggy"/></a>
+            <a href="https://www.zomato.com/nakodar/ishwar-kitchen-nakodar-locality/order" target="_blank" class="social-btn" title="Zomato"><img src="Logo/zomato.webp" alt="Zomato" title="Zomato"/></a>
+            <a href="https://www.google.com/maps/search/Ishwar+Kitchen+Nakodar" target="_blank" class="social-btn" title="Maps">📍</a>
+          </div>
+        </div>
+        <div><h4>Quick Links</h4><ul><li><a href="index.html">Home</a></li><li><a href="index.html#about">About Us</a></li><li><a href="menu.html">Our Menu</a></li><li><a href="index.html#order">Order Online</a></li><li><a href="index.html#gallery">Gallery</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+        <div><h4>Popular Dishes</h4><ul><li>Dal Makhani</li><li>Butter Paneer Masala</li><li>Chole Bhature</li><li>Chaap Tikka</li><li>Veg Hakka Noodles</li><li>Sweet Lassi</li><li>Keema Naan</li></ul></div>
+        <div class="footer-contact-info"><h4>Contact Info</h4><p>📍 Nurmahal Road, near AU Bank,<br/>&nbsp;&nbsp;&nbsp; GTB Nagar, Nakodar, Punjab</p><p>🕒 10:30 AM – 10:30 PM (Daily)</p><p>📞 <a href="tel:+918699081813">+91 8699081813</a></p><p>💬 <a href="https://wa.me/918699081813">WhatsApp Us</a></p></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom"><div class="container"><p>© 2026 Ishwar Kitchen, Nakodar. All rights reserved.</p><p>Made with ❤️ for authentic Punjabi food lovers</p></div></div>
+</footer>
+
+<!-- ══════════ FLOATING MENU DRAWER (Bottom Sheet) ══════════ -->
+<div class="fmenu-overlay" id="fmenuOverlay" onclick="toggleFloatMenu()"></div>
+<div class="fmenu-drawer" id="fmenuDrawer">
+  <div class="fmenu-drag" onclick="toggleFloatMenu()"></div>
+  <div class="fmenu-head">
+    <div class="fmenu-title">🍽️ Browse Menu</div>
+    <button class="fmenu-close" onclick="toggleFloatMenu()">✕</button>
+  </div>
+  <div class="fmenu-page">
+    <div class="fmenu-cat-list" id="fmenuCatList">
+      <!-- Categories injected by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ FLOATING BUTTONS ══════════ -->
+<div class="floating-btns">
+  <button class="float-btn menu-f" onclick="toggleFloatMenu()" title="Menu"><span class="tooltip">🍽️ Menu</span>🍽️</button>
+  <a href="tel:+918699081813" class="float-btn call-f" title="Call"><span class="tooltip">📞 +91 8699081813</span>📞</a>
+  <button class="float-btn top-f" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Top"><span class="tooltip">↑ Back to Top</span>↑</button>
+</div>
+
+<!-- ══════════ Toast ══════════ -->
+<div class="toast" id="toast"></div>
+
+<script src="script.min.js"></script>
+</body>
+</html>
