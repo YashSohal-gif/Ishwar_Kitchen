@@ -1333,9 +1333,12 @@ function closeGlobe() {
   if (globeRAF) { cancelAnimationFrame(globeRAF); globeRAF = null; }
 }
 
-document.getElementById('globeModal').addEventListener('click', function(e) {
-  if (e.target === this) closeGlobe();
-});
+const globeModalEl = document.getElementById('globeModal');
+if (globeModalEl) {
+  globeModalEl.addEventListener('click', function(e) {
+    if (e.target === this) closeGlobe();
+  });
+}
 
 window.addEventListener('resize', () => {
   if (globeCanvas && document.getElementById('globeModal').classList.contains('active')) {

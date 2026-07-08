@@ -265,6 +265,9 @@
         .controls {
             margin-top: 30px;
             z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .btn {
             background: #D4AF37;
@@ -279,9 +282,24 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.3);
             transition: transform 0.2s;
         }
-        .btn:hover {
-            transform: scale(1.05);
+        @media (hover: hover) and (pointer: fine) {
+            .btn:hover {
+                transform: scale(1.05);
+                background: #e6c555;
+            }
+        }
+        .btn:active {
+            transform: scale(0.97);
             background: #e6c555;
+        }
+        .page-indicator {
+            display: none;
+            font-size: 0.85em;
+            font-weight: 600;
+            color: #ccc;
+            letter-spacing: 1px;
+            min-width: 54px;
+            text-align: center;
         }
 
         /* Modal */
@@ -347,6 +365,7 @@
                 border-radius: 0;
                 border: none;
                 padding: 15px; /* Smaller padding for mobile */
+                padding-bottom: 70px; /* Keep content clear of the fixed nav bar */
             }
             .page.mobile-half-flipped {
                 transform: rotateY(-180deg);
@@ -355,7 +374,27 @@
                 transform: translateX(-100%); /* Slide completely off screen */
             }
             .controls {
-                display: none !important; /* Hide buttons, use swipe */
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                margin-top: 0;
+                padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
+                background: rgba(0,0,0,0.75);
+                backdrop-filter: blur(6px);
+                justify-content: space-between;
+                z-index: 2000;
+            }
+            .btn {
+                flex: 1;
+                margin: 0;
+                padding: 12px 10px;
+                font-size: 14px;
+            }
+            .btn:first-child { margin-right: 8px; }
+            .btn:last-child { margin-left: 8px; }
+            .page-indicator {
+                display: block;
             }
             .cover-title { font-size: 2em; }
             .cover-subtitle { font-size: 1.8em; }
@@ -1874,6 +1913,7 @@
 
     <div class="controls">
         <button class="btn" onclick="prevPage()">&#8592; Previous</button>
+        <span class="page-indicator" id="pageIndicator">1 / 15</span>
         <button class="btn" onclick="nextPage()">Next &#8594;</button>
     </div>
 
@@ -1890,7 +1930,12 @@
         let currentPage = 0;
         let isMobileHalfFlipped = false;
         const pages = document.querySelectorAll('.page');
-        
+
+        function updatePageIndicator() {
+            const indicator = document.getElementById('pageIndicator');
+            if (indicator) indicator.textContent = `${Math.min(currentPage + 1, pages.length)} / ${pages.length}`;
+        }
+
         function nextPage() {
             if (window.innerWidth <= 768) {
                 if (currentPage >= pages.length) return;
@@ -1913,6 +1958,7 @@
                     currentPage++;
                 }
             }
+            updatePageIndicator();
         }
 
         function prevPage() {
@@ -1941,19 +1987,28 @@
                     }, 1000);
                 }
             }
+            updatePageIndicator();
         }
 
         // Swipe Detection Logic
         let touchstartX = 0;
+        let touchstartY = 0;
         let touchendX = 0;
+        let touchendY = 0;
         const bookContainer = document.querySelector('.book-container');
 
         function handleGesture() {
-            if (touchendX < touchstartX - 40) {
+            const deltaX = touchendX - touchstartX;
+            const deltaY = touchendY - touchstartY;
+
+            // Ignore the gesture if it moved more vertically than horizontally —
+            // that's the user scrolling a long page, not flipping it.
+            if (Math.abs(deltaX) <= Math.abs(deltaY)) return;
+
+            if (deltaX < -40) {
                 // Swiped left
                 nextPage();
-            }
-            if (touchendX > touchstartX + 40) {
+            } else if (deltaX > 40) {
                 // Swiped right
                 prevPage();
             }
@@ -1961,10 +2016,12 @@
 
         bookContainer.addEventListener('touchstart', e => {
             touchstartX = e.changedTouches[0].screenX;
+            touchstartY = e.changedTouches[0].screenY;
         });
 
         bookContainer.addEventListener('touchend', e => {
             touchendX = e.changedTouches[0].screenX;
+            touchendY = e.changedTouches[0].screenY;
             handleGesture();
         });
 
@@ -1978,7 +2035,7 @@
             document.getElementById('modal').classList.remove('active');
         }
         
-        updateZIndex();
+        updatePageIndicator();
     </script>
 </body>
 </html>
