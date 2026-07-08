@@ -13,6 +13,7 @@ User-agent: *
 Allow: /
 Allow: /menu
 Allow: /review
+Allow: /contact
 Disallow: /menu.pdf
 Disallow: /admin.html
 
