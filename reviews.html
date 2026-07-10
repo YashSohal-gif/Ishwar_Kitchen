@@ -125,6 +125,23 @@
   <div class="container">
     <div class="section-header" data-aos><p class="section-tag">What People Say</p><h2 class="section-title">Customer <em>Reviews</em></h2><p class="section-desc">Real feedback from our happy customers</p></div>
 
+    <!-- ══════════ GOOGLE REVIEW CTA ══════════ -->
+    <div class="google-review-cta" data-aos>
+      <div class="gr-info">
+        <span class="gr-badge">📍 Google Reviews</span>
+        <h3 class="gr-title">Loved your meal? <em>Rate us on Google!</em></h3>
+        <p class="gr-desc">Your review helps other food lovers in Nakodar discover us — takes less than a minute.</p>
+        <div class="gr-actions">
+          <a class="rf-submit-btn" id="googleReviewBtn" href="https://search.google.com/local/writereview?placeid=ChIJg5wtJlNoGjkRadoPR_u1RMg" target="_blank" rel="noopener"><span>⭐ Review Us on Google</span></a>
+          <button class="gr-copy-btn" id="grCopyBtn" type="button" title="Copy review link">🔗 Copy Link</button>
+        </div>
+      </div>
+      <div class="gr-qr-wrap">
+        <div id="googleReviewQR" class="gr-qr"></div>
+        <span class="gr-qr-label">Scan to review on Google</span>
+      </div>
+    </div>
+
     <!-- ══════════ LATEST FEEDBACK (newest first, top of page) ══════════ -->
     <div class="latest-feedback-wrap" data-aos>
       <div class="latest-feedback-header">
@@ -246,6 +263,25 @@
 <!-- ══════════ Toast ══════════ -->
 <div class="toast" id="toast"></div>
 
+<script>
+  var GOOGLE_REVIEW_URL = "https://search.google.com/local/writereview?placeid=ChIJg5wtJlNoGjkRadoPR_u1RMg";
+  new QRCode(document.getElementById("googleReviewQR"), {
+    text: GOOGLE_REVIEW_URL,
+    width: 150,
+    height: 150,
+    colorDark: "#080705",
+    colorLight: "#F5E6C8",
+    correctLevel: QRCode.CorrectLevel.H
+  });
+  document.getElementById("grCopyBtn").addEventListener("click", function () {
+    navigator.clipboard.writeText(GOOGLE_REVIEW_URL).then(function () {
+      var btn = document.getElementById("grCopyBtn");
+      var original = btn.textContent;
+      btn.textContent = "✅ Copied!";
+      setTimeout(function () { btn.textContent = original; }, 2000);
+    });
+  });
+</script>
 <script src="script.js"></script>
 </body>
 </html>
