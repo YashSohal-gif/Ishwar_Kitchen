@@ -1333,9 +1333,8 @@ function closeGlobe() {
   if (globeRAF) { cancelAnimationFrame(globeRAF); globeRAF = null; }
 }
 
-const globeModalEl = document.getElementById('globeModal');
-if (globeModalEl) {
-  globeModalEl.addEventListener('click', function(e) {
+if (document.getElementById('globeModal')) {
+  document.getElementById('globeModal').addEventListener('click', function(e) {
     if (e.target === this) closeGlobe();
   });
 }
@@ -1465,9 +1464,8 @@ function submitReview(e) {
     document.getElementById('starLabel').textContent = 'Tap to rate';
     document.querySelectorAll('.star-pick').forEach(s => s.classList.remove('selected', 'hovered'));
 
-    // Re-render and thank user
-    renderUserReviews();
-    showToast('🙏 Thank you! Your review has been submitted.');
+    // Redirect to Thank You page
+    window.location.href = 'thank-you.html';
   })
   .catch(() => {
     // Still save locally even if network fails
@@ -1481,8 +1479,8 @@ function submitReview(e) {
     document.getElementById('starLabel').textContent = 'Tap to rate';
     document.querySelectorAll('.star-pick').forEach(s => s.classList.remove('selected', 'hovered'));
 
-    renderUserReviews();
-    showToast('✅ Review saved! (Offline — will sync later)');
+    // Redirect to Thank You page even if offline (so they see the success screen)
+    window.location.href = 'thank-you.html';
   })
   .finally(() => {
     btn.disabled = false;
@@ -1490,30 +1488,51 @@ function submitReview(e) {
   });
 }
 
-// ── Render User Reviews ───────────────────────────────────────
+// ── Flag the just-submitted review so it gets the "Just In" highlight,
+//    re-render, then scroll the guest up to watch it land at the top ──
+function revealNewReview() {
+  sessionStorage.setItem('ik_just_submitted', '1');
+  renderUserReviews();
+  const wrap = document.querySelector('.latest-feedback-wrap');
+  if (wrap) wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ── Escape user-supplied text before injecting via innerHTML ──────
+function escapeHtml(str) {
+  return String(str).replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
+}
+
+// ── Render User Reviews (newest first, freshest at the very top) ──
 function renderUserReviews() {
   const wrap = document.getElementById('userReviewsWrap');
   if (!wrap) return;
 
   const saved = JSON.parse(localStorage.getItem('ik_reviews') || '[]');
-  if (!saved.length) { wrap.innerHTML = ''; return; }
+  if (!saved.length) {
+    wrap.innerHTML = '<div class="no-reviews-yet">🌟 No feedback yet — be the first to share your experience below!</div>';
+    return;
+  }
 
-  wrap.innerHTML = '<h4 style="font-family:\'Playfair Display\',serif;color:var(--gold);font-size:1rem;margin-bottom:.8rem;">💬 Recent Reviews from Customers</h4>' +
-    saved.map(rv => {
-      const stars   = '★'.repeat(rv.rating) + '☆'.repeat(5 - rv.rating);
-      const initials = rv.name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
-      return `
-        <div class="user-review-card">
-          <div class="user-review-stars">${stars}</div>
-          <p class="user-review-text">"${rv.text}"</p>
-          <div class="user-review-author">
-            <div class="user-review-avatar">${initials}</div>
-            <div>
-              <div class="user-review-name">${rv.name}</div>
-              <div class="user-review-location">${rv.location}</div>
-            </div>
-            <div class="user-review-date">${rv.date}</div>
+  // Only the review just submitted in THIS session gets the celebratory "Just In" highlight
+  const justSubmitted = sessionStorage.getItem('ik_just_submitted') === '1';
+  sessionStorage.removeItem('ik_just_submitted');
+
+  wrap.innerHTML = saved.map((rv, i) => {
+    const stars   = '★'.repeat(rv.rating) + '☆'.repeat(5 - rv.rating);
+    const initials = rv.name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+    const isNew = i === 0 && justSubmitted;
+    return `
+      <div class="user-review-card${isNew ? ' is-new' : ''}" style="--i:${i}">
+        <div class="user-review-stars">${stars}</div>
+        <p class="user-review-text">"${escapeHtml(rv.text)}"</p>
+        <div class="user-review-author">
+          <div class="user-review-avatar">${escapeHtml(initials)}</div>
+          <div>
+            <div class="user-review-name">${escapeHtml(rv.name)}</div>
+            <div class="user-review-location">${escapeHtml(rv.location)}</div>
           </div>
-        </div>`;
-    }).join('');
+          <div class="user-review-date">${escapeHtml(rv.date)}</div>
+        </div>
+      </div>`;
+  }).join('');
 }
