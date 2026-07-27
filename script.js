@@ -1553,7 +1553,7 @@ function initLiquidNav(activeTab) {
         <span class="ni-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2v7a2 2 0 0 0 4 0V2"/><path d="M9 11v11"/><path d="M17 2c-1.7 1.8-2.3 4-2.3 6.5S15.3 14 17 15.5V22"/></svg>
         </span>
-        <span class="ni-label">Menu</span>
+        <span class="ni-label">Order</span>
       </button>
       <button class="nav-item" data-tab="location" onclick="lnGo('location')">
         <span class="ni-icon">
