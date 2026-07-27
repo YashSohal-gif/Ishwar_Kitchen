@@ -206,11 +206,7 @@ function initMenuImageLinks() {
     if (wrap._pp) return;
     wrap._pp = true;
     wrap.addEventListener('click', () => {
-      if (PETPOOJA_URL === 'https://ishwarkitchen.petpooja.com/orders/menu') {
-        showToast('⏳ Our ordering system is in testing!');
-      } else {
-        window.open(PETPOOJA_URL, '_blank');
-      }
+      showPetpoojaPopup();
     });
   });
 }
@@ -224,7 +220,7 @@ document.querySelectorAll('.menu-tab').forEach(tab => {
 // Update PetPooja button href dynamically
 function syncPetpoojaLinks() {
   document.querySelectorAll('[id="petpoojaMainBtn"], .petpooja-link-btn').forEach(el => {
-    if (PETPOOJA_URL !== 'https://ishwarkitchen.petpooja.com/orders/menu') el.href = PETPOOJA_URL;
+    el.href = PETPOOJA_URL;
   });
 }
 syncPetpoojaLinks();
@@ -328,10 +324,11 @@ function showPetpoojaPopup() {
 <div class="pp-overlay" id="ppOverlay" onclick="closePetpoojaPopup()"></div>
 <div class="pp-modal" id="ppModal">
   <button class="pp-close" onclick="closePetpoojaPopup()">✕</button>
-  <div class="pp-icon">🛒</div>
-  <h3 class="pp-title">Online Ordering<br/><em>Coming Soon!</em></h3>
-  <p class="pp-desc">Our ordering system is coming soon. Until then, you can call us or order via Swiggy / Zomato.</p>
+  <div class="pp-icon">🧪</div>
+  <h3 class="pp-title">Online Ordering<br/><em>Testing Mode — Launching Soon!</em></h3>
+  <p class="pp-desc">Our online ordering system is currently being tested and will launch officially very soon. You're welcome to preview it below, or order right now via call / Swiggy / Zomato.</p>
   <div class="pp-actions">
+    <a href="${PETPOOJA_URL}" target="_blank" class="pp-btn pp-btn-primary" onclick="closePetpoojaPopup()">🔗 Preview Ordering (Beta)</a>
     <a href="tel:+918699081813" class="pp-btn pp-btn-primary" onclick="closePetpoojaPopup()">📞 Call to Order</a>
     <a href="https://www.swiggy.com/search?query=Ishwar+Kitchen+Nakodar" target="_blank" class="pp-btn pp-btn-swiggy" onclick="closePetpoojaPopup()">Order on Swiggy</a>
     <a href="https://www.zomato.com/nakodar/ishwar-kitchen-nakodar-locality/order" target="_blank" class="pp-btn pp-btn-zomato" onclick="closePetpoojaPopup()">Order on Zomato</a>
@@ -1535,4 +1532,83 @@ function renderUserReviews() {
         </div>
       </div>`;
   }).join('');
+}
+
+// ══════════ // ══════════
+// ══════════ // MOBILE LIQUID-GLASS BOTTOM NAV ══════════
+// ══════════ // ══════════
+const IK_LOCATION_URL = 'https://www.google.com/maps/search/?api=1&query=Ishwar+Kitchen+Nakodar';
+
+function initLiquidNav(activeTab) {
+  if (window.innerWidth > 768) return;
+
+  document.body.classList.add('mobile-app-view');
+
+  if (!document.querySelector('.liquid-nav')) {
+    const nav = document.createElement('nav');
+    nav.className = 'liquid-nav';
+    nav.innerHTML = `
+      <div class="bubble" id="lnBubble"></div>
+      <button class="nav-item" data-tab="menu" onclick="lnGo('menu')">
+        <span class="ni-icon">🍽️</span><span class="ni-label">Menu</span>
+      </button>
+      <button class="nav-item" data-tab="location" onclick="lnGo('location')">
+        <span class="ni-icon">📍</span><span class="ni-label">Location</span>
+      </button>
+      <button class="nav-item" data-tab="home" onclick="lnGo('home')">
+        <span class="ni-icon">🏠</span><span class="ni-label">Home</span>
+      </button>
+      <button class="nav-item" data-tab="reviews" onclick="lnGo('reviews')">
+        <span class="ni-icon">⭐</span><span class="ni-label">Reviews</span>
+      </button>`;
+    document.body.appendChild(nav);
+  }
+
+  lnSetActive(activeTab || 'home');
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth <= 768) lnPositionBubble();
+  });
+}
+
+function lnSetActive(tab) {
+  document.querySelectorAll('.liquid-nav .nav-item').forEach(el => {
+    el.classList.toggle('active', el.dataset.tab === tab);
+  });
+  lnPositionBubble();
+}
+
+function lnPositionBubble() {
+  const active = document.querySelector('.liquid-nav .nav-item.active');
+  const bubble = document.getElementById('lnBubble');
+  const nav = document.querySelector('.liquid-nav');
+  if (!active || !bubble || !nav) return;
+  const navRect = nav.getBoundingClientRect();
+  const itemRect = active.getBoundingClientRect();
+  const x = itemRect.left - navRect.left + (itemRect.width - bubble.offsetWidth) / 2;
+  nav.classList.add('morphing');
+  bubble.style.transform = `translateX(${x}px)`;
+  setTimeout(() => nav.classList.remove('morphing'), 500);
+}
+
+function lnGo(tab) {
+  lnSetActive(tab);
+  switch (tab) {
+    case 'menu':
+      showPetpoojaPopup();
+      break;
+    case 'location':
+      window.open(IK_LOCATION_URL, '_blank');
+      break;
+    case 'home':
+      if (/index\.html$|\/$/.test(window.location.pathname) || document.getElementById('home')) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        window.location.href = 'index.html';
+      }
+      break;
+    case 'reviews':
+      window.location.href = 'reviews.html';
+      break;
+  }
 }

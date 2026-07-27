@@ -21,7 +21,7 @@
   <link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png"/>
 
   <link rel="canonical" href="https://www.ishwarkitchen.in/"/>
-  <link rel="stylesheet" href="style.min.css"/>
+  <link rel="stylesheet" href="style.css"/>
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
@@ -643,14 +643,12 @@
 
     <!-- PRIMARY: direct order -->
     <div class="op-hero">
-      <div class="op-hero-icon">🍽️</div>
-      <p class="op-hero-title">Order Online</p>
-      <p class="op-hero-sub">Browse our full menu &amp; place your order directly on our Website / App</p>
+      <div class="op-hero-icon">🧪</div>
+      <p class="op-hero-title">Testing Mode — Launching Soon</p>
+      <p class="op-hero-sub">Our online ordering system is currently being tested. You can preview it now, or use the options below.</p>
       <button onclick="showPetpoojaPopup()" class="op-pulse-btn" id="petpoojaMainBtn">
-        <span class="op-pulse-ring"></span>
-        <span class="op-pulse-ring op-pulse-ring-2"></span>
         <span class="op-pulse-icon">🛒</span>
-        <span class="op-pulse-text">Order Directly</span>
+        <span class="op-pulse-text">Preview Ordering</span>
         <span class="op-pulse-arrow">→</span>
       </button>
     </div>
@@ -675,9 +673,9 @@
     </div>
     <div class="order-grid" data-aos>
       <div class="order-card" onclick="showPetpoojaPopup()" style="cursor:pointer;border-color:rgba(212,175,55,0.4)">
-        <div class="order-brand-icon" style="background:linear-gradient(135deg,#D4AF37,#9A7D1A);display:flex;align-items:center;justify-content:center;font-size:1.8rem;">🛒</div>
-        <h3>Order Directly</h3><p>Order from our website — quick &amp; sent right to the kitchen</p>
-        <span class="btn btn-primary">Order Now →</span>
+        <div class="order-brand-icon" style="background:linear-gradient(135deg,#D4AF37,#9A7D1A);display:flex;align-items:center;justify-content:center;font-size:1.8rem;">🧪</div>
+        <h3>Testing Mode</h3><p>Our website ordering is in testing &amp; launching soon — tap to preview</p>
+        <span class="btn btn-primary">Preview →</span>
       </div>
       <a href="tel:+918699081813" class="order-card">
         <div class="order-brand-icon">
@@ -1029,6 +1027,7 @@
 <!-- ══════════ Toast ══════════ -->
 <div class="toast" id="toast"></div>
 
-<script src="script.min.js"></script>
+<script src="script.js"></script>
+<script>document.addEventListener('DOMContentLoaded', () => initLiquidNav('home'));</script>
 </body>
 </html>

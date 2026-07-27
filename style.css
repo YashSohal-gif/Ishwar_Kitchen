@@ -1656,3 +1656,146 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   }
 }
+
+/* ============================================================
+   MOBILE APP-STYLE LAYOUT — locked top bar + liquid glass
+   bottom nav. DESKTOP IS UNTOUCHED — everything below is
+   scoped to @media (max-width: 768px) only.
+   ============================================================ */
+@media (max-width: 768px) {
+
+  /* ---- simplify homepage: only Home + About show, rest is
+         reached through the bottom nav instead of scrolling ---- */
+  body.mobile-app-view #menu,
+  body.mobile-app-view #order,
+  body.mobile-app-view .cart-overlay,
+  body.mobile-app-view .cart-drawer,
+  body.mobile-app-view #gallery,
+  body.mobile-app-view #reservation,
+  body.mobile-app-view #reviews,
+  body.mobile-app-view #qr,
+  body.mobile-app-view #contact,
+  body.mobile-app-view #follow-us,
+  body.mobile-app-view #faq,
+  body.mobile-app-view .special-banner,
+  body.mobile-app-view .info-strip {
+    display: none !important;
+  }
+
+  /* ---- locked top bar: logo + name only ---- */
+  body.mobile-app-view .navbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    width: 100%;
+    border-radius: 0;
+    margin: 0;
+  }
+  body.mobile-app-view .nav-links,
+  body.mobile-app-view .reserve-btn,
+  body.mobile-app-view .hamburger,
+  body.mobile-app-view .floating-btns {
+    display: none !important;
+  }
+  body.mobile-app-view .nav-container {
+    justify-content: center;
+  }
+
+  /* push page content below the fixed top bar and above the
+     fixed bottom nav */
+  body.mobile-app-view {
+    padding-top: 76px;
+    padding-bottom: calc(70px + env(safe-area-inset-bottom));
+  }
+  body.mobile-app-view .hero {
+    margin-top: 0;
+  }
+  body.mobile-app-view .footer-bottom {
+    padding-bottom: 18px;
+  }
+
+  /* ---- liquid glass bottom nav ---- */
+  .liquid-nav {
+    position: fixed;
+    left: 10px; right: 10px;
+    bottom: calc(10px + env(safe-area-inset-bottom));
+    z-index: 1200;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 62px;
+    padding: 0 6px;
+    border-radius: 26px;
+    background: rgba(18, 15, 10, 0.55);
+    -webkit-backdrop-filter: blur(22px) saturate(180%);
+    backdrop-filter: blur(22px) saturate(180%);
+    border: 1px solid rgba(255,255,255,0.14);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.18);
+    overflow: hidden;
+  }
+  /* soft glass sheen across the top of the bar */
+  .liquid-nav::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0) 40%);
+    pointer-events: none;
+  }
+
+  /* the moving liquid bubble that sits behind the active icon */
+  .liquid-nav .bubble {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 32% 28%, rgba(255,255,255,0.55), rgba(212,175,55,0.55) 45%, rgba(212,175,55,0.28) 75%);
+    box-shadow: 0 6px 18px rgba(212,175,55,0.45), inset 0 1px 3px rgba(255,255,255,0.6);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), border-radius 0.5s ease;
+    pointer-events: none;
+    z-index: 0;
+  }
+  /* squish the blob mid-travel for a liquid feel */
+  .liquid-nav.morphing .bubble {
+    border-radius: 40% 60% 55% 45% / 50% 45% 55% 50%;
+  }
+
+  .liquid-nav .nav-item {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    background: none;
+    border: none;
+    color: rgba(245,230,200,0.65);
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    padding: 6px 0;
+    transition: color 0.35s ease, transform 0.3s ease;
+  }
+  .liquid-nav .nav-item .ni-icon {
+    font-size: 1.25rem;
+    line-height: 1;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .liquid-nav .nav-item .ni-label {
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+  .liquid-nav .nav-item.active {
+    color: #080705;
+  }
+  .liquid-nav .nav-item.active .ni-icon {
+    transform: translateY(-2px) scale(1.08);
+  }
+  .liquid-nav .nav-item:active {
+    transform: scale(0.92);
+  }
+}
