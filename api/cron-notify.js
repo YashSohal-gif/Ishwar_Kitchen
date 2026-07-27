@@ -1,6 +1,7 @@
 // Triggered daily by Vercel Cron (see vercel.json). Sends ONE personalised,
 // Punjabi-touch push notification per day: a festival greeting if today is
-// one, otherwise today's rotating special.
+// one, otherwise the next message in a 5-message rotation (a different
+// notification each day, cycling back to message 1 every 5th day).
 //
 // Fixed-date Punjabi/national festivals are listed below. Festivals whose
 // date shifts every year on the lunar calendar (Lohri's neighbour Maghi
@@ -37,6 +38,42 @@ const DAILY_SPECIALS = [
   { dish: 'Kadai Paneer + Laccha Paratha', price: '₹199' },      // Saturday
 ];
 
+// 5 different notification "types" that rotate one-per-day (day 1 sends
+// message 1, day 2 sends message 2, ..., day 6 wraps back to message 1).
+// Written in a punchy, self-aware, Zomato-style tone — short, a bit
+// cheeky/funny — but with Punjabi words woven in instead of straight
+// English. Edit/add/remove entries here to change the rotation.
+const MESSAGE_POOL = [
+  () => {
+    const sp = DAILY_SPECIALS[new Date().getDay()];
+    return {
+      title: 'Fridge Ne Haar Maan Li 🏳️',
+      body: `Ghar da khana dekh ke pet ro reha ae. Aaj da special: ${sp.dish} sirf ${sp.price} — bas ek tap door ae!`,
+      tag: 'ishwar-kitchen-daily-special',
+    };
+  },
+  () => ({
+    title: 'Tandoor Tuhanu Miss Kar Reha Ae 🔥😢',
+    body: 'Itne din ho gaye ji, saada tandoor v puchda pai "ohh kithe gaye?" Waapas aao, dil (te pet) naal gal karo.',
+    tag: 'ishwar-kitchen-miss-you',
+  }),
+  () => ({
+    title: 'Ghar Da Khana? Nah Ji Nah 🙅',
+    body: 'Family nu bahana chahida? "Aaj mood nahi banaan da" bol ke seedha Ishwar Kitchen aa jao — asi cover kar denge. 😎',
+    tag: 'ishwar-kitchen-family',
+  }),
+  () => ({
+    title: '500 Log Ikatthe Galat Nahi Ho Sakde 🧠',
+    body: 'Roz 500+ log sada khana khaunde ne — tussi hi reh gaye ho ki? Chalo hun der na karo!',
+    tag: 'ishwar-kitchen-social-proof',
+  }),
+  () => ({
+    title: 'Pet Vajj Reha Ae... 📢',
+    body: 'Kudkud kudkud — ohh tuhada pet bol reha ae, sada nahi. Order karo, shaant karo! 🛵',
+    tag: 'ishwar-kitchen-cta',
+  }),
+];
+
 function todaysPayload() {
   const now = new Date();
   const mmdd = `${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
@@ -45,13 +82,11 @@ function todaysPayload() {
     return { ...FESTIVALS[mmdd], url: '/', tag: 'ishwar-kitchen-festival' };
   }
 
-  const sp = DAILY_SPECIALS[now.getDay()];
-  return {
-    title: 'Aaj Da Special! 🍽️',
-    body: `Sat Sri Akal ji! Aaj da special: ${sp.dish} sirf ${sp.price} vich. Aao ji, aithe khao!`,
-    url: '/',
-    tag: 'ishwar-kitchen-daily',
-  };
+  // Days since Unix epoch — deterministic and stable, so which message
+  // goes out on a given calendar day never shifts on redeploys/restarts.
+  const dayIndex = Math.floor(now.getTime() / 86400000);
+  const msg = MESSAGE_POOL[dayIndex % MESSAGE_POOL.length]();
+  return { ...msg, url: '/' };
 }
 
 module.exports = async (req, res) => {
