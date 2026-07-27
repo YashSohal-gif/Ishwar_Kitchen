@@ -1202,6 +1202,8 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   .gallery-grid{grid-template-columns:1fr}
   .map-cta,.hero-cta{flex-direction:column;align-items:center}
   .about-stats{gap:14px}
+  /* Cart drawer is desktop-only — mobile uses the bottom nav instead */
+  .cart-open-btn{display:none}
 }
 
 /* Social Follow Section */
