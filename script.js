@@ -206,8 +206,8 @@ function initMenuImageLinks() {
     if (wrap._pp) return;
     wrap._pp = true;
     wrap.addEventListener('click', () => {
-      if (PETPOOJA_URL === 'REPLACE_WITH_PETPOOJA_URL') {
-        showToast('⏳ Our ordering system is coming soon!');
+      if (PETPOOJA_URL === 'https://ishwarkitchen.petpooja.com/orders/menu') {
+        showToast('⏳ Our ordering system is in testing!');
       } else {
         window.open(PETPOOJA_URL, '_blank');
       }
@@ -224,7 +224,7 @@ document.querySelectorAll('.menu-tab').forEach(tab => {
 // Update PetPooja button href dynamically
 function syncPetpoojaLinks() {
   document.querySelectorAll('[id="petpoojaMainBtn"], .petpooja-link-btn').forEach(el => {
-    if (PETPOOJA_URL !== 'REPLACE_WITH_PETPOOJA_URL') el.href = PETPOOJA_URL;
+    if (PETPOOJA_URL !== 'https://ishwarkitchen.petpooja.com/orders/menu') el.href = PETPOOJA_URL;
   });
 }
 syncPetpoojaLinks();
