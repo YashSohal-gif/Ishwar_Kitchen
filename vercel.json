@@ -1,6 +1,12 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "crons": [
+    {
+      "path": "/api/cron-notify",
+      "schedule": "30 5 * * *"
+    }
+  ],
   "headers": [
     {
       "source": "/(robots\\.txt|sitemap\\.xml)",

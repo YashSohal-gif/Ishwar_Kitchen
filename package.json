@@ -1,0 +1,9 @@
+{
+  "name": "ishwar-kitchen-notifications",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Serverless functions powering Ishwar Kitchen's web push notifications",
+  "dependencies": {
+    "web-push": "^3.6.7"
+  }
+}

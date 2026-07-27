@@ -57,3 +57,36 @@ self.addEventListener('fetch', e => {
     })
   );
 });
+
+// ══════════ // PUSH NOTIFICATIONS ══════════
+self.addEventListener('push', e => {
+  let data = {};
+  try { data = e.data ? e.data.json() : {}; } catch (err) { data = { title: 'Ishwar Kitchen', body: e.data ? e.data.text() : '' }; }
+
+  const title = data.title || 'Ishwar Kitchen 🍽️';
+  const options = {
+    body: data.body || '',
+    icon: data.icon || '/favicon-192.png',
+    badge: '/favicon.png',
+    image: data.image || undefined,
+    data: { url: data.url || '/' },
+    vibrate: [100, 50, 100],
+    tag: data.tag || 'ishwar-kitchen',
+    renotify: true,
+  };
+
+  e.waitUntil(self.registration.showNotification(title, options));
+});
+
+self.addEventListener('notificationclick', e => {
+  e.notification.close();
+  const url = (e.notification.data && e.notification.data.url) || '/';
+  e.waitUntil(
+    self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(clients => {
+      for (const client of clients) {
+        if (client.url.includes(url) && 'focus' in client) return client.focus();
+      }
+      if (self.clients.openWindow) return self.clients.openWindow(url);
+    })
+  );
+});

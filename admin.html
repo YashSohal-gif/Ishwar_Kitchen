@@ -255,6 +255,19 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'I
       </div>
     </div>
 
+    <!-- Send Notification -->
+    <div class="stat-card" style="margin-bottom:1.1rem">
+      <div class="stat-label" style="margin-bottom:.6rem">📢 Send Push Notification</div>
+      <div style="display:flex;flex-direction:column;gap:.5rem">
+        <input type="text" class="search-input" id="notifyTitle" placeholder="Title — e.g. Baisakhi Diyan Vadhaiyan! 🌾" maxlength="60">
+        <textarea class="search-input" id="notifyBody" rows="2" placeholder="Message — e.g. Sat Sri Akal ji! Aao ji, khushiyan manao Ishwar Kitchen de change khane de naal." style="resize:vertical;font-family:'Inter',sans-serif"></textarea>
+        <input type="text" class="search-input" id="notifyUrl" placeholder="Link when tapped (optional) — e.g. /menu.html">
+        <input type="password" class="search-input" id="notifySecret" placeholder="Send secret (ADMIN_SEND_SECRET)">
+        <button class="refresh-btn" style="align-self:flex-start" onclick="sendNotification()">🔔 Send to All Subscribers</button>
+        <div class="stat-sub" id="notifyStatus"></div>
+      </div>
+    </div>
+
     <!-- Controls -->
     <div class="controls">
       <div class="filter-tabs">
@@ -394,6 +407,37 @@ async function patchStatus(orderId, status) {
   if (o) o.status = status;
   updateStats(allOrders);
   renderOrders();
+}
+
+// ════════════════════════════════════════════════════════
+//  PUSH NOTIFICATIONS
+// ════════════════════════════════════════════════════════
+async function sendNotification() {
+  const title  = document.getElementById('notifyTitle').value.trim();
+  const body   = document.getElementById('notifyBody').value.trim();
+  const url    = document.getElementById('notifyUrl').value.trim();
+  const secret = document.getElementById('notifySecret').value;
+  const statusEl = document.getElementById('notifyStatus');
+
+  if (!title || !body) { showToast('⚠️ Title and message are required'); return; }
+  if (!secret) { showToast('⚠️ Enter the send secret'); return; }
+
+  statusEl.textContent = 'Sending…';
+  try {
+    const res = await fetch('/api/send-push', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ secret, title, body, url: url || '/' }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Send failed');
+    statusEl.textContent = `Sent to ${data.sent}/${data.total} subscribers${data.failed ? ` (${data.failed} failed/removed)` : ''}.`;
+    showToast('✅ Notification sent');
+  } catch (e) {
+    statusEl.textContent = 'Failed to send — check the secret and try again.';
+    showToast('⚠️ Could not send notification');
+    console.error(e);
+  }
 }
 
 // ════════════════════════════════════════════════════════

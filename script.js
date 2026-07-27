@@ -1625,3 +1625,67 @@ function lnGo(tab) {
       break;
   }
 }
+
+// ══════════ // ══════════
+// ══════════ // WEB PUSH NOTIFICATIONS ══════════
+// ══════════ // ══════════
+// ⬇ After running `npx web-push generate-vapid-keys`, paste the PUBLIC key here.
+const VAPID_PUBLIC_KEY = 'REPLACE_WITH_VAPID_PUBLIC_KEY';
+
+function ikUrlBase64ToUint8Array(base64String) {
+  const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
+  const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+  const rawData = atob(base64);
+  return Uint8Array.from([...rawData].map(c => c.charCodeAt(0)));
+}
+
+async function ikSubscribeNotifications() {
+  const fab = document.getElementById('notifyFab');
+
+  if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+    showToast('⚠️ Notifications aren\'t supported on this browser.');
+    return;
+  }
+  if (VAPID_PUBLIC_KEY === 'REPLACE_WITH_VAPID_PUBLIC_KEY') {
+    showToast('🔔 Notifications are being set up — check back soon!');
+    return;
+  }
+
+  try {
+    const permission = await Notification.requestPermission();
+    if (permission !== 'granted') {
+      showToast('🔕 Notifications are blocked. Enable them in your browser settings to get updates.');
+      return;
+    }
+
+    const reg = await navigator.serviceWorker.ready;
+    let sub = await reg.pushManager.getSubscription();
+    if (!sub) {
+      sub = await reg.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: ikUrlBase64ToUint8Array(VAPID_PUBLIC_KEY),
+      });
+    }
+
+    await fetch('/api/save-subscription', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ subscription: sub }),
+    });
+
+    if (fab) fab.classList.add('subscribed');
+    showToast('✅ Sat Sri Akal! You\'ll now get updates from Ishwar Kitchen.');
+  } catch (err) {
+    showToast('⚠️ Could not enable notifications. Please try again.');
+  }
+}
+
+function ikInitNotifyFab() {
+  const fab = document.getElementById('notifyFab');
+  if (!fab || !('serviceWorker' in navigator) || !('PushManager' in window)) return;
+  navigator.serviceWorker.ready
+    .then(reg => reg.pushManager.getSubscription())
+    .then(sub => { if (sub) fab.classList.add('subscribed'); })
+    .catch(() => {});
+}
+document.addEventListener('DOMContentLoaded', ikInitNotifyFab);
