@@ -1667,20 +1667,22 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 @media (max-width: 768px) {
 
   /* ---- simplify homepage: only Home + About show, rest is
-         reached through the bottom nav instead of scrolling ---- */
-  body.mobile-app-view #menu,
-  body.mobile-app-view #order,
-  body.mobile-app-view .cart-overlay,
-  body.mobile-app-view .cart-drawer,
-  body.mobile-app-view #gallery,
-  body.mobile-app-view #reservation,
-  body.mobile-app-view #reviews,
-  body.mobile-app-view #qr,
-  body.mobile-app-view #contact,
-  body.mobile-app-view #follow-us,
-  body.mobile-app-view #faq,
-  body.mobile-app-view .special-banner,
-  body.mobile-app-view .info-strip {
+         reached through the bottom nav instead of scrolling.
+         Scoped to .page-home only — reviews.html reuses id="reviews"
+         for its own main content and must not be hidden by this. ---- */
+  body.mobile-app-view.page-home #menu,
+  body.mobile-app-view.page-home #order,
+  body.mobile-app-view.page-home .cart-overlay,
+  body.mobile-app-view.page-home .cart-drawer,
+  body.mobile-app-view.page-home #gallery,
+  body.mobile-app-view.page-home #reservation,
+  body.mobile-app-view.page-home #reviews,
+  body.mobile-app-view.page-home #qr,
+  body.mobile-app-view.page-home #contact,
+  body.mobile-app-view.page-home #follow-us,
+  body.mobile-app-view.page-home #faq,
+  body.mobile-app-view.page-home .special-banner,
+  body.mobile-app-view.page-home .info-strip {
     display: none !important;
   }
 
