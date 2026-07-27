@@ -1641,6 +1641,7 @@ function ikUrlBase64ToUint8Array(base64String) {
 
 async function ikSubscribeNotifications() {
   const fab = document.getElementById('notifyFab');
+  ikHideNotifyCard();
 
   if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
     showToast('⚠️ Notifications aren\'t supported on this browser.');
@@ -1674,11 +1675,41 @@ async function ikSubscribeNotifications() {
     });
 
     if (fab) fab.classList.add('subscribed');
+    localStorage.setItem('ik_notify_subscribed', '1');
     showToast('✅ Sat Sri Akal! You\'ll now get updates from Ishwar Kitchen.');
   } catch (err) {
     showToast('⚠️ Could not enable notifications. Please try again.');
   }
 }
+
+// ── Soft-ask card: shown once (a few seconds after page load) instead of
+// firing the native permission prompt cold. "Not now" snoozes it for a
+// week rather than hiding it forever, since people change their mind.
+function ikHideNotifyCard() {
+  const card = document.getElementById('notifyCard');
+  if (card) card.classList.remove('show');
+}
+
+function ikDismissNotifyCard() {
+  ikHideNotifyCard();
+  localStorage.setItem('ik_notify_dismissed_at', String(Date.now()));
+}
+
+function ikInitNotifyCard() {
+  const card = document.getElementById('notifyCard');
+  if (!card) return;
+  if (!('serviceWorker' in navigator) || !('PushManager' in window)) return;
+  if (VAPID_PUBLIC_KEY === 'REPLACE_WITH_VAPID_PUBLIC_KEY') return;
+  if (Notification.permission !== 'default') return; // already granted or blocked
+  if (localStorage.getItem('ik_notify_subscribed') === '1') return;
+
+  const dismissedAt = Number(localStorage.getItem('ik_notify_dismissed_at') || 0);
+  const SNOOZE_MS = 7 * 24 * 60 * 60 * 1000;
+  if (dismissedAt && Date.now() - dismissedAt < SNOOZE_MS) return;
+
+  setTimeout(() => card.classList.add('show'), 4000);
+}
+document.addEventListener('DOMContentLoaded', ikInitNotifyCard);
 
 function ikInitNotifyFab() {
   const fab = document.getElementById('notifyFab');

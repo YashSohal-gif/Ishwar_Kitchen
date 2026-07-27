@@ -220,6 +220,19 @@
 <!-- ══════════ NOTIFY ME ══════════ -->
 <button class="notify-fab" id="notifyFab" onclick="ikSubscribeNotifications()" title="Enable Notifications">🔔</button>
 
+<!-- ══════════ NOTIFY SOFT-ASK CARD ══════════ -->
+<div class="notify-card" id="notifyCard">
+  <div class="notify-card-icon">🔔</div>
+  <div class="notify-card-text">
+    <strong>Want personalised updates?</strong>
+    <span>Sat Sri Akal ji! Get today's special &amp; festive offers, straight from Ishwar Kitchen. 🙏</span>
+  </div>
+  <div class="notify-card-actions">
+    <button class="notify-card-btn allow" onclick="ikSubscribeNotifications()">Allow</button>
+    <button class="notify-card-btn later" onclick="ikDismissNotifyCard()">Not now</button>
+  </div>
+</div>
+
 <!-- ══════════ Toast ══════════ -->
 <div class="toast" id="toast"></div>
 
