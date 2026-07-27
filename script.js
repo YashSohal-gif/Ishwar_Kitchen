@@ -1550,16 +1550,28 @@ function initLiquidNav(activeTab) {
     nav.innerHTML = `
       <div class="bubble" id="lnBubble"></div>
       <button class="nav-item" data-tab="menu" onclick="lnGo('menu')">
-        <span class="ni-icon">🍽️</span><span class="ni-label">Menu</span>
+        <span class="ni-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2v7a2 2 0 0 0 4 0V2"/><path d="M9 11v11"/><path d="M17 2c-1.7 1.8-2.3 4-2.3 6.5S15.3 14 17 15.5V22"/></svg>
+        </span>
+        <span class="ni-label">Menu</span>
       </button>
       <button class="nav-item" data-tab="location" onclick="lnGo('location')">
-        <span class="ni-icon">📍</span><span class="ni-label">Location</span>
+        <span class="ni-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-7.58 7-12A7 7 0 0 0 5 10c0 4.42 7 12 7 12z"/><circle cx="12" cy="10" r="2.4"/></svg>
+        </span>
+        <span class="ni-label">Location</span>
       </button>
       <button class="nav-item" data-tab="home" onclick="lnGo('home')">
-        <span class="ni-icon">🏠</span><span class="ni-label">Home</span>
+        <span class="ni-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9a1 1 0 0 0 1 1H17.5a1 1 0 0 0 1-1v-9"/><path d="M9.5 20v-6h5v6"/></svg>
+        </span>
+        <span class="ni-label">Home</span>
       </button>
       <button class="nav-item" data-tab="reviews" onclick="lnGo('reviews')">
-        <span class="ni-icon">⭐</span><span class="ni-label">Reviews</span>
+        <span class="ni-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5l2.9 6 6.6.6-5 4.4 1.5 6.5L12 16.7 6 20l1.5-6.5-5-4.4 6.6-.6z"/></svg>
+        </span>
+        <span class="ni-label">Reviews</span>
       </button>`;
     document.body.appendChild(nav);
   }
