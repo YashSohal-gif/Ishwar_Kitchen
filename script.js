@@ -349,6 +349,10 @@ function showPetpoojaPopup() {
   <div class="pp-icon">🧪</div>
   <h3 class="pp-title">Online Ordering<br/><em>Testing Mode — Launching Soon!</em></h3>
   <p class="pp-desc">Our online ordering system is currently being tested and will launch officially very soon. You're welcome to preview it below, or order right now via call / Swiggy / Zomato.</p>
+  <div class="delivery-note">
+    <span class="delivery-note-icon">⚠️</span>
+    <span class="delivery-note-text"><strong>Please note:</strong> our delivery agent will charge the delivery fee <strong>separately, in cash,</strong> after your order is delivered successfully.</span>
+  </div>
   <div class="pp-actions">
     <a href="${PETPOOJA_URL}" target="_blank" class="pp-btn pp-btn-primary" onclick="closePetpoojaPopup()">🔗 Preview Ordering (Beta)</a>
     <a href="tel:+918699081813" class="pp-btn pp-btn-primary" onclick="closePetpoojaPopup()">📞 Call to Order</a>
