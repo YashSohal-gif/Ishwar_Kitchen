@@ -2,7 +2,7 @@
 // Protected by ADMIN_SEND_SECRET (set in Vercel env vars) so only the
 // admin panel — which asks for it — can trigger a broadcast.
 
-const { listPushSubscriptions, deletePushSubscription } = require('./_lib/supabase');
+const { listPushSubscriptions, deletePushSubscription, logNotificationSend } = require('./_lib/supabase');
 const { sendToAll } = require('./_lib/webpush');
 
 module.exports = async (req, res) => {
@@ -29,6 +29,7 @@ module.exports = async (req, res) => {
       { title, body, url: url || '/', tag: 'ishwar-kitchen-manual' },
       { deletePushSubscription }
     );
+    await logNotificationSend(title, result.sent, 'manual').catch(err => console.error('logNotificationSend failed:', err));
 
     res.status(200).json(result);
   } catch (err) {

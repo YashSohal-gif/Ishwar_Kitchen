@@ -9,7 +9,7 @@
 // Send those manually from the admin panel's "Send Notification" box a
 // day or two before, once you've confirmed that year's date.
 
-const { listPushSubscriptions, deletePushSubscription } = require('./_lib/supabase');
+const { listPushSubscriptions, deletePushSubscription, logNotificationSend } = require('./_lib/supabase');
 const { sendToAll } = require('./_lib/webpush');
 
 // MM-DD → greeting. Keep in sync with anything you already tell customers
@@ -72,6 +72,7 @@ module.exports = async (req, res) => {
     const payload = todaysPayload();
     const subs = await listPushSubscriptions();
     const result = await sendToAll(subs, payload, { deletePushSubscription });
+    await logNotificationSend(payload.title, result.sent, payload.tag).catch(err => console.error('logNotificationSend failed:', err));
     res.status(200).json({ payload, ...result });
   } catch (err) {
     console.error('cron-notify error:', err);

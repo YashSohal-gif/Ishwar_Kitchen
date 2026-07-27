@@ -253,6 +253,16 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'I
         <div class="stat-value" id="statDone">—</div>
         <div class="stat-sub">Today</div>
       </div>
+      <div class="stat-card">
+        <div class="stat-label">"Order Now" Clicks</div>
+        <div class="stat-value gold" id="statOrderClicks">—</div>
+        <div class="stat-sub">Today</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Notified Today</div>
+        <div class="stat-value green" id="statNotified">—</div>
+        <div class="stat-sub" id="statNotifiedSub">People reached</div>
+      </div>
     </div>
 
     <!-- Send Notification -->
@@ -352,7 +362,7 @@ if (sessionStorage.getItem('ik_admin')) {
 //  SUPABASE HELPERS
 // ════════════════════════════════════════════════════════
 function isConfigured() {
-  return SUPABASE_URL !== 'https://myusocxvkspfjlzhfncz.supabase.co' && SUPABASE_KEY !== 'sb_publishable_Mi004oFramS3Qcui4BG1Wg_18bGKhzW';
+  return !SUPABASE_URL.includes('REPLACE') && !SUPABASE_KEY.includes('REPLACE');
 }
 
 async function fetchOrders(showFeedback = false) {
@@ -449,7 +459,45 @@ function initDashboard() {
   }
   requestNotifPermission();
   fetchOrders();
+  fetchEngagementStats();
   pollTimer = setInterval(fetchOrders, 10000); // poll every 10s
+  setInterval(fetchEngagementStats, 30000); // poll every 30s
+}
+
+// ════════════════════════════════════════════════════════
+//  ENGAGEMENT — "Order Now" click-through & notification reach
+// ════════════════════════════════════════════════════════
+async function fetchEngagementStats() {
+  if (!isConfigured()) return;
+  const todayStartISO = new Date(new Date().setHours(0, 0, 0, 0)).toISOString();
+  const headers = { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` };
+
+  try {
+    const clicksRes = await fetch(
+      `${SUPABASE_URL}/rest/v1/order_clicks?select=id&created_at=gte.${encodeURIComponent(todayStartISO)}`,
+      { headers: { ...headers, Prefer: 'count=exact' } }
+    );
+    const clicks = await clicksRes.json();
+    document.getElementById('statOrderClicks').textContent = Array.isArray(clicks) ? clicks.length : '0';
+  } catch (e) {
+    console.error('order_clicks fetch failed', e);
+  }
+
+  try {
+    const sendsRes = await fetch(
+      `${SUPABASE_URL}/rest/v1/notification_sends?select=recipients_count&sent_at=gte.${encodeURIComponent(todayStartISO)}`,
+      { headers }
+    );
+    const sends = await sendsRes.json();
+    if (Array.isArray(sends)) {
+      const totalReach = sends.reduce((s, r) => s + (r.recipients_count || 0), 0);
+      document.getElementById('statNotified').textContent = totalReach;
+      document.getElementById('statNotifiedSub').textContent =
+        sends.length ? `${sends.length} notification${sends.length > 1 ? 's' : ''} sent` : 'People reached';
+    }
+  } catch (e) {
+    console.error('notification_sends fetch failed', e);
+  }
 }
 
 // ════════════════════════════════════════════════════════

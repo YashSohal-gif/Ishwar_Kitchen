@@ -4,12 +4,18 @@ Everything on the code side is done — the site, service worker, and serverless
 functions are all wired up. Three things only you can do (they need secrets I
 should never hardcode into a public repo) are left before it goes live.
 
-## 1. Create the subscribers table in Supabase
+## 1. Create the tables in Supabase
 
 This reuses the same Supabase project `admin.html` already talks to.
 
 1. Go to your Supabase project → **SQL Editor** → **New query**
 2. Paste the contents of [`supabase-setup.sql`](supabase-setup.sql) and run it
+
+> If you already ran this once before (for `push_subscriptions`), run it
+> again — it's been updated with two more tables (`order_clicks`,
+> `notification_sends`) for the admin dashboard's "Order Now clicks" and
+> "Notified Today" stats. `create table if not exists` means re-running it
+> is safe and won't touch your existing data.
 
 ## 2. Generate VAPID keys (one-time, free)
 

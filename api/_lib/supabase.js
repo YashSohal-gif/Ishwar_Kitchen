@@ -56,4 +56,14 @@ async function deletePushSubscription(endpoint) {
   });
 }
 
-module.exports = { upsertPushSubscription, listPushSubscriptions, deletePushSubscription };
+// Logs one row per broadcast so the admin dashboard can show "people
+// notified today" — recipientsCount is how many actually succeeded.
+async function logNotificationSend(title, recipientsCount, type) {
+  return supabaseRequest('notification_sends', {
+    method: 'POST',
+    prefer: 'return=minimal',
+    body: JSON.stringify([{ title, recipients_count: recipientsCount, type: type || 'manual' }]),
+  });
+}
+
+module.exports = { upsertPushSubscription, listPushSubscriptions, deletePushSubscription, logNotificationSend };

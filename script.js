@@ -200,6 +200,26 @@ document.addEventListener("DOMContentLoaded", () => {
 // ⬇ Paste your PetPooja URL here once you get it
 const PETPOOJA_URL = 'https://ishwarkitchen.petpooja.com/menu';
 
+// Same Supabase project admin.html reads orders from — used here only to
+// log an "Order Now" click-through event for the admin dashboard's
+// engagement stat. The publishable key is safe to expose client-side.
+const IK_SUPABASE_URL = 'https://myusocxvkspfjlzhfncz.supabase.co';
+const IK_SUPABASE_KEY = 'sb_publishable_Mi004oFramS3Qcui4BG1Wg_18bGKhzW';
+
+function ikTrackOrderClick() {
+  fetch(`${IK_SUPABASE_URL}/rest/v1/order_clicks`, {
+    method: 'POST',
+    headers: {
+      apikey: IK_SUPABASE_KEY,
+      Authorization: `Bearer ${IK_SUPABASE_KEY}`,
+      'Content-Type': 'application/json',
+      Prefer: 'return=minimal',
+    },
+    body: JSON.stringify([{ page: window.location.pathname }]),
+    keepalive: true,
+  }).catch(() => {}); // best-effort — never block the ordering flow on this
+}
+
 // Make every menu card image open PetPooja
 function initMenuImageLinks() {
   document.querySelectorAll('.menu-card-img-wrap').forEach(wrap => {
@@ -310,6 +330,8 @@ function showOrderForm() {
 
 // ══════════ // PETPOOJA COMING SOON POPUP ══════════
 function showPetpoojaPopup() {
+  ikTrackOrderClick();
+
   // Close the cart drawer first if open
   const drawer = document.getElementById('cartDrawer');
   if (drawer && drawer.classList.contains('open')) toggleCart();
