@@ -1690,11 +1690,17 @@ async function ikSubscribeNotifications() {
       });
     }
 
-    await fetch('/api/save-subscription', {
+    const saveRes = await fetch('/api/save-subscription', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ subscription: sub }),
     });
+    if (!saveRes.ok) {
+      const errData = await saveRes.json().catch(() => ({}));
+      console.error('save-subscription failed:', saveRes.status, errData);
+      showToast('⚠️ Notifications aren\'t fully set up yet on our end — please try again later.');
+      return;
+    }
 
     if (fab) fab.classList.add('subscribed');
     localStorage.setItem('ik_notify_subscribed', '1');
