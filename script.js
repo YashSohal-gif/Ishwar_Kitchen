@@ -198,7 +198,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // ══════════ // ══════════
 
 // ⬇ Paste your PetPooja URL here once you get it
-const PETPOOJA_URL = 'https://ishwarkitchen.petpooja.com/orders/menu'; // e.g. https://order.petpooja.com/ishwar-kitchen
+const PETPOOJA_URL = 'https://ishwarkitchen.petpooja.com/menu';
 
 // Make every menu card image open PetPooja
 function initMenuImageLinks() {
