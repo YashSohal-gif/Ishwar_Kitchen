@@ -1630,7 +1630,7 @@ function lnGo(tab) {
 // ══════════ // WEB PUSH NOTIFICATIONS ══════════
 // ══════════ // ══════════
 // ⬇ After running `npx web-push generate-vapid-keys`, paste the PUBLIC key here.
-const VAPID_PUBLIC_KEY = 'REPLACE_WITH_VAPID_PUBLIC_KEY';
+const VAPID_PUBLIC_KEY = 'BLfoVCgR1Or2m4gE1S6spJhhMZMU2SSCVHLQ93pje1RiiSPgaFL4akN8H8K4Df2kU6gFo_-CPsleWvW0PjX8wCE';
 
 function ikUrlBase64ToUint8Array(base64String) {
   const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
