@@ -1682,84 +1682,86 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
     display: none !important;
   }
 
-  /* ---- locked top bar: logo + name only ---- */
-  body.mobile-app-view .navbar {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    width: 100%;
-    border-radius: 0;
-    margin: 0;
+  /* ---- top bar stays the site's normal floating glass pill —
+         just made a bit more compact, hamburger stays intact ---- */
+  body.mobile-app-view .nav-logo-circle {
+    width: 38px; height: 38px;
   }
-  body.mobile-app-view .nav-links,
-  body.mobile-app-view .reserve-btn,
-  body.mobile-app-view .hamburger,
+  body.mobile-app-view .nav-logo-text .logo-name {
+    font-size: 1rem;
+  }
+  body.mobile-app-view .nav-logo-text .logo-tagline {
+    font-size: 0.66rem;
+  }
+  body.mobile-app-view .nav-container {
+    padding: 8px 16px;
+  }
+  /* old duplicate floating call/menu/top buttons — replaced by bottom nav */
   body.mobile-app-view .floating-btns {
     display: none !important;
   }
-  body.mobile-app-view .nav-container {
-    justify-content: center;
-  }
 
-  /* push page content below the fixed top bar and above the
-     fixed bottom nav */
+  /* leave room above the fixed bottom nav so content/footer isn't hidden under it */
   body.mobile-app-view {
-    padding-top: 76px;
-    padding-bottom: calc(70px + env(safe-area-inset-bottom));
-  }
-  body.mobile-app-view .hero {
-    margin-top: 0;
+    padding-bottom: calc(78px + env(safe-area-inset-bottom));
   }
   body.mobile-app-view .footer-bottom {
     padding-bottom: 18px;
   }
 
-  /* ---- liquid glass bottom nav ---- */
+  /* ---- liquid glass bottom nav — true floating pill ---- */
   .liquid-nav {
     position: fixed;
-    left: 10px; right: 10px;
-    bottom: calc(10px + env(safe-area-inset-bottom));
+    left: 12px; right: 12px;
+    bottom: calc(12px + env(safe-area-inset-bottom));
     z-index: 1200;
     display: flex;
     justify-content: space-around;
     align-items: center;
-    height: 62px;
+    height: 60px;
     padding: 0 6px;
-    border-radius: 26px;
-    background: rgba(18, 15, 10, 0.55);
-    -webkit-backdrop-filter: blur(22px) saturate(180%);
-    backdrop-filter: blur(22px) saturate(180%);
-    border: 1px solid rgba(255,255,255,0.14);
-    box-shadow: 0 10px 40px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.18);
-    overflow: hidden;
+    border-radius: 999px;
+    background: rgba(15, 12, 8, 0.5);
+    -webkit-backdrop-filter: blur(26px) saturate(190%);
+    backdrop-filter: blur(26px) saturate(190%);
+    border: 1px solid rgba(255,255,255,0.16);
+    box-shadow: 0 12px 36px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.16);
   }
   /* soft glass sheen across the top of the bar */
   .liquid-nav::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0) 40%);
+    border-radius: inherit;
+    background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0) 45%);
     pointer-events: none;
   }
 
-  /* the moving liquid bubble that sits behind the active icon */
+  /* the moving liquid-glass capsule that sits behind the active tab —
+     translucent frosted highlight, not a solid color blob, so it reads
+     as glass rather than a button (iOS 26 tab-bar style) */
   .liquid-nav .bubble {
     position: absolute;
-    top: 6px;
-    left: 6px;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 32% 28%, rgba(255,255,255,0.55), rgba(212,175,55,0.55) 45%, rgba(212,175,55,0.28) 75%);
-    box-shadow: 0 6px 18px rgba(212,175,55,0.45), inset 0 1px 3px rgba(255,255,255,0.6);
-    -webkit-backdrop-filter: blur(6px);
-    backdrop-filter: blur(6px);
-    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), border-radius 0.5s ease;
+    top: 5px; bottom: 5px; left: 6px;
+    width: 60px;
+    border-radius: 999px;
+    background: linear-gradient(155deg, rgba(255,255,255,0.4), rgba(255,255,255,0.05) 55%, rgba(212,175,55,0.25));
+    border: 1px solid rgba(255,255,255,0.38);
+    box-shadow:
+      0 4px 16px rgba(212,175,55,0.3),
+      0 0 22px rgba(212,175,55,0.22),
+      inset 0 1px 2px rgba(255,255,255,0.65),
+      inset 0 -2px 5px rgba(0,0,0,0.18);
+    -webkit-backdrop-filter: blur(14px) saturate(200%);
+    backdrop-filter: blur(14px) saturate(200%);
+    transform: scaleY(1) scaleX(1);
+    transition: left 0.5s cubic-bezier(0.34, 1.2, 0.4, 1), width 0.45s cubic-bezier(0.34, 1.2, 0.4, 1), transform 0.35s ease;
     pointer-events: none;
     z-index: 0;
   }
-  /* squish the blob mid-travel for a liquid feel */
+  /* gentle squash-stretch mid-travel for a liquid feel (no shape distortion) */
   .liquid-nav.morphing .bubble {
-    border-radius: 40% 60% 55% 45% / 50% 45% 55% 50%;
+    transform: scaleY(0.82) scaleX(1.08);
   }
 
   .liquid-nav .nav-item {
@@ -1790,7 +1792,8 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
     letter-spacing: 0.3px;
   }
   .liquid-nav .nav-item.active {
-    color: #080705;
+    color: var(--gold);
+    text-shadow: 0 0 10px rgba(212,175,55,0.55);
   }
   .liquid-nav .nav-item.active .ni-icon {
     transform: translateY(-2px) scale(1.08);

@@ -1585,10 +1585,11 @@ function lnPositionBubble() {
   if (!active || !bubble || !nav) return;
   const navRect = nav.getBoundingClientRect();
   const itemRect = active.getBoundingClientRect();
-  const x = itemRect.left - navRect.left + (itemRect.width - bubble.offsetWidth) / 2;
+  const inset = 6;
   nav.classList.add('morphing');
-  bubble.style.transform = `translateX(${x}px)`;
-  setTimeout(() => nav.classList.remove('morphing'), 500);
+  bubble.style.left = (itemRect.left - navRect.left + inset) + 'px';
+  bubble.style.width = (itemRect.width - inset * 2) + 'px';
+  setTimeout(() => nav.classList.remove('morphing'), 450);
 }
 
 function lnGo(tab) {
