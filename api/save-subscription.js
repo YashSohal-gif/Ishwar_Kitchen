@@ -16,6 +16,8 @@ module.exports = async (req, res) => {
     res.status(200).json({ ok: true });
   } catch (err) {
     console.error('save-subscription error:', err);
-    res.status(500).json({ error: 'Could not save subscription' });
+    // TEMPORARY: exposing err.message to self-diagnose the 500 without
+    // Vercel dashboard access — revert to a generic message once fixed.
+    res.status(500).json({ error: 'Could not save subscription', detail: err.message });
   }
 };
