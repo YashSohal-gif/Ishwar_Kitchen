@@ -1630,28 +1630,40 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   left: 50%; bottom: -100%;
   transform: translateX(-50%);
   width: min(480px, 94vw);
+  max-height: min(88vh, 720px);
+  display: flex;
+  flex-direction: column;
   background: linear-gradient(160deg, #16120a 0%, #0e0b06 100%);
   border: 1px solid rgba(212,175,55,0.35);
   border-radius: 24px;
-  padding: 2.4rem 2rem 2rem;
   text-align: center;
   box-shadow: 0 -4px 60px rgba(212,175,55,0.12), 0 24px 80px rgba(0,0,0,0.6);
   transition: bottom .38s cubic-bezier(0.34,1.56,0.64,1);
 }
 .pp-modal.open { bottom: 50%; transform: translateX(-50%) translateY(50%); }
 @media (max-width: 600px) {
-  .pp-modal { border-radius: 24px 24px 0 0; }
+  .pp-modal { border-radius: 24px 24px 0 0; max-height: 85vh; }
   .pp-modal.open { bottom: 0; transform: translateX(-50%); }
 }
+/* Scrollable inner wrapper — keeps .pp-close fixed in place at the
+   top-right corner no matter how tall the content or how far it's
+   scrolled, so the popup is always closable without hunting for the X */
+.pp-modal-scroll {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  padding: 2.4rem 2rem 2rem;
+}
 .pp-close {
-  position: absolute; top: 14px; right: 16px;
+  position: absolute; top: 14px; right: 16px; z-index: 2;
   font-size: 1rem; color: var(--muted);
-  background: rgba(255,255,255,0.06); border: none;
-  width: 30px; height: 30px; border-radius: 50%;
+  background: rgba(30,24,14,0.85); border: none;
+  width: 34px; height: 34px; border-radius: 50%;
   cursor: pointer; transition: color .2s, background .2s;
   display: flex; align-items: center; justify-content: center;
+  backdrop-filter: blur(4px);
 }
-.pp-close:hover { color: var(--text); background: rgba(255,255,255,0.12); }
+.pp-close:hover { color: var(--text); background: rgba(255,255,255,0.16); }
 .pp-icon {
   font-size: 3rem;
   margin-bottom: 1rem;
