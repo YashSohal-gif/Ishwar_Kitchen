@@ -346,18 +346,20 @@ function showPetpoojaPopup() {
 <div class="pp-overlay" id="ppOverlay" onclick="closePetpoojaPopup()"></div>
 <div class="pp-modal" id="ppModal">
   <button class="pp-close" onclick="closePetpoojaPopup()">✕</button>
-  <div class="pp-icon">🧪</div>
-  <h3 class="pp-title">Online Ordering<br/><em>Testing Mode — Launching Soon!</em></h3>
-  <p class="pp-desc">Our online ordering system is currently being tested and will launch officially very soon. You're welcome to preview it below, or order right now via call / Swiggy / Zomato.</p>
-  <div class="delivery-note">
-    <span class="delivery-note-icon">🛍️</span>
-    <span class="delivery-note-text"><strong>Pickup Available Now — Delivery Coming Soon!</strong> Online orders are currently for pickup only. Home delivery is in trial mode and will launch very shortly.</span>
-  </div>
-  <div class="pp-actions">
-    <a href="${PETPOOJA_URL}" target="_blank" class="pp-btn pp-btn-primary" onclick="closePetpoojaPopup()">🔗 Preview Ordering (Beta)</a>
-    <a href="tel:+918699081813" class="pp-btn pp-btn-primary" onclick="closePetpoojaPopup()">📞 Call to Order</a>
-    <a href="https://www.swiggy.com/search?query=Ishwar+Kitchen+Nakodar" target="_blank" class="pp-btn pp-btn-swiggy" onclick="closePetpoojaPopup()">Order on Swiggy</a>
-    <a href="https://www.zomato.com/nakodar/ishwar-kitchen-nakodar-locality/order" target="_blank" class="pp-btn pp-btn-zomato" onclick="closePetpoojaPopup()">Order on Zomato</a>
+  <div class="pp-modal-scroll">
+    <div class="pp-icon">🧪</div>
+    <h3 class="pp-title">Online Ordering<br/><em>Testing Mode — Launching Soon!</em></h3>
+    <p class="pp-desc">Our online ordering system is currently being tested and will launch officially very soon. You're welcome to preview it below, or order right now via call / Swiggy / Zomato.</p>
+    <div class="delivery-note">
+      <span class="delivery-note-icon">🛍️</span>
+      <span class="delivery-note-text"><strong>Pickup Available Now — Delivery Coming Soon!</strong> Online orders are currently for pickup only. Home delivery is in trial mode and will launch very shortly.</span>
+    </div>
+    <div class="pp-actions">
+      <a href="${PETPOOJA_URL}" target="_blank" class="pp-btn pp-btn-primary" onclick="closePetpoojaPopup()">🔗 Preview Ordering (Beta)</a>
+      <a href="tel:+918699081813" class="pp-btn pp-btn-primary" onclick="closePetpoojaPopup()">📞 Call to Order</a>
+      <a href="https://www.swiggy.com/search?query=Ishwar+Kitchen+Nakodar" target="_blank" class="pp-btn pp-btn-swiggy" onclick="closePetpoojaPopup()">Order on Swiggy</a>
+      <a href="https://www.zomato.com/nakodar/ishwar-kitchen-nakodar-locality/order" target="_blank" class="pp-btn pp-btn-zomato" onclick="closePetpoojaPopup()">Order on Zomato</a>
+    </div>
   </div>
 </div>`;
   document.body.appendChild(el);
